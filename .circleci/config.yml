@@ -16,6 +16,4 @@ workflows:
     jobs:
       - cypress/run:
           start: 'npm run cypress:open'
-      - deploy-site:
-          requires:
-              cypress/run
+      - deploy-site
