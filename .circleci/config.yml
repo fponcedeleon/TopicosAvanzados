@@ -2,8 +2,20 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.0
   cypress: cypress-io/cypress@1
+jobs:
+  deploy-site:
+    # This job installs Java to be used in pmd
+    executor: sfdx/default
+    steps:
+      - checkout
+      - run:
+        name: Deploy
+        command: curl -X POST -d {} ${hook}
 workflows:
   node-tests:
     jobs:
       - cypress/run:
           start: 'npm run cypress:open'
+      - deploy-site:
+          requires:
+              cypress/run
