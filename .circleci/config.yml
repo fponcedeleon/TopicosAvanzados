@@ -4,10 +4,8 @@ orbs:
   cypress: cypress-io/cypress@1
 jobs:
   deploy-site:
-    docker:
-     - image: alpine
+    machine: true
     steps:
-      - checkout
       - run:
         name: Deploy
         command: curl -X POST -d {} ${hook}
