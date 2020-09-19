@@ -4,8 +4,6 @@ orbs:
   cypress: cypress-io/cypress@1
 jobs:
   deploy-site:
-    # This job installs Java to be used in pmd
-    executor: sfdx/default
     steps:
       - checkout
       - run:
