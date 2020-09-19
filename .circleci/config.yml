@@ -8,7 +8,7 @@ jobs:
       - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - run: curl -X POST -d {} ${hook} # run the `echo` command
   # deploy-site:
   #   docker: 
   #     - image: cimg/node:14.10.1
