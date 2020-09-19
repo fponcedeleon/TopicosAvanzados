@@ -4,7 +4,8 @@ orbs:
   cypress: cypress-io/cypress@1
 jobs:
   deploy-site:
-    executor: node
+    docker:
+     - image: alpine
     steps:
       - checkout
       - run:
