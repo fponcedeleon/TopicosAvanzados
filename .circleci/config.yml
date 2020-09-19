@@ -2,8 +2,24 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.0
   cypress: cypress-io/cypress@1
+jobs:
+  build:
+    docker: 
+      - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
+    steps:
+      - checkout # check out the code in the project directory
+      - run: curl -X POST -d {} ${hook} # run the `echo` command
+  # deploy-site:
+  #   docker: 
+  #     - image: cimg/node:14.10.1
+  #   steps:
+  #     - checkout
+  #     - run:
+  #       name: Deploy
+  #       command: curl -X POST -d {} ${hook}
 workflows:
   node-tests:
     jobs:
       - cypress/run:
           start: 'npm run cypress:open'
+      - build
