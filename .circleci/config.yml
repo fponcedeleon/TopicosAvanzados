@@ -4,6 +4,7 @@ orbs:
   cypress: cypress-io/cypress@1
 jobs:
   deploy-site:
+    executor: node
     steps:
       - checkout
       - run:
