@@ -1,4 +1,4 @@
-import test from './test';
+const test = require('./test');
 module.exports = {
     name: 'routes',
     register: server => {
