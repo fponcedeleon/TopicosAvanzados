@@ -5,7 +5,7 @@ const routes = require('./routes');
 const init = async () => {
   const server = Hapi.server({
     port: process.env.PORT || '8080',
-    host: process.env.HOST || 'localhost',
+    host: process.env.HOST || '0.0.0.0',
     routes: {
       cors: {origin: ['*'], credentials: true}
     }
@@ -17,9 +17,11 @@ const init = async () => {
     }
   };
 
+  console.log(`listening on port ${server.port} and host ${server.host}`)
   await server.register([routes]);
 
 
   await server.start();
 };
+
 init();
