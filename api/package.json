@@ -1,0 +1,17 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^18.3.2",
+    "hapi-cors": "^1.0.3"
+  },
+  "heroku-run-build-script": true,
+  "author": "",
+  "license": "ISC"
+}
