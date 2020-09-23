@@ -7,7 +7,8 @@
     "start": "cd api && node index.js",
     "cypress:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run"
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run",
+    "postinstall": "npm install --prefix api && npm install --prefix web"
   },
   "repository": {
     "type": "git",
