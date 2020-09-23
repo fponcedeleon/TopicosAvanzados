@@ -23,5 +23,5 @@ workflows:
     jobs:
       # - cypress/run:
       #     start: 'npm run cypress:open'
-      - build
+      # - build
       - heroku/deploy-via-git
