@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@hapi/hapi": "^18.3.2",
-    "hapi-cors": "^1.0.3"
+    "dotenv": "^8.1.0",
+    "hapi-cors": "^1.0.3",
+    "mongoose": "^5.10.7"
   },
   "heroku-run-build-script": true,
   "author": "",
