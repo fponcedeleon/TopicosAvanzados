@@ -32,14 +32,14 @@ workflows:
       - build-prod:
           filters:
               requires:
-                  - cypress/run
+                - cypress/run
               branches:
                   only: 
                     - master
       - build-dev:
           filters:
               requires:
-                  - cypress/run
+                - cypress/run
               branches:
                   only: 
                     - /release\/.*/
@@ -47,7 +47,7 @@ workflows:
           app-name: ${HEROKU_APP_NAME}
           filters:
               requires:
-                  - cypress/run
+                - cypress/run
               branches:
                   only: 
                     - master
@@ -55,7 +55,7 @@ workflows:
           app-name: ${HEROKU_APP_NAME_DEV}
           filters:
               requires:
-                  - cypress/run
+                - cypress/run
               branches:
                   only: 
                     - /release\/.*/
