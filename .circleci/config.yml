@@ -4,7 +4,13 @@ orbs:
   cypress: cypress-io/cypress@1
   heroku: circleci/heroku@0.0.10
 jobs:
-  build:
+  build-dev:
+    docker: 
+      - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
+    steps:
+      - checkout # check out the code in the project directory
+      - run: curl -X POST -d {} ${hookDEV} # run the `echo` command
+  build-prod:
     docker: 
       - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
     steps:
@@ -19,9 +25,26 @@ jobs:
   #       name: Deploy
   #       command: curl -X POST -d {} ${hook}
 workflows:
-  node-tests:
+  deployment-workflow:
     jobs:
       - cypress/run:
           start: 'npm run cypress:open'
-      - build
-      - heroku/deploy-via-git
+      - build-prod:
+          filter:
+              branches:
+                  only: master
+      - build-dev:
+          filter:
+              branches:
+                  only: /release\/*
+      - heroku/deploy-via-git:
+          app-name: ${HEROKU_APP_NAME}
+          filter:
+              branches:
+                  only: master
+      - heroku/deploy-via-git:
+          app-name: ${HEROKU_APP_NAME_DEV}
+          filter:
+              branches:
+                  only: /release\/*
+            
