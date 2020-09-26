@@ -38,7 +38,7 @@ workflows:
           filters:
               branches:
                   only: 
-                    - /release\/*
+                    - /release\/.*/
       - heroku/deploy-via-git:
           app-name: ${HEROKU_APP_NAME}
           filters:
@@ -50,5 +50,5 @@ workflows:
           filters:
               branches:
                   only: 
-                    - /release\/*
+                    - /release\/.*/
             
