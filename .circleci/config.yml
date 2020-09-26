@@ -30,32 +30,32 @@ workflows:
       - cypress/run:
           start: 'npm run cypress:open'
       - build-prod:
+          requires:
+              - cypress/run
           filters:
-              requires:
-                - cypress/run
               branches:
                   only: 
                     - master
       - build-dev:
+          requires:
+              - cypress/run
           filters:
-              requires:
-                - cypress/run
               branches:
                   only: 
                     - /release\/.*/
       - heroku/deploy-via-git:
           app-name: ${HEROKU_APP_NAME}
+          requires:
+              - cypress/run
           filters:
-              requires:
-                - cypress/run
               branches:
                   only: 
                     - master
       - heroku/deploy-via-git:
           app-name: ${HEROKU_APP_NAME_DEV}
+          requires:
+              - cypress/run
           filters:
-              requires:
-                - cypress/run
               branches:
                   only: 
                     - /release\/.*/
