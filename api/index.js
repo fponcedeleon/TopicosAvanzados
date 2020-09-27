@@ -1,11 +1,16 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const http = require('http');
 const Hapi = require('@hapi/hapi');
 const routes = require('./routes');
+const connectors = require('./connectors');
 
 const init = async () => {
   const server = Hapi.server({
-    port: process.env.PORT || '8080',
-    host: process.env.HOST || '0.0.0.0',
+    port: process.env.PORT,
+    host: process.env.HOST,
     routes: {
       cors: {origin: ['*'], credentials: true}
     }
@@ -17,9 +22,7 @@ const init = async () => {
     }
   };
 
-  console.log(`listening on port ${server.port} and host ${server.host}`)
-  await server.register([routes]);
-
+  await server.register([connectors, routes]);
 
   await server.start();
 };
