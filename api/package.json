@@ -11,7 +11,9 @@
     "@hapi/hapi": "^18.3.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.1.0",
+    "hapi-auth-jwt2": "^10.2.0",
     "hapi-cors": "^1.0.3",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7"
   },
   "heroku-run-build-script": true,
