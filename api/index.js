@@ -22,7 +22,7 @@ const init = async () => {
     }
   };
 
-  await createUser();
+  // await createUser();
 
   await server.register([connectors, jwtAuth, routes]);
 
