@@ -1,5 +1,6 @@
 {
   "name": "topicosavanzados",
+  "proxy":"http://localhost:27017",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
