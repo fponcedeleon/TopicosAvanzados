@@ -1,14 +1,10 @@
 import { post, get, put, deleteApi } from "../utils/api.js";
-import { removePostId } from "../utils/session.js";
+//import { removePostId } from "../utils/session.js";
 
-// const baseUrl =
-//   window.location.hostname === '169.254.175.166'
-//     ? 'http://localhost:3000'
-//     : 'https://limitless-everglades-76624.herokuapp.com';
 const baseUrl =
   window.location.hostname === "localhost"
-    ? "http://localhost:8000"
-    : "http://localhost:8000"; //ACA VA HEROKU CUANDO ESTE ANDANDO
+    ? "http://localhost:8080"
+    : "http://localhost:8080"; //ACA VA HEROKU CUANDO ESTE ANDANDO
 
 export const createNewElection = async (
   createdBy,
