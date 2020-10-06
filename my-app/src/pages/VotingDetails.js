@@ -8,7 +8,15 @@ function VotingDetails(props) {
         <div className="details-middle">
             <div> 
                  <label>Nombre</label>
-                 <input type="text" class="form-control" aria-describedby="emailHelp" placeholder={election.name} />
+                 <input type="text" class="form-control" aria-describedby="emailHelp" value={election.name} />
+            </div>
+            <div> 
+                 <label>Descripcion</label>
+                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value={election.description}></textarea>
+            </div>
+            <div> 
+                 <label>Plazo</label>
+                 <input class="form-control" type="date" value="2020-12-31" id="example-date-input" />
             </div>
         </div>
         </div>
