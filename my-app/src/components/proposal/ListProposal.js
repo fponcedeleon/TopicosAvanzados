@@ -5,6 +5,7 @@ import data from '../../data.js';
 
 export class ListProposal extends Component
 {    
+    
 render()
     {  
         const propouse =  this.props.propouse.propouseParam

@@ -5,31 +5,31 @@ import {OpenProposal} from "../components/proposal/OpenProposal";
 import {ListProposal} from "../components/proposal/ListProposal";
 import Container from '@material-ui/core/Container'
 
+
+
 function VotingDetails(props) {  
     const election = data.election.find(x => x.id == props.match.params.id)
     const propouse = data.propouses.filter(x => x.electionId == election.id)
  
-    function ShowProposal(propouseParam)
+    const [propouses , setPropouse] = useState(
+        data.propouses.filter(x => x.electionId == election.id)
+    )
+     
+    function ShowProposal(propouseParam, functionParam)
     {
+        console.log(propouseParam)
         switch (propouseParam.type) {
-            case 1: return <OpenProposal propouse={{propouseParam}} funcionGetValue={GetValueOfOpen}/> 
-            case 2: return <ListProposal propouse={{propouseParam}} funcionGetValue={GetValueOfList}/>
+            case 1: return <OpenProposal propouse={{propouseParam}} funcionGetValue={functionParam}/> 
+            case 2: return <ListProposal propouse={{propouseParam}} funcionGetValue={functionParam}/>
             default: return <OpenProposal/>
         }
     }
 
-
-    function GetValueOfList(values)
-    {
-        console.log(values.target.value)
-        console.log(values.target.getAttribute("data-attrId"))
-    }
-
-    function GetValueOfOpen(values)
-    { 
-        console.log(values.target.value)
-        console.log(values.target.getAttribute("data-attrId"))
-    }
+    const GetValueOfOpen = (index, event) => {
+        const values = [...propouses];
+        values[index][event.target.name] = event.target.value;
+        setPropouse(values);
+    } 
 
     return <Container>
         <form>
@@ -52,13 +52,12 @@ function VotingDetails(props) {
                         <input readOnly="true" class="form-control" type="date" value="2020-12-31" id="example-date-input" />
                     </div> 
                     
-                    {propouse.map(p =>
-                       <div>{ShowProposal(p)}  </div>
+                    {propouses.map((p, index) => 
+                       <div>{ShowProposal(p, event => GetValueOfOpen(index, event))}  </div>
                     )}
- 
 
                     <div className="custom-row"> 
-                        <button type="button" class="form-control">Enviar Respuesta</button>
+                        <button type="button" class="form-control" onClick="EnviarDatos">Enviar Respuesta</button>
                     </div>
                     
                 </div>
