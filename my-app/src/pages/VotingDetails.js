@@ -9,18 +9,26 @@ function VotingDetails(props) {
     const election = data.election.find(x => x.id == props.match.params.id)
     const propouse = data.propouses.filter(x => x.electionId == election.id)
  
-    function ShowProposal(propouseParam, funcionHola)
+    function ShowProposal(propouseParam)
     {
         switch (propouseParam.type) {
-            case 1: return <OpenProposal propouse={{propouseParam}}/> 
-            case 2: return <ListProposal propouse={{propouseParam}}/> 
+            case 1: return <OpenProposal propouse={{propouseParam}} funcionGetValue={GetValueOfOpen}/> 
+            case 2: return <ListProposal propouse={{propouseParam}} funcionGetValue={GetValueOfList}/>
             default: return <OpenProposal/>
         }
     }
 
-    function HolaMundo()
+
+    function GetValueOfList(values)
     {
-        console.log("hola mundo")
+        console.log(values.target.value)
+        console.log(values.target.getAttribute("data-attrId"))
+    }
+
+    function GetValueOfOpen(values)
+    { 
+        console.log(values.target.value)
+        console.log(values.target.getAttribute("data-attrId"))
     }
 
     return <Container>
@@ -45,7 +53,7 @@ function VotingDetails(props) {
                     </div> 
                     
                     {propouse.map(p =>
-                       <div>{ShowProposal(p, HolaMundo)}  </div>
+                       <div>{ShowProposal(p)}  </div>
                     )}
  
 

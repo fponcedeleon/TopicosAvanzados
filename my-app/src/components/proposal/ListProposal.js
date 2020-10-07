@@ -9,13 +9,12 @@ render()
     {  
         const propouse =  this.props.propouse.propouseParam
         const options =  data.opciones.filter(x => x.idPropouse == propouse.id)
-        console.log(propouse)
-        console.log(propouse)
-        console.log(data.opciones)
+        const funcionRetorno = this.props.funcionGetValue
+
         return <div className="custom-row" >
         <div>{propouse.name}</div>
         <div className="custom-row" >
-            <select class="form-control">  
+            <select class="form-control" data-attrId={propouse.id} onChange={funcionRetorno.bind(this)}>  
                 {options.map(option => 
                     <option>{option.valor}</option> 
                     )}
