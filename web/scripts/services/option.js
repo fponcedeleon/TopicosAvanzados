@@ -23,11 +23,27 @@ export const createNewOption = async (proposalId, name) => {
 };
 
 export const getAllProposalOptions = async () => {
-  const { data: options } = await get(`${baseUrl}/options/byProposal/${proposalId}`); //IMPLEMENTAR RUTA EN API
+  const { data: options } = await get(
+    `${baseUrl}/options/byProposal/${proposalId}`
+  ); //IMPLEMENTAR RUTA EN API
   return options;
 };
 
 export const getOneOption = async (optionId) => {
   const { data: option } = await get(`${baseUrl}/options/${optionId}`);
+  return option;
+};
+
+export const voteOption = async (optionId, userId) => {
+  const optAux = getOneOption(optionId);
+  const nameAux = optAux.name;
+  const arrAux = optAux.votants;
+  if (arrAux.indexOf(userId) < 0) {
+    arrAux.push(userId);
+  }
+  const { data: option } = await put(`${baseUrl}/options/${optionId}`, {
+    name: nameAux,
+    votants: arrAux,
+  });
   return option;
 };
