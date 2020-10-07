@@ -27,8 +27,8 @@ export const createNewProposal = async (
   return proposal;
 };
 
-export const getAllProposals = async () => {
-  const { data: proposals } = await get(`${baseUrl}/proposals`); //IMPLEMENTAR RUTA EN API
+export const getAllElectionProposals = async () => {
+  const { data: proposals } = await get(`${baseUrl}/proposals/byElection/${electionId}`); //IMPLEMENTAR RUTA EN API
   return proposals;
 };
 
