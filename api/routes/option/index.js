@@ -7,6 +7,11 @@ module.exports = [
     config: config.getOptionById,
   },
   {
+    method: 'GET',
+    path: '/options/byProposal/{id}',
+    config: config.getOptionsByProposal,
+  },
+  {
     method: 'POST',
     path: '/options',
     config: config.create,

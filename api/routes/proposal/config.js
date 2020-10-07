@@ -8,6 +8,11 @@ module.exports = {
     // description: 'Returns a list of activities. No required query params, but if given, will filter the search',
     handler: handlers.getProposalById
   },
+  getProposalsByElection: {
+    // validate: validations.getByCriteria,
+    // description: 'Returns a list of activities. No required query params, but if given, will filter the search',
+    handler: handlers.getProposalsByElection
+  },
   create: {
     // auth: process.env.JWT_PROTOCOL,
     // validate: validations.create,
