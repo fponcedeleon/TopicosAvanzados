@@ -83,23 +83,25 @@ function VotingDetails(props) {
 
     console.log(event.target.value);
     console.log(id);
-    
+
     selectedOptions[id] = event.target.value;
     console.log(selectedOptions[id]);
   }
 
   const handleSubmit = () => {
 
-    for (const key in selectedOptions) {
-      console.log('optionid' + selectedOptions[key]);
-      voteOption(selectedOptions[key], '5f766c4c5c33392600cc824e').then();
-    }
+    if (window.confirm("Confirma las opciones votadas?")) {
+      for (const key in selectedOptions) {
+        console.log('optionid' + selectedOptions[key]);
+        voteOption(selectedOptions[key], '5f766c4c5c33392600cc824e').then();
+      }
 
-    alert('Has votado correctamente.');
+      alert('Has votado correctamente.');
+    }
   }
 
   return <Container>
-    <form onSubmit={handleSubmit} >
+    <form >
       <div className="voting-Details">
         <div className="row">
           <div className="details-middle">
@@ -112,7 +114,7 @@ function VotingDetails(props) {
 
             {proposals.map((p, index) =>
               <div>
-                <ListProposal proposalName={p.name} proposalId={p._id} funcionGetValue={GetValueOfOpen()} handleChange={handleChange}/>
+                <ListProposal proposalName={p.name} proposalId={p._id} funcionGetValue={GetValueOfOpen()} handleChange={handleChange} />
               </div>
             )}
 
@@ -126,7 +128,7 @@ function VotingDetails(props) {
             )} */}
 
             <div className="custom-row">
-              <button type="submit" class="form-control">Enviar Respuesta</button>
+              <button type="button" onClick={handleSubmit} class="form-control">Enviar Respuesta</button>
             </div>
           </div>
         </div>
