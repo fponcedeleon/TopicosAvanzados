@@ -3,27 +3,27 @@ const config = require("./config");
 module.exports = [
   {
     method: "GET",
-    path: "/options/{id}",
-    config: config.getOptionById,
+    path: "/proposals/{id}",
+    config: config.getProposalById,
   },
   {
-    method: "GET",
-    path: "/options/byProposal",
-    config: config.getOptionsByProposal,
+    method: 'GET',
+    path: '/proposals/byElection/',
+    config: config.getProposalsByElection,
   },
   {
     method: "POST",
-    path: "/options",
+    path: "/proposals",
     config: config.create,
   },
   {
     method: "PUT",
-    path: "/options/{id}",
+    path: "/proposals/{id}",
     config: config.update,
   },
   {
     method: "DELETE",
-    path: "/options/{id}",
+    path: "/proposals/{id}",
     config: config.deleteOne,
   },
 ];
