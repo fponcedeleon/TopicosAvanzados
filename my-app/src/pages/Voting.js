@@ -4,7 +4,7 @@ import '../App.css';
 import '../constants/apiRoutes';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; 
 import axios from "axios";
-import {useSelector, useDispatch} from "react-redux";
+// import {useSelector, useDispatch} from "react-redux";
 import { ListProposal } from '../components/proposal/ListProposal';
 import { listElections } from '../actions/electionActions';
 
@@ -12,11 +12,12 @@ import { listElections } from '../actions/electionActions';
 export default function VotingPage() {
   
   const [elections, setElection] = useState([])
-  const electionList = useSelector(state => state.electionList); 
+  // const electionList = useSelector(state => state.electionList); 
+  const electionList = listElections();
   const {election, loading, error} = electionList;
    
   useEffect(() =>{
-      dispatch(listElections);
+      // dispatch(listElections);
       return () =>{
 
       };
