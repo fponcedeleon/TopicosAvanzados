@@ -1,6 +1,8 @@
 import React from "react";
 import "../App.css";
 import { createNewElection } from "../scripts/services/election.js";
+import { createNewProposal } from "../scripts/services/proposal.js";
+import { createNewOption } from "../scripts/services/option.js";
 
 export default function Services() {
   const handleSumbit = async (event) => {
@@ -11,8 +13,12 @@ export default function Services() {
     const maxAge = event.target.maxAge.value;
     const city = event.target.city.value;
     const country = event.target.country.value;
+    const name = event.target.proposalName.value;
+    const description = event.target.proposalDescription.value;
+    const opt1 = event.target.optionOne.value;
+    const opt2 = event.target.optionTwo.value;
 
-    await createNewElection(
+    const election = await createNewElection(
       "",
       startDate,
       endDate,
@@ -21,6 +27,16 @@ export default function Services() {
       city,
       country
     );
+
+    const proposal = await createNewProposal(
+      election.data.id,
+      name,
+      description
+    );
+    const propId = proposal.data.id;
+
+    await createNewOption(propId, opt1);
+    await createNewOption(propId, opt2);
   };
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
@@ -87,6 +103,40 @@ export default function Services() {
           placeholder="Pais"
           name="country"
           id="country"
+        ></input>
+
+        <hr></hr>
+        <label for="proposal">
+          <b>Propuesta</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Propuesta"
+          name="proposalName"
+          id="proposalName"
+        ></input>
+        <input
+          type="text"
+          placeholder="Descripcion"
+          name="proposalDescription"
+          id="proposalDescription"
+        ></input>
+
+        <hr></hr>
+        <label for="options">
+          <b>Opciones</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Opcion 1"
+          name="optionOne"
+          id="optionOne"
+        ></input>
+        <input
+          type="text"
+          placeholder="Opcion 2"
+          name="optionTwo"
+          id="optionTwo"
         ></input>
 
         <hr></hr>

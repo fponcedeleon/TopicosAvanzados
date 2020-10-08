@@ -8,7 +8,7 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/proposals/byElection/',
+    path: '/proposals/byElection',
     config: config.getProposalsByElection,
   },
   {

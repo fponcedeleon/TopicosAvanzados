@@ -3,8 +3,8 @@ import { post, get, put, deleteApi } from "../utils/api.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
-    ? process.env.LOCAL_URL
-    : process.env.URL; //ACA VA HEROKU CUANDO ESTE ANDANDO
+    ? "http://localhost:8080"
+    : "http://localhost:8080"; //ACA VA HEROKU CUANDO ESTE ANDANDO
 
 export const createNewProposal = async (electionId, name, description) => {
   const { data: proposal, error } = await post(`${baseUrl}/proposals`, {
@@ -23,7 +23,7 @@ export const createNewProposal = async (electionId, name, description) => {
   return proposal;
 };
 
-export const getAllElectionProposals = async () => {
+export const getAllElectionProposals = async (electionId) => {
   const { data: proposals } = await get(
     `${baseUrl}/proposals/byElection?id=${electionId}`
   );
