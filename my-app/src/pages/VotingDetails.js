@@ -17,7 +17,6 @@ function VotingDetails(props) {
      
     function ShowProposal(propouseParam, functionParam)
     {
-        console.log(propouseParam)
         switch (propouseParam.type) {
             case 1: return <OpenProposal propouse={{propouseParam}} funcionGetValue={functionParam}/> 
             case 2: return <ListProposal propouse={{propouseParam}} funcionGetValue={functionParam}/>
