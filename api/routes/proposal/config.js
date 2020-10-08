@@ -3,7 +3,7 @@ const handlers = require('./handlers');
 
 module.exports = {
   getProposalById: {
-    auth: false,
+    //auth: false,
     // validate: validations.getByCriteria,
     // description: 'Returns a list of activities. No required query params, but if given, will filter the search',
     handler: handlers.getProposalById
@@ -20,13 +20,13 @@ module.exports = {
     handler: handlers.create
   },
   update: {
-    auth: process.env.JWT_PROTOCOL,
+    //auth: process.env.JWT_PROTOCOL,
     // validate: validations.update,
     // description: 'Updates the activity given the params. The id is required to get the activity to update',
     handler: handlers.update
   },
   deleteOne: {
-    auth: process.env.JWT_PROTOCOL,
+    //auth: process.env.JWT_PROTOCOL,
     // validate: validations.deleteOne,
     // description: 'Deletes the activity given the (required) id',
     handler: handlers.deleteOne

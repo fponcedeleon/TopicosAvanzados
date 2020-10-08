@@ -16,8 +16,8 @@ const getOptionById = async ({ params }) => {
     });
 };
 
-const getOptionsByProposal = async ({ params }) => {
-  return await Option.find({ proposalId: params.proposalId })
+const getOptionsByProposal = async ({ query }) => {
+  return await Option.find({ proposalId: query.id })
     .populate("optionId", ["name"])
     .exec()
     .then((results) => {
