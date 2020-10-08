@@ -17,6 +17,7 @@ export default function Services() {
     const description = event.target.proposalDescription.value;
     const opt1 = event.target.optionOne.value;
     const opt2 = event.target.optionTwo.value;
+    const nameEl = event.target.nameEl.value;
 
     const election = await createNewElection(
       "",
@@ -25,7 +26,8 @@ export default function Services() {
       minAge,
       maxAge,
       city,
-      country
+      country,
+      nameEl,
     );
 
     const proposal = await createNewProposal(
@@ -43,6 +45,17 @@ export default function Services() {
       <div class="container">
         <h1 className="election">Eleccion</h1>
         <p>Llene este formulario para crear una eleccion.</p>
+        <label for="startDate">
+          <b>Nombre*</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Eleccion 1"
+          name="nameEl"
+          id="nameEl"
+          required
+        ></input>
+        <hr></hr>
         <label for="startDate">
           <b>Comienzo*</b>
         </label>

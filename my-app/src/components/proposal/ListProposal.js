@@ -1,26 +1,76 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
+import React, { Component, useEffect, useState } from 'react';
+import { render } from 'react-dom';
 import '../../index.css';
-import data from '../../data.js'; 
+// import data from '../../data.js'; 
+import { getAllProposalOptions } from "../../scripts/services/option";
 
-export class ListProposal extends Component
-{    
+
+
+
+export class ListProposal extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
+
+  componentDidMount() {
+    const id = this.props.proposalId;
+    getAllProposalOptions(id)
+        .then(
+          (result) => {
+            console.log(result);
+            this.setState({
+              data: result
+            });
+            // setData(result);
+          },
+          // Nota: es importante manejar errores aquí y no en 
+          // un bloque catch() para que no interceptemos errores
+          // de errores reales en los componentes.
+          (error) => {
+            console.log(error);
+          }
+        )
+  }
+
+  render() {
+    console.log(this.state.data);
+    // const [data, setData] = useState([]);
+    // let data = [];
+      const id = this.props.proposalId;
+      // console.log('id' + id);
+      // getAllProposalOptions(id)
+      //   .then(
+      //     (result) => {
+      //       console.log(result);
+      //       data = result;
+      //       // setData(result);
+      //     },
+      //     // Nota: es importante manejar errores aquí y no en 
+      //     // un bloque catch() para que no interceptemos errores
+      //     // de errores reales en los componentes.
+      //     (error) => {
+      //       console.log(error);
+      //     }
+      //   )
     
-render()
-    {  
-        const propouse =  this.props.propouse.propouseParam
-        const options =  data.opciones.filter(x => x.idPropouse == propouse.id)
-        const funcionRetorno = this.props.funcionGetValue
 
-        return <div className="custom-row" >
-        <div>{propouse.name}</div>
-        <div className="custom-row" >
-            <select class="form-control" data-attrId={propouse.id} onChange={funcionRetorno.bind(this)}>  
-                {options.map(option => 
-                    <option>{option.valor}</option> 
-                    )}
-            </select> 
-        </div> 
-    </div> 
-    }
+    const name = this.props.proposalName
+    // const funcionRetorno = this.props.funcionGetValue
+    // const options = data.opciones.filter(x => x.idPropouse == propouse.id)
+    return <div className="custom-row" >
+      <div>{name}</div>
+      <div className="custom-row" >
+        <select class="form-control" data-attrId={id} onChange={(event) => console.log(event.currentTarget)} >
+          {this.state.data.map(option => { 
+            console.log(option);
+            return <option>{option.name}</option>}
+          )}
+        </select>
+      </div>
+    </div>
+  }
 }

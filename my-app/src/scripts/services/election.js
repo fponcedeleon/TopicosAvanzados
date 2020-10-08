@@ -13,7 +13,8 @@ export const createNewElection = async (
   minAge,
   maxAge,
   city,
-  country
+  country,
+  name
 ) => {
   const { data: election, error } = await post(`${baseUrl}/elections`, {
     createdBy,
@@ -23,6 +24,7 @@ export const createNewElection = async (
     maxAge,
     city,
     country,
+    name
   });
   if (error) {
     if (error.status === 409) {
@@ -37,6 +39,7 @@ export const createNewElection = async (
 
 export const getAllElections = async () => {
   const { data: elections } = await get(`${baseUrl}/elections`); //IMPLEMENTAR RUTA EN API
+  console.log(elections);
   return elections;
 };
 
