@@ -2,12 +2,13 @@ const Election = require("../../models/election");
 const User = require("../../models/user");
 
 const getElectionModel = async (
-  { createdBy, startDate, endDate, minAge, maxAge, city, country },
+  { createdBy, name, startDate, endDate, minAge, maxAge, city, country },
   { credentials }
 ) => {
   const randomUser = await User.find({}).then((r) => r);
   return new Election({
     createdBy: randomUser[0]._id, //credentials.id,
+    name: name,
     startDate: startDate,
     endDate: endDate,
     minAge: minAge,
@@ -21,6 +22,7 @@ const getElectionModel = async (
 const parseElection = ({
   _id,
   createdBy,
+  name,
   country,
   city,
   startDate,
@@ -32,6 +34,7 @@ const parseElection = ({
   return {
     id: _id || undefined,
     createdBy: createdBy,
+    name: name,
     country: country,
     city: city,
     startDate: startDate,
