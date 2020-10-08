@@ -27,10 +27,10 @@ function Navbar() {
   return (
     <>
       <nav className='navbar'>
-        <div className='navbar-container'> 
+        <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-            TAS
-            <i class='fab fa-typo3' />
+            TRVL
+            <i className='fab fa-typo3' />
           </Link>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -43,7 +43,7 @@ function Navbar() {
             </li>
             <li className='nav-item'>
               <Link
-                to='/services'
+                to='/voting'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
@@ -52,14 +52,15 @@ function Navbar() {
             </li>
             <li className='nav-item'>
               <Link
-                to='/products'
+                to='/election'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
                 Eleccion
               </Link>
             </li>
-          </ul> 
+          </ul>
+          {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
         </div>
       </nav>
     </>

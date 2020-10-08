@@ -2,14 +2,16 @@ const handlers = require('./handlers');
 // const validations = require('./validations');
 
 module.exports = {
-  getElectionById: {
+  getProposalById: {
     //auth: false,
     // validate: validations.getByCriteria,
     // description: 'Returns a list of activities. No required query params, but if given, will filter the search',
-    handler: handlers.getElectionById
+    handler: handlers.getProposalById
   },
-  getAll: {
-    handler: handlers.getAll
+  getProposalsByElection: {
+    // validate: validations.getByCriteria,
+    // description: 'Returns a list of activities. No required query params, but if given, will filter the search',
+    handler: handlers.getProposalsByElection
   },
   create: {
     // auth: process.env.JWT_PROTOCOL,

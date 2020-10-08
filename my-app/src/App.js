@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+import Navbar from './components/Navbar';
+import Election from './pages/Election';
+import Voting from './pages/Voting';
+import Home from './pages/Home'; 
+import { BrowserRouter as Router, Switch, Route, BrowserRouter } from 'react-router-dom'; 
 import './App.css';
+import VotingDetails from './pages/VotingDetails';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-          @Fede is here!
-        </a>
-      </header>
-    </div>
+    <BrowserRouter> 
+      <Navbar /> 
+      <Route path='/' exact component={Home} />
+      <Route path='/election' component={Election} />
+      <Route path='/voting' component={Voting} />
+      <Route path='/votingdetails/:id' component={VotingDetails} /> 
+  </BrowserRouter>
   );
 }
 
