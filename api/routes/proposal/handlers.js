@@ -16,8 +16,8 @@ const getProposalById = async ({ params }) => {
     });
 };
 
-const getProposalsByElection = async ({ params }) => {
-  return await Proposal.find({ electionId: params.electionId })
+const getProposalsByElection = async ({ query }) => {
+  return await Proposal.find({ electionId: query.id })
     .populate("proposalId", ["name"])
     .exec()
     .then((results) => {

@@ -3,8 +3,8 @@ import { post, get, put, deleteApi } from "../utils/api.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "http://localhost:8080"; //ACA VA HEROKU CUANDO ESTE ANDANDO
+    ? process.env.LOCAL_URL
+    : process.env.URL; //ACA VA HEROKU CUANDO ESTE ANDANDO
 
 export const createNewOption = async (proposalId, name) => {
   const { data: option, error } = await post(`${baseUrl}/options`, {
@@ -24,8 +24,8 @@ export const createNewOption = async (proposalId, name) => {
 
 export const getAllProposalOptions = async () => {
   const { data: options } = await get(
-    `${baseUrl}/options/byProposal/${proposalId}`
-  ); //IMPLEMENTAR RUTA EN API
+    `${baseUrl}/options/byProposal?id=${proposalId}`
+  );
   return options;
 };
 
