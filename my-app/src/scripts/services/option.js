@@ -35,7 +35,7 @@ export const getOneOption = async (optionId) => {
 };
 
 export const voteOption = async (optionId, userId) => {
-  const optAux = getOneOption(optionId);
+  const optAux = await getOneOption(optionId);
   const nameAux = optAux.name;
   const arrAux = optAux.votants;
   if (arrAux.indexOf(userId) < 0) {

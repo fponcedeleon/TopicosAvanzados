@@ -25,6 +25,8 @@ export class ListProposal extends Component {
             this.setState({
               data: result
             });
+
+            // this.props.handleChange()
             // setData(result);
           },
           // Nota: es importante manejar errores aquí y no en 
@@ -64,10 +66,10 @@ export class ListProposal extends Component {
     return <div className="custom-row" >
       <div>{name}</div>
       <div className="custom-row" >
-        <select class="form-control" data-attrId={id} onChange={(event) => console.log(event.currentTarget)} >
+        <select class="form-control" data-attrId={id} onChange={(event) => this.props.handleChange(event, id)} >
           {this.state.data.map(option => { 
             console.log(option);
-            return <option>{option.name}</option>}
+            return <option value={option._id} >{option.name}</option>}
           )}
         </select>
       </div>

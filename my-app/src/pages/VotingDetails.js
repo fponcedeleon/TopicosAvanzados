@@ -6,10 +6,13 @@ import Container from '@material-ui/core/Container'
 import { getAllElectionProposals } from "../scripts/services/proposal";
 import { getOnePost } from "../scripts/services/election";
 import { voteOption } from "../scripts/services/option";
+import { useHistory } from 'react-router-dom';
 
 
 
 function VotingDetails(props) {
+
+  let selectedOptions = {};
 
   const [election, setElection] = useState({});
   const [proposals, setProposals] = useState([]);
@@ -42,6 +45,10 @@ function VotingDetails(props) {
         console.log(error);
       }
     )
+    // proposals.forEach(p => {
+    //   const idP = p._id;
+    //   selectedOptions[idP] = 
+    // })
   }, [])
 
   // const election = data.election.find(x => x.id == props.match.params.id)
@@ -52,6 +59,7 @@ function VotingDetails(props) {
   // )
 
   function ShowProposal(propouseParam, functionParam) {
+    const history = useHistory();
     return <div></div>//<ListProposal propouse={{ propouseParam }} funcionGetValue={functionParam} />
     // switch (propouseParam.type) {
     //   case 1: return <OpenProposal propouse={{ propouseParam }} funcionGetValue={functionParam} />
@@ -71,16 +79,27 @@ function VotingDetails(props) {
     return <div></div>;
   }
 
-  const handleChange = (event) => {
-    console.log(event);
+  const handleChange = (event, id) => {
+
+    console.log(event.target.value);
+    console.log(id);
+    
+    selectedOptions[id] = event.target.value;
+    console.log(selectedOptions[id]);
   }
 
   const handleSubmit = () => {
-    voteOption()
+
+    for (const key in selectedOptions) {
+      console.log('optionid' + selectedOptions[key]);
+      voteOption(selectedOptions[key], '5f766c4c5c33392600cc824e').then();
+    }
+
+    alert('Has votado correctamente.');
   }
 
   return <Container>
-    <form onsubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} >
       <div className="voting-Details">
         <div className="row">
           <div className="details-middle">

@@ -35,6 +35,7 @@ const fetch = async (url, method, data) => {
     return { error: { status: response.status } };
   }
 
+  console.log(response);
   return { data: await response.json() };
 };
 
