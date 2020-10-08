@@ -15,21 +15,9 @@ election: [
 ],
 propouses:[
   {
-    id: 1,
-    type: 1,
-    name: 'Justifique por que Wanders es el mejor cuadro uruguayo',
-    electionId: 1
-  },
-  {
     id: 2,
     type: 2,
     name: 'Quien es el mejor cuadro actual del futbol uruguayo',
-    electionId: 1
-  },
-  {
-    id: 3,
-    type: 1,
-    name: 'Que cualidades tiene el equipo al que eligio',
     electionId: 1
   },
   {

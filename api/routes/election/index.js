@@ -7,6 +7,11 @@ module.exports = [
     config: config.getElectionById,
   },
   {
+    method: 'GET',
+    path: '/elections',
+    config: config.getAll,
+  },
+  {
     method: 'POST',
     path: '/elections',
     config: config.create,

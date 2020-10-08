@@ -2,7 +2,7 @@ const Election = require("../../models/election");
 const User = require("../../models/user");
 
 const getElectionModel = async (
-  { startDate, endDate, minAge, maxAge, city, country },
+  { createdBy, startDate, endDate, minAge, maxAge, city, country },
   { credentials }
 ) => {
   const randomUser = await User.find({}).then((r) => r);

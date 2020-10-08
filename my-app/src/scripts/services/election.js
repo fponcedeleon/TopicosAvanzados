@@ -3,14 +3,13 @@ import { post, get, put, deleteApi } from "../utils/api.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
-    ? process.env.LOCAL_URL
-    : process.env.URL; //ACA VA HEROKU CUANDO ESTE ANDANDO
+    ? "http://localhost:8080"
+    : "http://localhost:8080"; //ACA VA HEROKU CUANDO ESTE ANDANDO
 
 export const createNewElection = async (
   createdBy,
   startDate,
   endDate,
-  isActive,
   minAge,
   maxAge,
   city,
@@ -20,7 +19,6 @@ export const createNewElection = async (
     createdBy,
     startDate,
     endDate,
-    isActive,
     minAge,
     maxAge,
     city,

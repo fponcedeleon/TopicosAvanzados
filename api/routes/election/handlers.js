@@ -16,8 +16,13 @@ const getElectionById = async ({ params }) => {
     });
 };
 
+const getAll = async () => {
+  return await Election.find({});
+}
+
 const create = async ({ payload, auth }) => {
   const electionToInsert = await helper.getElectionModel(payload, auth);
+  console.log(electionToInsert)
   return await electionToInsert
     .save()
     .then((result) => {
@@ -63,6 +68,7 @@ const deleteOne = async ({ params }) => {
 
 module.exports = {
   getElectionById,
+  getAll,
   create,
   update,
   deleteOne,
