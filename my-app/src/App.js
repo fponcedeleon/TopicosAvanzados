@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Election from './pages/Election';
 import Voting from './pages/Voting';
 import Home from './pages/Home'; 
-import { BrowserRouter as Router, Switch, Route, BrowserRouter } from 'react-router-dom'; 
+import { BrowserRouter as Route, BrowserRouter } from 'react-router-dom'; 
 import './App.css';
 import VotingDetails from './pages/VotingDetails';
 
