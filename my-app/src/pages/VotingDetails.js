@@ -14,7 +14,8 @@ function VotingDetails(props) {
   const [proposals, setProposals] = useState([]);
 
   useEffect(() => {
-    getOnePost(props.match.params.id)
+    const electionId = props.match.params.id;
+    getOnePost(electionId)
       .then(
         (result) => {
           console.log(result);
@@ -27,7 +28,7 @@ function VotingDetails(props) {
           console.log(error);
         }
       )
-    getAllElectionProposals(props.match.params.id).then(
+    getAllElectionProposals(electionId).then(
       (result) => {
         console.log(result);
         setProposals(result);
@@ -43,7 +44,7 @@ function VotingDetails(props) {
     //   const idP = p._id;
     //   selectedOptions[idP] = 
     // })
-  }, [])
+  }, [electionId])
 
   // const election = data.election.find(x => x.id == props.match.params.id)
   // const propouse = data.propouses.filter(x => x.electionId == election.id)
