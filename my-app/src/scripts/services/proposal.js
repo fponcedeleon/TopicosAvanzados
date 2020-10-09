@@ -1,4 +1,4 @@
-import { post, get, put, deleteApi } from "../utils/api.js";
+import { post, get } from "../utils/api.js";
 //import { removePostId } from "../utils/session.js";
 
 const baseUrl =
