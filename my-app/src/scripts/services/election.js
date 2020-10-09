@@ -2,9 +2,9 @@ import { post, get } from "../utils/api.js";
 //import { removePostId } from "../utils/session.js";
 
 const baseUrl =
-  window.location.hostname === "localhost"
+  window.location.hostname === "localho"
     ? "http://localhost:8080"
-    : "https://topicossw-test.herokuapp.com/";
+    : "https://topicossw.herokuapp.com";
 
 export const createNewElection = async (
   createdBy,
