@@ -2,7 +2,7 @@ import { post, get } from "../utils/api.js";
 //import { removePostId } from "../utils/session.js";
 
 const baseUrl =
-  window.location.hostname === "localho"
+  window.location.hostname === "localhost"
     ? "http://localhost:8080"
     : "https://topicossw.herokuapp.com";
 
