@@ -15,8 +15,8 @@ function VotingDetails(props) {
   const [election, setElection] = useState({});
   const [proposals, setProposals] = useState([]);
 
+  const electionId = props.match.params.id;
   useEffect(() => {
-    const electionId = props.match.params.id;
     console.log(electionId);
     getOnePost(electionId)
       .then(
