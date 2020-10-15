@@ -6,6 +6,7 @@ const Hapi = require('@hapi/hapi');
 const routes = require('./routes');
 const jwtAuth = require('./auth/jwt');
 const connectors = require('./connectors');
+const { task } = require('./helpers/schedule');
 
 const init = async () => {
   const server = Hapi.server({
@@ -23,12 +24,12 @@ const init = async () => {
   // };
 
   //await createUser();
+  task.task();
 
   await server.register([connectors, jwtAuth, routes]);
 
   await server.start();
 };
-
 const User = require('./models/user');
 const createUser = () => {
   const user = new User({
