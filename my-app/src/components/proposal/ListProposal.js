@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { render } from 'react-dom';
 import '../../index.css';
 // import data from '../../data.js'; 
 import { getAllProposalOptions } from "../../scripts/services/option";

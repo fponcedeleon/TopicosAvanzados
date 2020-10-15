@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import '../App.css';
-// import data from '../data.js';
 import { getAllElections } from "../scripts/services/election";
 
 export default function VotingPage() {
