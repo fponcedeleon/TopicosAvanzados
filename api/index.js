@@ -15,16 +15,16 @@ const init = async () => {
       cors: {origin: ['*'], credentials: true}
     }
   });
-  const cors = {
-    plugin: require('hapi-cors'),
-    options: {
-        origins: ['*']
-    }
-  };
+  // const cors = {
+  //   plugin: require('hapi-cors'),
+  //   options: {
+  //       origins: ['*']
+  //   }
+  // };
 
   //await createUser();
 
-  await server.register([cors, connectors, jwtAuth, routes]);
+  await server.register([connectors, jwtAuth, routes]);
 
   await server.start();
 };

@@ -12,7 +12,6 @@ const fetch = async (url, method, data) => {
   let body;
   if (data) {
     headers.append("Content-Type", "application/json");
-    headers.append("Access-Control-Allow-Origin", "*");
     body = JSON.stringify(data);
   }
 
