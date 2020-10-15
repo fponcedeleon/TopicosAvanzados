@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
-import { ListProposal } from "../components/proposal/ListProposal";
+import ListProposal from "../components/proposal/ListProposal";
 import Container from '@material-ui/core/Container'
 import { getAllElectionProposals } from "../scripts/services/proposal";
 import { getOnePost } from "../scripts/services/election";
