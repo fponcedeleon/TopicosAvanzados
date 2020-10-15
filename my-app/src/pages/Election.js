@@ -5,6 +5,55 @@ import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
 
 export default function Services() {
+  async function addOption() {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Opcion";
+    document.getElementById("newOpts").append(input);
+  }
+
+  const addProposal = async () => {
+    const prop = document.createElement("div");
+    const label = document.createElement("label");
+    label.for = "proposal";
+    const newB = document.createElement("b");
+    newB.textContent = "Propuesta";
+    label.append(newB);
+    prop.append(label);
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Propuesta";
+    prop.append(input);
+    const inputDes = document.createElement("input");
+    inputDes.type = "text";
+    inputDes.placeholder = "Descripcion";
+    prop.append(inputDes);
+    const labelOpt = document.createElement("label");
+    labelOpt.for = "options";
+    const newB2 = document.createElement("b");
+    newB2.textContent = "Opciones";
+    labelOpt.append(newB2);
+    prop.append(labelOpt);
+    const inputOpt1 = document.createElement("input");
+    inputOpt1.type = "text";
+    inputOpt1.placeholder = "Opcion 1";
+    prop.append(inputOpt1);
+    const inputOpt2 = document.createElement("input");
+    inputOpt2.type = "text";
+    inputOpt2.placeholder = "Opcion 2";
+    prop.append(inputOpt2);
+    const div2 = document.createElement("div");
+    div2.id = "newOpts";
+    prop.append(div2);
+    const newBtn = document.createElement("button");
+    newBtn.type = "button";
+    newBtn.class = "optionbtn";
+    newBtn.onClick = { addOption };
+    newBtn.textContent = "Add option";
+    prop.append(newBtn);
+    document.getElementById("newProp").append(prop);
+  };
+
   const handleSumbit = async (event) => {
     event.preventDefault();
     const startDate = event.target.startDate.value;
@@ -27,7 +76,7 @@ export default function Services() {
       maxAge,
       city,
       country,
-      nameEl,
+      nameEl
     );
 
     const proposal = await createNewProposal(
@@ -134,8 +183,6 @@ export default function Services() {
           name="proposalDescription"
           id="proposalDescription"
         ></input>
-
-        <hr></hr>
         <label for="options">
           <b>Opciones</b>
         </label>
@@ -151,6 +198,14 @@ export default function Services() {
           name="optionTwo"
           id="optionTwo"
         ></input>
+        <div id="newOpts"></div>
+        <button type="button" class="optionbtn" onClick={addOption}>
+          Add option
+        </button>
+        <div id="newProp"></div>
+        <button type="button" class="proposalbtn" onClick={addProposal}>
+          Add proposal
+        </button>
 
         <hr></hr>
 
