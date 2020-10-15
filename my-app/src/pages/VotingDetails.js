@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
-import { OpenProposal } from "../components/proposal/OpenProposal";
 import { ListProposal } from "../components/proposal/ListProposal";
 import Container from '@material-ui/core/Container'
 import { getAllElectionProposals } from "../scripts/services/proposal";
 import { getOnePost } from "../scripts/services/election";
 import { voteOption } from "../scripts/services/option";
-import { useHistory } from 'react-router-dom';
 
 
 
@@ -49,7 +47,7 @@ function VotingDetails(props) {
     //   const idP = p._id;
     //   selectedOptions[idP] = 
     // })
-  }, [])
+  }, [electionId])
 
   // const election = data.election.find(x => x.id == props.match.params.id)
   // const propouse = data.propouses.filter(x => x.electionId == election.id)
@@ -58,15 +56,6 @@ function VotingDetails(props) {
   //     data.propouses.filter(x => x.electionId == election.id)
   // )
 
-  function ShowProposal(propouseParam, functionParam) {
-    const history = useHistory();
-    return <div></div>//<ListProposal propouse={{ propouseParam }} funcionGetValue={functionParam} />
-    // switch (propouseParam.type) {
-    //   case 1: return <OpenProposal propouse={{ propouseParam }} funcionGetValue={functionParam} />
-    //   case 2: return <ListProposal propouse={{ propouseParam }} funcionGetValue={functionParam} />
-    //   default: return <ListProposal propouse={{ propouseParam }} funcionGetValue={functionParam} />
-    // }
-  }
 
   const GetValueOfOpen = () => {
     // const values = [...propouses];
