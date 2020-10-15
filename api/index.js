@@ -16,7 +16,7 @@ const init = async () => {
     }
   });
   const cors = {
-    //plugin: require('hapi-cors'),
+    plugin: require('hapi-cors'),
     options: {
         origins: ['*']
     }
