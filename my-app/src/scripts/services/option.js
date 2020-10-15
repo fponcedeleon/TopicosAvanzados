@@ -4,7 +4,7 @@ import { post, get, put } from "../utils/api.js";
 const baseUrl =
   window.location.hostname === "localhost"
     ? "http://localhost:8080"
-    : "https://topicossw-test.herokuapp.com/";
+    : "https://topicossw-test.herokuapp.com";
 
 export const createNewOption = async (proposalId, name) => {
   const { data: option, error } = await post(`${baseUrl}/options`, {
