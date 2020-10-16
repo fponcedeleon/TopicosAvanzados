@@ -3,8 +3,30 @@ import "../App.css";
 import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
+import { getAllUsers } from "../scripts/services/user.js";
+import { customEmail } from "../scripts/services/auth.js";
 
 export default function Services() {
+  const sendCustomEmail = async (pet) => {
+    const users = await getAllUsers();
+
+    const electionName = document.getElementById("nameEl").value();
+    const endDate = document.getElementById("endDate").value();
+    const subject = "Nueva eleccion";
+    users.forEach((user) => {
+      // const electionLink = generateNewLink();
+      const electionLink = "";
+      customEmail(
+        user.userName,
+        user.email,
+        electionName,
+        endDate,
+        electionLink,
+        subject
+      );
+    });
+  };
+
   const handleSumbit = async (event) => {
     event.preventDefault();
     const startDate = event.target.startDate.value;
@@ -27,7 +49,7 @@ export default function Services() {
       maxAge,
       city,
       country,
-      nameEl,
+      nameEl
     );
 
     const proposal = await createNewProposal(
@@ -45,7 +67,7 @@ export default function Services() {
       <div class="container">
         <h1 className="election">Eleccion</h1>
         <p>Llene este formulario para crear una eleccion.</p>
-        <label for="startDate">
+        <label for="nameEl">
           <b>Nombre*</b>
         </label>
         <input

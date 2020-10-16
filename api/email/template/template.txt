@@ -1,0 +1,2 @@
+Estimado usuario {Name},
+Lo invitamos a participar de la nueva elección {ElectionName}. Esta elección permanecerá abierta hasta {EndDate}. Si desea votar, por favor ingrese al siguiente enlace, el cual lo redirigirá una única vez hacia la página de votación de dicha elección: {ElectionLink}.
