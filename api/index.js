@@ -38,8 +38,8 @@ const createUser = () => {
     lastName: 'test',
     isActive: true,
   });
-  //user.save().then();
-  //User.findOne({username: 'test'}).then((re) => console.log('success'+ re)).catch(error=>console.log(error));
+  user.save().then();
+  User.findOne({username: 'test'}).then((re) => console.log('success'+ re)).catch(error=>console.log(error));
 
 
 }
