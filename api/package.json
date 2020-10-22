@@ -15,6 +15,7 @@
     "hapi-cors": "^1.0.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7",
+    "node-cron": "^2.0.3",
     "nodemailer": "^6.4.14"
   },
   "heroku-run-build-script": true,
