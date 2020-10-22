@@ -29,8 +29,10 @@ export default function Services() {
   const handleSumbit = async (event) => {
     console.log("1")
     event.preventDefault();
-    const startDate = event.target.startDate.value;
-    const endDate = event.target.endDate.value;
+    const startDateHr = event.target.startDateHr.value;
+    const startDate = event.target.startDate.value + " " + startDateHr;
+    const endDateHr = event.target.endDateHr.value;
+    const endDate = event.target.endDate.value + " " + endDateHr;    
     const minAge = event.target.minAge.value;
     const maxAge = event.target.maxAge.value;
     const city = event.target.city.value;
@@ -93,14 +95,38 @@ export default function Services() {
         ></input>
 
         <hr></hr>
+        <label for="startDateHr">
+          <b>Hora Comienzo*</b>
+        </label>
+        <input
+          type="text"
+          placeholder="HH:MM"
+          name="startDateHr"
+          id="startDateHr"
+          required
+        ></input>
+
+        <hr></hr>
         <label for="endDate">
-          <b>Final*</b>
+          <b>Finalizado*</b>
         </label>
         <input
           type="text"
           placeholder="MM/DD/AAAA"
           name="endDate"
           id="endDate"
+          required
+        ></input>
+
+        <hr></hr>
+        <label for="endDateHr">
+          <b>Hora Finalizado*</b>
+        </label>
+        <input
+          type="text"
+          placeholder="HH:MM"
+          name="endDateHr"
+          id="endDateHr"
           required
         ></input>
 
