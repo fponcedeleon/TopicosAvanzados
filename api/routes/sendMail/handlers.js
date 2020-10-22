@@ -20,10 +20,10 @@ const create = async (request, h) => {
       isNewElection,
       endDate
     );
-    
+
     return h ? h.response({ email: "Email has been sent" }).code(201) : null;
   } catch (error) {
-    return h.response({ err: "Failed to send email" }).code(500);
+    return h ? h.response({ err: "Failed to send email" }).code(500) : error;
   }
 };
 
