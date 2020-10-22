@@ -12,7 +12,7 @@ const fetch = async (url, method, data) => {
   let body;
   if (data) {
     headers.append("Content-Type", "application/json");
-  //  headers.append('Access-Control-Allow-Origin', '*');
+    //headers.append('Access-Control-Allow-Origin', '*');
     // headers.append(
     //   'Access-Control-Allow-Headers',
     //   'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method',
@@ -35,7 +35,7 @@ const fetch = async (url, method, data) => {
     return { error: { status: response.status } };
   }
 
-  console.log(response);
+  //console.log(response);
   return { data: await response.json() };
 };
 
