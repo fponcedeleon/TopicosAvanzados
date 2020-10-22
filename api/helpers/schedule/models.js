@@ -1,6 +1,6 @@
 const Election = require('../../models/election');
 
-const getActiveElections = async () => {
+const InactivateElections = async () => {
     const nDate = new Date().toISOString();
     const activeCondition = {
         isActive: true,
