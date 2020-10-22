@@ -71,6 +71,7 @@ export default function VotingPage() {
                       <tbody>
                           {data && data.map(election =>
                             <tr>
+                                {console.log("ELECTIO: " + election._id)}
                                 <th scope="row"><Link to={"/VotingResult/" + election._id}>{election._id}</Link></th>
                                 <td>{election.name}</td>
                             </tr>

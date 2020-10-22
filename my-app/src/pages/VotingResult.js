@@ -8,13 +8,12 @@ import { voteOption } from "../scripts/services/option";
 import '../App.css';
 
 
-export default function VotingResult() {
+export default function VotingResult(props) {
 
   const [election, setElection] = useState({});
   const [proposals, setProposals] = useState([]);
-  const [option, setOption] = useState([]);
 
-  const electionId = 1;// props.match.params.id;
+  const electionId = props.match.params.id;
 
   useEffect(() => {
 
@@ -43,11 +42,10 @@ export default function VotingResult() {
     return <div> 
         
         <div className="row">
-          <div className="details-middle">
+          <div className="details-middle contenedorCentrado">
 
-            <div className="custom-row">
-              <label>Nombre</label>
-              <input readOnly="true" type="text" class="form-control" aria-describedby="emailHelp" value={election.name} />
+            <div className="custom-row"> 
+                <h2>Nombre Eleccion: {election.name} </h2> 
             </div>
 
 

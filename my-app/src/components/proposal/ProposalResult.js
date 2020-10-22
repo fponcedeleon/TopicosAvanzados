@@ -8,29 +8,20 @@ import '../../index.css';
 const ProposalResult = (props) => {
 
     const [options, setOption] = useState([]);
-    const [proposal, setProposal] = useState([]);
 
     const id = props.proposalId;
     const name = props.proposalName;
 
-    const GetPercent = (id) =>
+    const GetPercent = (option) =>
     {
-      
+      return option.votants.length;
     }
 
-    useEffect(() => {
+    useEffect(() => { 
       getAllProposalOptions(id)
         .then(
-          (result) => {
-            setOption(result);
-          },
-          (error) => {
-            console.log(error);
-          }
-        )
-        getOnePost(id).then(
           (result) => { 
-            setProposal(result);
+            setOption(result); 
           },
           (error) => {
             console.log(error);
@@ -38,13 +29,12 @@ const ProposalResult = (props) => {
         )
     }, [id])
     
-    return <div className="custom-row" >
-                <div>{name}</div>
+    return <div className="custom-row contenedorCentrado">
                 <div className="custom-row" >
                 
                  <div className="custom-row">
                     <div className="col-md-12">
-                      <h2> {name}</h2>
+                      <h5> {name}</h5>
                     </div>
                  </div>
                   <div className="custom-row">
@@ -52,14 +42,14 @@ const ProposalResult = (props) => {
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">Opcion</th>
-                            <th scope="col">Porcentaje</th>
+                            <th scope="col">Cantidad de votos</th>
                           </tr>
                         </thead>
                         <tbody>
                             {options.map(option =>
                               <tr>
                                   <td>{option.name}</td>
-                                  <td>{GetPercent(option.id)}</td>
+                                  <td>{GetPercent(option)}</td>
                               </tr>
                               )}
                         </tbody>

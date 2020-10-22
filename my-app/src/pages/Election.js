@@ -6,6 +6,7 @@ import { createNewOption } from "../scripts/services/option.js";
 
 export default function Services() {
   const handleSumbit = async (event) => {
+    console.log("1")
     event.preventDefault();
     const startDate = event.target.startDate.value;
     const endDate = event.target.endDate.value;
@@ -19,8 +20,9 @@ export default function Services() {
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
 
+    console.log("2")
     const election = await createNewElection(
-      "",
+      "test",
       startDate,
       endDate,
       minAge,

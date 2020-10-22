@@ -32,3 +32,7 @@ code {
 .custom-row{ 
   padding-top: 3%;
 }
+
+.contenedorCentrado{
+  text-align: center;
+}
