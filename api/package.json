@@ -14,7 +14,8 @@
     "hapi-auth-jwt2": "^10.2.0",
     "hapi-cors": "^1.0.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.7"
+    "mongoose": "^5.10.7",
+    "nodemailer": "^6.4.14"
   },
   "heroku-run-build-script": true,
   "author": "",
