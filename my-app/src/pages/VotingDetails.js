@@ -70,7 +70,7 @@ function VotingDetails(props) {
             </div>
 
 
-            {proposals.map((p, index) =>
+            {proposals.map((p) =>
               <div>
                 <ListProposal proposalName={p.name} proposalId={p._id} funcionGetValue={GetValueOfOpen()} handleChange={handleChange} />
               </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getAllProposalOptions } from "../../scripts/services/option";
-import { getOnePost } from "../../scripts/services/proposal";
 import {render} from 'react-dom';
 import '../../index.css';
 

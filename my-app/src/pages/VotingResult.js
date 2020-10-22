@@ -1,10 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
-import {Link} from 'react-router-dom';
 import ProposalResult from "../components/proposal/ProposalResult";
 import { getAllElectionProposals } from "../scripts/services/proposal";
 import { getOnePost } from "../scripts/services/election";
-import { voteOption } from "../scripts/services/option";
 import '../App.css';
 
 
