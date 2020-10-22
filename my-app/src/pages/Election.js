@@ -5,29 +5,75 @@ import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
 
 export default function Services() {
+  var auxprop=0;
   async function addOption() {
     const input = document.createElement("input");
     input.type = "text";
+    input.className = "form-control";
     input.placeholder = "Opcion";
-    document.getElementById("newOpts").append(input);
+    console.log(auxprop);
+    switch (auxprop) {
+      case 0:
+        //Declaraciones ejecutadas cuando el resultado de expresión coincide con el valor1
+        document.getElementById("newOpts").append(input);
+        break;
+      case 1:
+        //Declaraciones ejecutadas cuando el resultado de expresión coincide con el valor2
+        document.getElementById("newOpts1").append(input);
+        break;
+      case 2:
+        //Declaraciones ejecutadas cuando el resultado de expresión coincide con valorN
+        document.getElementById("newOpts2").append(input);
+        break;
+      case 3:
+          //Declaraciones ejecutadas cuando el resultado de expresión coincide con valorN
+        document.getElementById("newOpts3").append(input);
+        break;
+        case 4:
+          //Declaraciones ejecutadas cuando el resultado de expresión coincide con valorN
+        document.getElementById("newOpts4").append(input);
+        break;  
+      default:
+        //Declaraciones ejecutadas cuando ninguno de los valores coincide con el valor de la expresión
+        console.log(auxprop);
+        break;
+    }
+    /**if(auxprop!==0){
+      var elem="newOpts"+ auxprop;
+      console.log(elem);
+      document.getElementById().append(input);
+    }
+    else{
+      document.getElementById("newOpts").append(input);
+    }**/
   }
 
   const addProposal = async () => {
+    if(auxprop<=3){
+      auxprop= auxprop+1;
     const prop = document.createElement("div");
     const label = document.createElement("label");
     label.for = "proposal";
     const newB = document.createElement("b");
-    newB.textContent = "Propuesta";
+    newB.textContent = "Propuesta "+ auxprop;
     label.append(newB);
     prop.append(label);
     const input = document.createElement("input");
     input.type = "text";
+    input.className= "form-control";
     input.placeholder = "Propuesta";
+    input.name="proposalName"+auxprop
+    input.id="proposalName"+auxprop
     prop.append(input);
     const inputDes = document.createElement("input");
     inputDes.type = "text";
+    inputDes.className = "form-control";
     inputDes.placeholder = "Descripcion";
+    inputDes.name="proposalDescription"+auxprop
+    inputDes.id="proposalDescription"+auxprop
     prop.append(inputDes);
+    const brNew = document.createElement("br");
+    prop.append(brNew);
     const labelOpt = document.createElement("label");
     labelOpt.for = "options";
     const newB2 = document.createElement("b");
@@ -36,22 +82,30 @@ export default function Services() {
     prop.append(labelOpt);
     const inputOpt1 = document.createElement("input");
     inputOpt1.type = "text";
+    inputOpt1.className = "form-control";
     inputOpt1.placeholder = "Opcion 1";
     prop.append(inputOpt1);
     const inputOpt2 = document.createElement("input");
     inputOpt2.type = "text";
+    inputOpt2.className= "form-control";
     inputOpt2.placeholder = "Opcion 2";
     prop.append(inputOpt2);
     const div2 = document.createElement("div");
-    div2.id = "newOpts";
+    div2.id = "newOpts"+ auxprop
     prop.append(div2);
-    const newBtn = document.createElement("button");
+   /**  const newBtn = document.createElement("button");
     newBtn.type = "button";
-    newBtn.class = "optionbtn";
-    newBtn.onClick = { addOption };
+    newBtn.className ="btn btn-dark";
+    newBtn.id = "optionbtn"+ auxprop;
+    newBtn.onclick = {addOption};
     newBtn.textContent = "Add option";
-    prop.append(newBtn);
+    prop.append(newBtn);**/
     document.getElementById("newProp").append(prop);
+    }
+    else{
+      alert("no me permiten mas propuestas")
+    }
+     
   };
 
   const handleSumbit = async (event) => {
@@ -98,7 +152,8 @@ export default function Services() {
           <b>Nombre*</b>
         </label>
         <input
-          type="text"
+          type="text" 
+          class="form-control"
           placeholder="Eleccion 1"
           name="nameEl"
           id="nameEl"
@@ -108,21 +163,19 @@ export default function Services() {
         <label for="startDate">
           <b>Comienzo*</b>
         </label>
-        <input
-          type="text"
-          placeholder="MM/DD/AAAA"
-          name="startDate"
-          id="startDate"
-          required
-        ></input>
+        <input class="form-control" 
+        type="date" 
+        placeholder="MM/DD/AAAA" 
+        name= "startDate"
+        id="startDate" />
 
         <hr></hr>
         <label for="endDate">
           <b>Final*</b>
         </label>
-        <input
-          type="text"
-          placeholder="MM/DD/AAAA"
+        <input class="form-control" 
+        type="date" 
+        placeholder="MM/DD/AAAA"
           name="endDate"
           id="endDate"
           required
@@ -133,7 +186,8 @@ export default function Services() {
           <b>Minimo de edad</b>
         </label>
         <input
-          type="text"
+          type="text" 
+          class="form-control"
           placeholder="Edad minima"
           name="minAge"
           id="minAge"
@@ -144,7 +198,8 @@ export default function Services() {
           <b>Maximo de edad</b>
         </label>
         <input
-          type="text"
+          type="text" 
+          class="form-control"
           placeholder="Edad maxima"
           name="maxAge"
           id="maxAge"
@@ -154,7 +209,7 @@ export default function Services() {
         <label for="city">
           <b>Ciudad</b>
         </label>
-        <input type="text" placeholder="Ciudad" name="city" id="city"></input>
+        <input type="text" class="form-control" placeholder="Ciudad" name="city" id="city"></input>
 
         <hr></hr>
         <label for="country">
@@ -162,6 +217,7 @@ export default function Services() {
         </label>
         <input
           type="text"
+          class="form-control"
           placeholder="Pais"
           name="country"
           id="country"
@@ -173,43 +229,50 @@ export default function Services() {
         </label>
         <input
           type="text"
+          class="form-control"
           placeholder="Propuesta"
           name="proposalName"
           id="proposalName"
         ></input>
         <input
           type="text"
+          class="form-control"
           placeholder="Descripcion"
           name="proposalDescription"
           id="proposalDescription"
         ></input>
+        <br></br>
         <label for="options">
           <b>Opciones</b>
         </label>
         <input
           type="text"
+          class="form-control"
           placeholder="Opcion 1"
           name="optionOne"
           id="optionOne"
         ></input>
         <input
           type="text"
+          class="form-control"
           placeholder="Opcion 2"
           name="optionTwo"
           id="optionTwo"
         ></input>
+        <br></br>
         <div id="newOpts"></div>
-        <button type="button" class="optionbtn" onClick={addOption}>
+        <div id="newProp"></div>
+        <button type="button" class="btn btn-dark" id="optionbtn" onClick={addOption}>
           Add option
         </button>
-        <div id="newProp"></div>
-        <button type="button" class="proposalbtn" onClick={addProposal}>
+        <br></br>
+        <button type="button" class="btn btn-dark" id="proposalbtn" onClick={addProposal}>
           Add proposal
         </button>
 
         <hr></hr>
 
-        <button type="submit" class="electionbtn">
+        <button type="submit" class="btn btn-outline-dark" id="electionbtn">
           Crear eleccion
         </button>
       </div>
