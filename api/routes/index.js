@@ -3,6 +3,7 @@ const election = require("./election");
 const option = require("./option");
 const proposal = require("./proposal");
 const sendMail = require("./sendMail");
+const user = require("./user");
 
 module.exports = {
   name: "routes",
@@ -13,6 +14,7 @@ module.exports = {
       ...option,
       ...proposal,
       ...sendMail,
+      ...user,
     ]);
   },
 };
