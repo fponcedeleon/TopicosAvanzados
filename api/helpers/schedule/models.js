@@ -8,6 +8,23 @@ const InactivateElections = async () => {
     };
 
     return Election.find(activeCondition)
+        .exec()
+        .then((results) => {
+            return results;
+        })
+        .catch(() => {
+            return [];
+        });
+}
+
+const updateElections = async () => {
+    const nDate = new Date().toISOString();
+    const activeCondition = {
+        isActive: true,
+        endDate: { $lte: nDate }
+    };
+
+    return Election.find(activeCondition)
         .update( { $set: { isActive: false } })
         .exec()
         .then((results) => {
@@ -19,5 +36,6 @@ const InactivateElections = async () => {
 }
 
 module.exports = {
-    getActiveElections
+    InactivateElections,
+    updateElections
 }
