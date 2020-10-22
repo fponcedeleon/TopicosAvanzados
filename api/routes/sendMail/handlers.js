@@ -5,18 +5,20 @@ const create = async (request, h) => {
     userName,
     userEmail,
     electionName,
-    endDate,
     electionLink,
     subject,
+    isNewElection,
+    endDate,
   } = request.payload;
   try {
     await CustomEmail.customEmail(
       userName,
       userEmail,
       electionName,
-      endDate,
       electionLink,
-      subject
+      subject,
+      isNewElection,
+      endDate
     );
     return h.response({ email: "Email has been sent" }).code(201);
   } catch (error) {
