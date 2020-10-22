@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getAllProposalOptions } from "../../scripts/services/option";
 import {render} from 'react-dom';
+import { getAllProposalOptions } from "../../scripts/services/option";
 import '../../index.css';
 
  
