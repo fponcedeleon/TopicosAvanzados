@@ -22,7 +22,7 @@ const init = async () => {
     }
   };
 
-  //await createUser();
+  await createUser();
 
   await server.register([cors, connectors, jwtAuth, routes]);
 
@@ -38,7 +38,8 @@ const createUser = () => {
     lastName: 'test',
     isActive: true,
   });
-  //user.save().then();
+  
+  user.save().then();
   //User.findOne({username: 'test'}).then((re) => console.log('success'+ re)).catch(error=>console.log(error));
 
 
