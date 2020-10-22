@@ -22,7 +22,6 @@ const getAll = async () => {
 
 const create = async ({ payload, auth }) => {
   const electionToInsert = await helper.getElectionModel(payload, auth);
-  console.log(electionToInsert)
   return await electionToInsert
     .save()
     .then((result) => {
