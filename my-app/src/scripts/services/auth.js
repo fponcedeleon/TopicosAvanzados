@@ -9,16 +9,18 @@ export const customEmail = async (
   userName,
   userEmail,
   electionName,
-  endDate,
   electionLink,
-  subject
+  subject,
+  isNewElection,
+  endDate = null
 ) => {
   await post(`${baseUrl}/sendMail`, {
     userName,
     userEmail,
     electionName,
-    endDate,
     electionLink,
     subject,
+    isNewElection,
+    endDate,
   });
 };

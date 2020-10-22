@@ -1,0 +1,7 @@
+Estimado usuario {Name},
+
+La elección de la cual usted participó recientemente, {ElectionName}, ha concluido. A través del siguiente enlace podrá acceder a los resultados de esta elección.
+
+{ResultsLink}
+
+Muchas gracias por utilizar nuestros servicios.

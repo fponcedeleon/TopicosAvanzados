@@ -7,22 +7,21 @@ import { getAllUsers } from "../scripts/services/user.js";
 import { customEmail } from "../scripts/services/auth.js";
 
 export default function Services() {
-  const sendCustomEmail = async (pet) => {
+  const sendCustomEmail = async (electionName, endDate) => {
     const users = await getAllUsers();
 
-    const electionName = document.getElementById("nameEl").value();
-    const endDate = document.getElementById("endDate").value();
     const subject = "Nueva eleccion";
     users.forEach((user) => {
       // const electionLink = generateNewLink();
-      const electionLink = "";
+      const electionLink = "link";
       customEmail(
-        user.userName,
+        user.firstName,
         user.email,
         electionName,
-        endDate,
         electionLink,
-        subject
+        subject,
+        true,
+        endDate
       );
     });
   };
@@ -61,6 +60,8 @@ export default function Services() {
 
     await createNewOption(propId, opt1);
     await createNewOption(propId, opt2);
+
+    await sendCustomEmail(name, endDate);
   };
   return (
     <form id="generateElection" onSubmit={handleSumbit}>

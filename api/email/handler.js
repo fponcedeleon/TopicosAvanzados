@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { getTemplate } = require("./template");
+const { getTemplateResults, getTemplateNewElection } = require("./template");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -27,11 +27,22 @@ const customEmail = (
   userName,
   userEmail,
   electionName,
-  endDate,
   electionLink,
-  subject
+  subject,
+  isNewElection,
+  endDate
 ) => {
-  const text = getTemplate(userName, electionName, endDate, electionLink);
+  let text;
+  if (isNewElection) {
+    text = getTemplateNewElection(
+      userName,
+      electionName,
+      endDate,
+      electionLink
+    );
+  } else {
+    text = getTemplateResults(userName, electionName, electionLink);
+  }
   sendEmail(subject, userEmail, text);
 };
 

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const getTemplate = (userName, electionName, endDate, electionLink) => {
-  const file = fs.readFileSync(path.resolve(__dirname, 'template.txt'));
+const getTemplateNewElection = (userName, electionName, endDate, electionLink) => {
+  const file = fs.readFileSync(path.resolve(__dirname, 'templateNewElection.txt'));
   let stringFile = file.toString();
 
   stringFile = stringFile.replace('{Name}', userName);
@@ -13,6 +13,18 @@ const getTemplate = (userName, electionName, endDate, electionLink) => {
   return stringFile;
 };
 
+const getTemplateResults = (userName, electionName, resultsLink) => {
+  const file = fs.readFileSync(path.resolve(__dirname, 'templateResults.txt'));
+  let stringFile = file.toString();
+
+  stringFile = stringFile.replace('{Name}', userName);
+  stringFile = stringFile.replace('{ElectionName}', electionName);
+  stringFile = stringFile.replace('{ResultsLink}', resultsLink);
+
+  return stringFile;
+};
+
 module.exports = {
-  getTemplate,
+  getTemplateNewElection,
+  getTemplateResults,
 };
