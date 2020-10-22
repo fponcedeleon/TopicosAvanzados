@@ -19,6 +19,7 @@ const getOptionById = async ({ params }) => {
 const getOptionsByProposal = async ({ query }) => {
   return await Option.find({ proposalId: query.id })
     .populate("optionId", ["name"])
+    .populate("votants", ["email", "firstName"])
     .exec()
     .then((results) => {
       return results;
