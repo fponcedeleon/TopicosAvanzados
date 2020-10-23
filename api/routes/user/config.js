@@ -26,7 +26,7 @@ module.exports = {
     handler: handlers.deleteOne
   },
   validateUser: {
-    auth: process.env.JWT_PROTOCOL,
+    // auth: process.env.JWT_PROTOCOL,
     // validate: validations.deleteOne,
     handler: handlers.validateUser
   },

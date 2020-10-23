@@ -28,7 +28,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/users/validate',
+    path: '/users/validate/{id}',
     config: config.validateUser,
   },
 ];
