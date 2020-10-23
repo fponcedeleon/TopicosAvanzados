@@ -1,5 +1,6 @@
 const User = require("../../models/user");
 const helper = require("./helper");
+const sessionHelper = require("../../helpers/sessions");
 /**
  *
  * @param {*} params this is accessed via api and the sport is the name, so we need to query.
@@ -25,9 +26,11 @@ const create = async ({ payload, auth }) => {
   return await userToInsert
     .save()
     .then((result) => {
+      const token = sessionHelper.createJWT(result.username);
       return {
         status: "Success",
         data: helper.parseUser(result),
+        token: token,
       };
     })
     .catch((error) => {
