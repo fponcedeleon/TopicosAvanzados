@@ -14,6 +14,7 @@ const userSchema = new Schema(
     lastName: { type: String },
     isActive: { type: Boolean, default: true },
     role: { type: String, required: true, default: 'standard' },
+    validated: { type: Boolean, default: false },
   },
   {
     id: false,

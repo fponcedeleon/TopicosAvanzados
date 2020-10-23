@@ -68,10 +68,28 @@ const deleteOne = async ({ params }) => {
     });
 };
 
+const validateUser = async ({ auth }) => {
+  const currentUser = auth.credentials;
+  console.log(currentUser);
+  return await User.updateOne({ _id: currentUser.id }, { $set: { validated: true } })
+    .exec()
+    .then((result) => {
+      if (result) {
+        return { status: "Success" };
+      }
+
+      return { status: "Error", message: "An error occured" };
+    })
+    .catch((error) => {
+      return { status: "Success", message: error };
+    });
+}
+
 module.exports = {
   getUserById,
   getAll,
   create,
   update,
   deleteOne,
+  validateUser,
 };
