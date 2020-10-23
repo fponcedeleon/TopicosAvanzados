@@ -1,12 +1,12 @@
-const Option = require("../../models/option");
+const User = require("../../models/user");
 const helper = require("./helper");
 /**
  *
  * @param {*} params this is accessed via api and the sport is the name, so we need to query.
  */
-const getOptionById = async ({ params }) => {
-  return await Option.findById(params.id)
-    .populate("optionId", ["name"])
+const getUserById = async ({ params }) => {
+  return await User.findById(params.id)
+    .populate("username", ["email"])
     .exec()
     .then((results) => {
       return results;
@@ -16,27 +16,18 @@ const getOptionById = async ({ params }) => {
     });
 };
 
-const getOptionsByProposal = async ({ query }) => {
-  return await Option.find({ proposalId: query.id })
-    .populate("optionId", ["name"])
-    .populate("votants", ["email", "firstName"])
-    .exec()
-    .then((results) => {
-      return results;
-    })
-    .catch((error) => {
-      return { status: "Error", message: error.message };
-    });
+const getAll = async () => {
+  return await User.find({});
 };
 
 const create = async ({ payload, auth }) => {
-  const electionToInsert = await helper.getOptionModel(payload, auth);
-  return await electionToInsert
+  const userToInsert = await helper.getUserModel(payload, auth);
+  return await userToInsert
     .save()
     .then((result) => {
       return {
         status: "Success",
-        data: helper.parseOption(result),
+        data: helper.parseUser(result),
       };
     })
     .catch((error) => {
@@ -45,7 +36,7 @@ const create = async ({ payload, auth }) => {
 };
 
 const update = async ({ params, payload }) => {
-  return await Option.updateOne({ _id: params.id }, { $set: payload })
+  return await User.updateOne({ _id: params.id }, { $set: payload })
     .exec()
     .then((result) => {
       if (result) {
@@ -60,7 +51,7 @@ const update = async ({ params, payload }) => {
 };
 
 const deleteOne = async ({ params }) => {
-  return Option.deleteOne({ _id: params.id })
+  return User.deleteOne({ _id: params.id })
     .exec()
     .then((result) => {
       if (result) {
@@ -75,8 +66,8 @@ const deleteOne = async ({ params }) => {
 };
 
 module.exports = {
-  getOptionById,
-  getOptionsByProposal,
+  getUserById,
+  getAll,
   create,
   update,
   deleteOne,

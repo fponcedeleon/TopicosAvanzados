@@ -3,12 +3,36 @@ import "../App.css";
 import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
+import { getAllUsers } from "../scripts/services/user.js";
+import { customEmail } from "../scripts/services/auth.js";
 
 export default function Services() {
+  const sendCustomEmail = async (electionName, endDate) => {
+    const users = await getAllUsers();
+
+    const subject = "Nueva eleccion";
+    users.forEach((user) => {
+      // const electionLink = generateNewLink();
+      const electionLink = "link";
+      customEmail(
+        user.firstName,
+        user.email,
+        electionName,
+        electionLink,
+        subject,
+        true,
+        endDate
+      );
+    });
+  };
+
   const handleSumbit = async (event) => {
+    console.log("1")
     event.preventDefault();
-    const startDate = event.target.startDate.value;
-    const endDate = event.target.endDate.value;
+    const startDateHr = event.target.startDateHr.value;
+    const startDate = event.target.startDate.value + " " + startDateHr;
+    const endDateHr = event.target.endDateHr.value;
+    const endDate = event.target.endDate.value + " " + endDateHr;    
     const minAge = event.target.minAge.value;
     const maxAge = event.target.maxAge.value;
     const city = event.target.city.value;
@@ -19,15 +43,16 @@ export default function Services() {
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
 
+    console.log("2")
     const election = await createNewElection(
-      "",
+      "test",
       startDate,
       endDate,
       minAge,
       maxAge,
       city,
       country,
-      nameEl,
+      nameEl
     );
 
     const proposal = await createNewProposal(
@@ -39,13 +64,15 @@ export default function Services() {
 
     await createNewOption(propId, opt1);
     await createNewOption(propId, opt2);
+
+    await sendCustomEmail(name, endDate);
   };
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
       <div class="container">
         <h1 className="election">Eleccion</h1>
         <p>Llene este formulario para crear una eleccion.</p>
-        <label for="startDate">
+        <label for="nameEl">
           <b>Nombre*</b>
         </label>
         <input
@@ -68,14 +95,38 @@ export default function Services() {
         ></input>
 
         <hr></hr>
+        <label for="startDateHr">
+          <b>Hora Comienzo*</b>
+        </label>
+        <input
+          type="text"
+          placeholder="HH:MM"
+          name="startDateHr"
+          id="startDateHr"
+          required
+        ></input>
+
+        <hr></hr>
         <label for="endDate">
-          <b>Final*</b>
+          <b>Finalizado*</b>
         </label>
         <input
           type="text"
           placeholder="MM/DD/AAAA"
           name="endDate"
           id="endDate"
+          required
+        ></input>
+
+        <hr></hr>
+        <label for="endDateHr">
+          <b>Hora Finalizado*</b>
+        </label>
+        <input
+          type="text"
+          placeholder="HH:MM"
+          name="endDateHr"
+          id="endDateHr"
           required
         ></input>
 

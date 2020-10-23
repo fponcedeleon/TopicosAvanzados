@@ -31,23 +31,55 @@ export default function VotingPage() {
   return <div className="grid-votaciones">
           <div className="col-md-2"></div>
           <div className="col-md-10">
-          <table class="table">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Nombre</th>
-                </tr>
-              </thead>
-              <tbody>
-                  {data && data.map(election =>
-                    <tr>
-                        <th scope="row"><Link to={"/VotingDetails/" + election._id}>{election._id}</Link></th>
-                        <td>{election.name}</td>
-                    </tr>
-                    )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <div className="custom-row">
+                <div className="col-md-12">
+                      <h2> Votaciones Abiertas </h2>
+                    </div>
+                </div>
+                <div className="custom-row">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {data && data.map(election =>
+                          <tr>
+                              <th scope="row"><Link to={"/VotingDetails/" + election._id}>{election._id}</Link></th>
+                              <td>{election.name}</td>
+                          </tr>
+                          )}
+                    </tbody>
+                  </table>
+                </div> 
+
+            <div className="custom-row">
+                <div className="col-md-12">
+                      <h2> Votaciones Cerradas </h2>
+                    </div>
+                </div>
+                <div className="custom-row">
+                  <table class="table">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Nombre</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {data && data.map(election =>
+                            <tr>
+                                {console.log("ELECTIO: " + election._id)}
+                                <th scope="row"><Link to={"/VotingResult/" + election._id}>{election._id}</Link></th>
+                                <td>{election.name}</td>
+                            </tr>
+                            )}
+                      </tbody>
+                    </table>
+                </div>
+          </div> 
+        </div> 
 ;
 }

@@ -6,6 +6,7 @@ const Hapi = require('@hapi/hapi');
 const routes = require('./routes');
 const jwtAuth = require('./auth/jwt');
 const connectors = require('./connectors');
+const { task } = require('./helpers/schedule');
 
 const init = async () => {
   const server = Hapi.server({
@@ -23,9 +24,8 @@ const init = async () => {
   };
 
   //await createUser();
-
+  task.task();
   await server.register([cors, connectors, jwtAuth, routes]);
-
   await server.start();
 };
 
@@ -38,6 +38,7 @@ const createUser = () => {
     lastName: 'test',
     isActive: true,
   });
+  
   //user.save().then();
   //User.findOne({username: 'test'}).then((re) => console.log('success'+ re)).catch(error=>console.log(error));
 
