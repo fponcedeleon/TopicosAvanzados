@@ -13,7 +13,7 @@ function VotingDetails(props) {
     const token = urlP.get("token");
     const tokenApi = await getToken(token);
     if (tokenApi) {
-      await deleteToken(token);
+      await deleteToken(tokenApi.data.id);
       return true;
     } else {
       return false;
@@ -21,7 +21,7 @@ function VotingDetails(props) {
   };
 
   if (!checkToken()) {
-    window.location = "/home"; //maybe make a new page showing that the url is invalid
+    //window.location = "/home"; //maybe make a new page showing that the url is invalid
   }
 
   let selectedOptions = {};

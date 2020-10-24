@@ -8,8 +8,8 @@ import { customEmail, createNewToken } from "../scripts/services/auth.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
-    ? "http://localhost:8080"
-    : "https://topicossw.herokuapp.com";
+    ? "http://localhost:3000"
+    : ""; //NETLIFY
 
 export default function Services() {
   let electionId;
@@ -23,8 +23,8 @@ export default function Services() {
     const users = await getAllUsers();
 
     const subject = "Nueva eleccion";
-    users.forEach((user) => {
-      const electionLink = generateNewLink(user.id);
+    users.forEach(async (user) => {
+      const electionLink = await generateNewLink(user._id);
       customEmail(
         user.firstName,
         user.email,
@@ -56,7 +56,7 @@ export default function Services() {
 
     console.log("2");
     const election = await createNewElection(
-      "test",
+      "test", //change to creator
       startDate,
       endDate,
       minAge,

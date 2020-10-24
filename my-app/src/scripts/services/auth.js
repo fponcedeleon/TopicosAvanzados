@@ -26,13 +26,26 @@ export const customEmail = async (
 };
 
 export const createNewToken = async (electionId, userId) => {
-  await post(`${baseUrl}/token`, { electionId, userId });
+  const { data: token, error } = await post(`${baseUrl}/token`, {
+    electionId,
+    userId,
+  });
+  if (error) {
+    if (error.status === 409) {
+      throw new Error("Token already exists.");
+    }
+    throw error;
+    //throw new Error('Oops! Something went wrong...');
+  }
+  console.log(token)
+  return token;
 };
 
 export const getToken = async (token) => {
-  await get(`${baseUrl}/token/${token}`);
+  const { data: tokenApi } = await get(`${baseUrl}/token/${token}`);
+  return tokenApi;
 };
 
 export const deleteToken = async (token) => {
-  await deleteApi(`${baseUrl}/token/${token}`);
+  return await deleteApi(`${baseUrl}/token/${token}`);
 };
