@@ -1,4 +1,4 @@
-import { post } from "../utils/api.js";
+import { post, deleteApi, get } from "../utils/api.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -23,4 +23,16 @@ export const customEmail = async (
     isNewElection,
     endDate,
   });
+};
+
+export const createNewToken = async (electionId, userId) => {
+  await post(`${baseUrl}/token`, { electionId, userId });
+};
+
+export const getToken = async (token) => {
+  await get(`${baseUrl}/token/${token}`);
+};
+
+export const deleteToken = async (token) => {
+  await deleteApi(`${baseUrl}/token/${token}`);
 };

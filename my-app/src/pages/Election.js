@@ -4,16 +4,27 @@ import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
 import { getAllUsers } from "../scripts/services/user.js";
-import { customEmail } from "../scripts/services/auth.js";
+import { customEmail, createNewToken } from "../scripts/services/auth.js";
+
+const baseUrl =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://topicossw.herokuapp.com";
 
 export default function Services() {
+  let electionId;
+
+  const generateNewLink = async (id) => {
+    const token = await createNewToken(electionId, id);
+    return `${baseUrl}/VotingDetails/${electionId}?token=${token.data.token}`;
+  };
+
   const sendCustomEmail = async (electionName, endDate) => {
     const users = await getAllUsers();
 
     const subject = "Nueva eleccion";
     users.forEach((user) => {
-      // const electionLink = generateNewLink();
-      const electionLink = "link";
+      const electionLink = generateNewLink(user.id);
       customEmail(
         user.firstName,
         user.email,
@@ -27,12 +38,12 @@ export default function Services() {
   };
 
   const handleSumbit = async (event) => {
-    console.log("1")
+    console.log("1");
     event.preventDefault();
     const startDateHr = event.target.startDateHr.value;
     const startDate = event.target.startDate.value + " " + startDateHr;
     const endDateHr = event.target.endDateHr.value;
-    const endDate = event.target.endDate.value + " " + endDateHr;    
+    const endDate = event.target.endDate.value + " " + endDateHr;
     const minAge = event.target.minAge.value;
     const maxAge = event.target.maxAge.value;
     const city = event.target.city.value;
@@ -43,7 +54,7 @@ export default function Services() {
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
 
-    console.log("2")
+    console.log("2");
     const election = await createNewElection(
       "test",
       startDate,
@@ -54,12 +65,9 @@ export default function Services() {
       country,
       nameEl
     );
+    electionId = election.data.id;
 
-    const proposal = await createNewProposal(
-      election.data.id,
-      name,
-      description
-    );
+    const proposal = await createNewProposal(electionId, name, description);
     const propId = proposal.data.id;
 
     await createNewOption(propId, opt1);
