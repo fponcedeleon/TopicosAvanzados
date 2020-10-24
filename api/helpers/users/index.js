@@ -5,5 +5,6 @@ module.exports = {
     createUserModel: helper.createUserModel,
     parseUserInfo: helper.parseUserInfo,
     getUserByParams: helper.getUserByParams,
-    saveUser: helper.saveUser
+    saveUser: helper.saveUser,
+    comparePassword: helper.comparePassword,
 }
