@@ -34,7 +34,7 @@ const create = async ({ payload, auth }) => {
   return await userToInsert
     .save()
     .then((result) => {
-      const link = `${linkUrl}/users/validate/${result._id}`;
+      const link = `${linkUrl}/verify/${result._id}`;
       const subject = 'Verify your email address';
       validateUserEmail(result.username, result.email, link, subject);
       return {
