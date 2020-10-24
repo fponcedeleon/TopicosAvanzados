@@ -37,11 +37,9 @@ const create = async ({ payload, auth }) => {
       const link = `${linkUrl}/users/validate/${result._id}`;
       const subject = 'Verify your email address';
       validateUserEmail(result.username, result.email, link, subject);
-      const token = sessionHelper.createJWT(result.username);
       return {
         status: "Success",
         data: helper.parseUser(result),
-        token: token,
       };
     })
     .catch((error) => {
@@ -81,18 +79,23 @@ const deleteOne = async ({ params }) => {
 
 const validateUser = async ({ params }) => {
 
-  return await User.updateOne({ _id: params.id }, { $set: { validated: true } })
+  return await User.findOneAndUpdate({ _id: params.id }, { validated: true })
     .exec()
     .then((result) => {
+      console.log(result);
       if (result) {
-        return { status: "Success" };
+        const token = sessionHelper.createJWT(result.username);
+        return { status: "Success", token: token };
       }
-
-      return { status: "Error", message: "An error occured" };
+      return { status: "Success", token: token };
     })
     .catch((error) => {
       return { status: "Success", message: error };
     });
+}
+
+const current = ({ auth }) => {
+  return { status: "Success", credentials: auth.credentials };
 }
 
 module.exports = {
@@ -102,4 +105,5 @@ module.exports = {
   update,
   deleteOne,
   validateUser,
+  current,
 };

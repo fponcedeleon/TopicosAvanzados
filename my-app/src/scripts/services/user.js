@@ -1,4 +1,4 @@
-import { get } from "../utils/api.js";
+import { get, post } from "../utils/api.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -16,3 +16,41 @@ export const getFilteredUsers = async (minAge, maxAge, city, department) => {
   );
   return users;
 };
+
+
+export const getCurrent = async () => {
+  const { data } = await post(
+    `${baseUrl}/users/current`
+  , {});
+  return data;
+}
+
+export const register = async ({
+  username,
+  firstName,
+  lastName,
+  email,
+  age,
+  country,
+  city
+}) => {
+  const { data } = await post(
+    `${baseUrl}/users`
+  , {
+    username,
+    firstName,
+    lastName,
+    email,
+    age,
+    country,
+    city
+  });
+  return data;
+}
+
+export const verifyAccount = async (userId) => {
+  const { data } = await post(
+    `${baseUrl}/users/validate/${userId}`
+  , {});
+  return data;
+}

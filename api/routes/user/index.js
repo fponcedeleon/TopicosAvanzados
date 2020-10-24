@@ -31,4 +31,9 @@ module.exports = [
     path: '/users/validate/{id}',
     config: config.validateUser,
   },
+  {
+    method: 'POST',
+    path: '/users/current',
+    config: config.current,
+  },
 ];

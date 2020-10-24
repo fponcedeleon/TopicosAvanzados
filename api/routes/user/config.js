@@ -30,4 +30,8 @@ module.exports = {
     // validate: validations.deleteOne,
     handler: handlers.validateUser
   },
+  current: {
+    auth: process.env.JWT_PROTOCOL,
+    handler: handlers.current
+  },
 };

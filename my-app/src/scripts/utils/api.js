@@ -1,13 +1,14 @@
-//import { getSession } from './session.js';
+// eslint-disable-next-line import/extensions
+import { getSession } from './session.js';
 
 const fetch = async (url, method, data) => {
   const headers = new Headers();
 
-  /*
   const session = getSession();
   if (session) {
-    headers.append('Authorization', `Bearer ${session.token}`);
-  }*/
+    headers.append('Authorization', `Bearer ${session}`);
+  }
+
   // Configurar cabeceras y cors
   let body;
   if (data) {
