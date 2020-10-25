@@ -87,7 +87,7 @@ const validateUser = async ({ params }) => {
         const token = sessionHelper.createJWT(result.username);
         return { status: "Success", token: token };
       }
-      return { status: "Success", token: token };
+      return { status: "Error" };
     })
     .catch((error) => {
       return { status: "Success", message: error };

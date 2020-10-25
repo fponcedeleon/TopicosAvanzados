@@ -77,6 +77,12 @@ const RegisterForm = () => {
 
                         <div>
                             <label>
+                                Contraseña <InputField type="text" field="password" />
+                            </label>
+                        </div>
+
+                        <div>
+                            <label>
                                 Email <InputField type="email" field="email" />
                             </label>
                         </div>

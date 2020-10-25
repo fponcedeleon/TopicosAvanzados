@@ -21,7 +21,7 @@ export const getFilteredUsers = async (minAge, maxAge, city, department) => {
 export const getCurrent = async () => {
   const { data } = await post(
     `${baseUrl}/users/current`
-  , {});
+    , {});
   return data;
 }
 
@@ -32,25 +32,30 @@ export const register = async ({
   email,
   age,
   country,
-  city
+  city,
+  department,
+  password,
 }) => {
   const { data } = await post(
     `${baseUrl}/users`
-  , {
-    username,
-    firstName,
-    lastName,
-    email,
-    age,
-    country,
-    city
-  });
+    , {
+      username,
+      firstName,
+      lastName,
+      email,
+      age,
+      country,
+      city,
+      department,
+      password,
+    });
   return data;
 }
 
 export const verifyAccount = async (userId) => {
   const { data } = await post(
     `${baseUrl}/users/validate/${userId}`
-  , {});
+    , {});
+    console.log(data);
   return data;
 }
