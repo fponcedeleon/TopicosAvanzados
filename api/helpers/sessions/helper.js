@@ -23,8 +23,15 @@ const createJWT = username => {
   return jwt.sign({ sub: username }, process.env.JWT_SECRET);
 }
 
+const create = async (username, password) => {
+
+  const validatedUser = await userHelper.comparePassword(username, password);
+  return validatedUser ? createJWT(username) : null;
+};
+
 module.exports = {
   getExistingUserByUsername,
   createUser,
-  createJWT
+  createJWT,
+  create,
 }

@@ -26,4 +26,14 @@ module.exports = [
     path: '/users/{id}',
     config: config.deleteOne,
   },
+  {
+    method: 'POST',
+    path: '/users/validate/{id}',
+    config: config.validateUser,
+  },
+  {
+    method: 'POST',
+    path: '/users/current',
+    config: config.current,
+  },
 ];

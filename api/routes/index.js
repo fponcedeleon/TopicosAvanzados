@@ -4,6 +4,7 @@ const option = require("./option");
 const proposal = require("./proposal");
 const sendMail = require("./sendMail");
 const user = require("./user");
+const sessions = require("./sessions");
 
 module.exports = {
   name: "routes",
@@ -15,6 +16,7 @@ module.exports = {
       ...proposal,
       ...sendMail,
       ...user,
+      ...sessions,
     ]);
   },
 };

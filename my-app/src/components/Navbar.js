@@ -3,7 +3,8 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
-function Navbar() {
+const Navbar = ({ isAuthenticated }) => {
+  console.log(isAuthenticated);
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -41,7 +42,9 @@ function Navbar() {
                 Home
               </Link>
             </li>
-            <li className='nav-item'>
+            { isAuthenticated &&
+              <React.Fragment>
+                <li className='nav-item'>
               <Link
                 to='/voting'
                 className='nav-links'
@@ -59,6 +62,32 @@ function Navbar() {
                 Eleccion
               </Link>
             </li>
+              </React.Fragment>
+            }
+
+            { !isAuthenticated &&
+              <React.Fragment>
+                <li className='nav-item'>
+              <Link
+                to='/login'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Login
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to='/register'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Register
+              </Link>
+            </li>
+              </React.Fragment>
+            }
+            
           </ul>
           {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
         </div>

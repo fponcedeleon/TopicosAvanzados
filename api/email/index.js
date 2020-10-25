@@ -1,5 +1,6 @@
-const { customEmail } = require('./handler');
+const { customEmail, validateUserEmail } = require('./handler');
 
 module.exports = {
   customEmail,
+  validateUserEmail,
 };

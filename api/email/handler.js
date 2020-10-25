@@ -1,5 +1,9 @@
 const nodemailer = require("nodemailer");
-const { getTemplateResults, getTemplateNewElection } = require("./template");
+const { 
+  getTemplateResults, 
+  getTemplateNewElection,
+  getTemplateValidateUser,
+} = require("./template");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -46,6 +50,17 @@ const customEmail = (
   sendEmail(subject, userEmail, text);
 };
 
+const validateUserEmail = (
+  userName,
+  userEmail,
+  link,
+  subject,
+) => {
+  const text = getTemplateValidateUser(userName, link);
+  sendEmail(subject, userEmail, text);
+};
+
 module.exports = {
   customEmail,
+  validateUserEmail,
 };
