@@ -53,10 +53,26 @@ const saveUser = userModel => {
   })
 }
 
+const comparePassword = (username, password) => {
+  return User.findOne({ username })
+    .exec()
+    .then(user => {
+      if (user) {
+        return user.comparePassword(password);
+      }
+
+      return false;
+    })
+    .catch(error => {
+      return { status: 'Error', message: error.message };
+    });
+};
+
 module.exports = {
   getCurrent,
   createUserModel,
   parseUserInfo,
   getUserByParams,
-  saveUser
+  saveUser,
+  comparePassword,
 }

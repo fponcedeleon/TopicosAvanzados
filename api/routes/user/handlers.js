@@ -1,5 +1,14 @@
 const User = require("../../models/user");
 const helper = require("./helper");
+const sessionHelper = require("../../helpers/sessions");
+const { validateUserEmail } = require("../../email");
+
+const linkUrl = process.env.NODE_ENV === 'localhost' ? 
+                    'http://localhost:3000' : 
+                        process.env.ENVIRONMENT === 'test' ? 
+                            'https://topicos2020testing.netlify.app' :
+                            'https://topicos2020.netlify.app';
+
 /**
  *
  * @param {*} params this is accessed via api and the sport is the name, so we need to query.
@@ -25,6 +34,9 @@ const create = async ({ payload, auth }) => {
   return await userToInsert
     .save()
     .then((result) => {
+      const link = `${linkUrl}/verify/${result._id}`;
+      const subject = 'Verify your email address';
+      validateUserEmail(result.username, result.email, link, subject);
       return {
         status: "Success",
         data: helper.parseUser(result),
@@ -65,10 +77,33 @@ const deleteOne = async ({ params }) => {
     });
 };
 
+const validateUser = async ({ params }) => {
+
+  return await User.findOneAndUpdate({ _id: params.id }, { validated: true })
+    .exec()
+    .then((result) => {
+      console.log(result);
+      if (result) {
+        const token = sessionHelper.createJWT(result.username);
+        return { status: "Success", token: token };
+      }
+      return { status: "Error" };
+    })
+    .catch((error) => {
+      return { status: "Success", message: error };
+    });
+}
+
+const current = ({ auth }) => {
+  return { status: "Success", credentials: auth.credentials };
+}
+
 module.exports = {
   getUserById,
   getAll,
   create,
   update,
   deleteOne,
+  validateUser,
+  current,
 };
