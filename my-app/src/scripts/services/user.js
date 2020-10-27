@@ -64,7 +64,7 @@ export const getToken = async ({
   user, 
   password
 }) => {
-  const { data } = await get(
+  const { data } = await post(
     `${baseUrl}/sessions`,{
          user, 
          password
