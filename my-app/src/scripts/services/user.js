@@ -60,7 +60,14 @@ export const verifyAccount = async (userId) => {
 }
 
 
-export const getToken = async (user, password) => {
-  const { data: token } = await get(`${baseUrl}/sessions?user=${user}&password=${password}`); 
-  return token;
+export const getToken = async ({
+  user, 
+  password
+}) => {
+  const { data } = await get(
+    `${baseUrl}/sessions`,{
+         user, 
+         password
+  }); 
+  return data;
 };
