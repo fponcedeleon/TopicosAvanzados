@@ -56,6 +56,11 @@ export const verifyAccount = async (userId) => {
   const { data } = await post(
     `${baseUrl}/users/validate/${userId}`
     , {});
-    console.log(data);
   return data;
 }
+
+
+export const getToken = async (user, password) => {
+  const { data: token } = await get(`${baseUrl}/sessions?user=${user}&password=${password}`); 
+  return token;
+};
