@@ -168,11 +168,11 @@ export default function Services() {
 
         <hr></hr>
         <label for="department">
-          <b>Pais</b>
+          <b>Departamento</b>
         </label>
         <input
           type="text"
-          placeholder="Pais"
+          placeholder="Departamento"
           name="department"
           id="department"
         ></input>

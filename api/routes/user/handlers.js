@@ -39,8 +39,9 @@ const getFilteredUsers = async ({ query }) => {
   } else if (query.minAge) {
     filter.age = { $gte: query.minAge };
   }
-  if (query.city) filter.city = query.city;
-  if (query.department) filter.department = query.department;
+  if (query.city) filter.city = { $regex: query.city, $options: "i" };
+  if (query.department)
+    filter.department = { $regex: query.department, $options: "i" };
   return await User.find(filter);
 };
 

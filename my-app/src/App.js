@@ -31,6 +31,7 @@ function App() {
       <Route path="/" exact component={Home} />
       {isAuthenticated && (
         <React.Fragment>
+          <Route path="/election" component={Election} />
           <Route path="/voting" component={Voting} />
           <Route path="/votingdetails/:id" component={VotingDetails} />
           <Route path="/votingresult/:id" component={VotingResult} />
@@ -39,7 +40,6 @@ function App() {
       {!isAuthenticated && (
         <React.Fragment>
           {/* <Route path='/login' component={Login} /> */}
-          <Route path="/election" component={Election} />
           <Route path="/register" component={Register} />
           <Route path="/verify" component={VerifyAccount} />
         </React.Fragment>
