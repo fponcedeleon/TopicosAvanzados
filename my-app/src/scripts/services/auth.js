@@ -1,4 +1,4 @@
-import { post } from "../utils/api.js";
+import { post, deleteApi, get } from "../utils/api.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -23,4 +23,29 @@ export const customEmail = async (
     isNewElection,
     endDate,
   });
+};
+
+export const createNewToken = async (electionId, userId) => {
+  const { data: token, error } = await post(`${baseUrl}/token`, {
+    electionId,
+    userId,
+  });
+  if (error) {
+    if (error.status === 409) {
+      throw new Error("Token already exists.");
+    }
+    throw error;
+    //throw new Error('Oops! Something went wrong...');
+  }
+  console.log(token)
+  return token;
+};
+
+export const getToken = async (token) => {
+  const { data: tokenApi } = await get(`${baseUrl}/token/${token}`);
+  return tokenApi;
+};
+
+export const deleteToken = async (token) => {
+  return await post(`${baseUrl}/token/${token}`);
 };

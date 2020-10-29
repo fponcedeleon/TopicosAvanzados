@@ -4,9 +4,23 @@ import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
 import { getFilteredUsers, getCurrent } from "../scripts/services/user.js";
-import { customEmail } from "../scripts/services/auth.js";
+import { customEmail, createNewToken } from "../scripts/services/auth.js";
+
+const baseUrl =
+  process.env.NODE_ENV === "localhost"
+    ? "http://localhost:3000"
+    : process.env.ENVIRONMENT === "test"
+    ? "https://topicos2020testing.netlify.app"
+    : "https://topicos2020.netlify.app";
 
 export default function Services() {
+  let electionId;
+
+  const generateNewLink = async (id) => {
+    const token = await createNewToken(electionId, id);
+    return `${baseUrl}/VotingDetails/${electionId}?token=${token.data.token}`;
+  };
+
   const sendCustomEmail = async (
     electionName,
     endDate,
@@ -18,9 +32,8 @@ export default function Services() {
     const users = await getFilteredUsers(minAge, maxAge, city, department);
 
     const subject = "Nueva eleccion";
-    users.forEach((user) => {
-      // const electionLink = generateNewLink();
-      const electionLink = "link";
+    users.forEach(async (user) => {
+      const electionLink = await generateNewLink(user._id);
       customEmail(
         user.firstName,
         user.email,
@@ -62,12 +75,9 @@ export default function Services() {
       department,
       nameEl
     );
+    electionId = election.data.id;
 
-    const proposal = await createNewProposal(
-      election.data.id,
-      name,
-      description
-    );
+    const proposal = await createNewProposal(electionId, nameEl, description);
     const propId = proposal.data.id;
 
     await createNewOption(propId, opt1);
