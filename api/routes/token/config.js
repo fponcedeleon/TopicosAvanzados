@@ -3,18 +3,15 @@ const handlers = require('./handlers');
 
 module.exports = {
   getToken: {
-    //auth: false,
-    // validate: validations.getByCriteria,
+    auth: false,
     handler: handlers.getToken
   },
   create: {
-    // auth: process.env.JWT_PROTOCOL,
-    // validate: validations.create,
+    auth: process.env.JWT_PROTOCOL,
     handler: handlers.create
   },
   deleteOne: {
-    //auth: process.env.JWT_PROTOCOL,
-    // validate: validations.deleteOne,
+    auth: process.env.JWT_PROTOCOL,
     handler: handlers.deleteOne
   },
 };
