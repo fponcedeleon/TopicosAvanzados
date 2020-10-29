@@ -94,7 +94,7 @@ export default function Services() {
       alert("An error occurred, please try again");
     }
   };
-  
+
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
       <div class="container">
@@ -163,7 +163,7 @@ export default function Services() {
           <b>Minimo de edad</b>
         </label>
         <input
-          type="text"
+          type="number"
           placeholder="Edad minima"
           name="minAge"
           id="minAge"
@@ -174,7 +174,7 @@ export default function Services() {
           <b>Maximo de edad</b>
         </label>
         <input
-          type="text"
+          type="number"
           placeholder="Edad maxima"
           name="maxAge"
           id="maxAge"
