@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { useHistory } from "react-router-dom";
 import { removeSession } from "../scripts/utils/session.js";
 import { getCurrent } from "../scripts/services/user.js";
 
@@ -9,9 +10,10 @@ const Navbar = ({ isAuthenticated }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
+  const history = useHistory();
   const logout = () => {
     removeSession();
+    history.push("/");
     window.location.reload();
   }
 
