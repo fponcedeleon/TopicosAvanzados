@@ -48,7 +48,21 @@ export const register = async ({
 };
 
 export const verifyAccount = async (userId) => {
-  const { data } = await post(`${baseUrl}/users/validate/${userId}`, {});
-  console.log(data);
+  const { data } = await post(
+    `${baseUrl}/users/validate/${userId}`
+    , {});
+  return data;
+}
+
+
+export const getToken = async ({
+  user, 
+  password
+}) => {
+  const { data } = await post(
+    `${baseUrl}/sessions`,{
+         user, 
+         password
+  }); 
   return data;
 };
