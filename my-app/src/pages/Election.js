@@ -62,7 +62,6 @@ export default function Services() {
     const opt1 = event.target.optionOne.value;
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
-    const currentUser = await getCurrent();
 
     const election = await createNewElection(
       "test", //GET CURRENT USER

@@ -77,7 +77,7 @@ const RegisterForm = () => {
 
                         <div>
                             <label>
-                                Contraseña <InputField type="text" field="password" />
+                                Contraseña <InputField type="password" field="password" />
                             </label>
                         </div>
 

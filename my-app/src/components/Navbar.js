@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from './Button';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import './Navbar.css';
+import { removeSession } from "../scripts/utils/session.js";
 
 const Navbar = ({ isAuthenticated }) => {
   const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
+  let history = useHistory();
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-      setButton(true);
-    }
-  };
-
-  useEffect(() => {
-    showButton();
-  }, []);
-
-  window.addEventListener('resize', showButton);
+  const logout = () => {
+    removeSession();
+    // history.push("/");
+    window.location.reload();
+  }
 
   return (
     <>
@@ -59,6 +52,15 @@ const Navbar = ({ isAuthenticated }) => {
                 onClick={closeMobileMenu}
               >
                 Eleccion
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to='/'
+                className='nav-links'
+                onClick={logout}
+              >
+                Log Out
               </Link>
             </li>
               </React.Fragment>
