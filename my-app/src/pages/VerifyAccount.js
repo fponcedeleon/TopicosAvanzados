@@ -10,8 +10,6 @@ const VerifyAccForm = () => {
     useEffect(() => {
         verifyAccount(userId)
             .then(res => {
-                console.log(res);
-                // if (res.)
                 setSession(res.token);
                 history.push('/')
                 alert('Successfully validated');

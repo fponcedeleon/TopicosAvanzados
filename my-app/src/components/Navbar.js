@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
 import './Navbar.css';
 import { removeSession } from "../scripts/utils/session.js";
 
 const Navbar = ({ isAuthenticated }) => {
   const [click, setClick] = useState(false);
-  let history = useHistory();
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
   const logout = () => {
     removeSession();
-    // history.push("/");
     window.location.reload();
   }
 
