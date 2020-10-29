@@ -10,6 +10,9 @@ module.exports = {
   getAll: {
     handler: handlers.getAll
   },
+  getFilteredUsers: {
+    handler: handlers.getFilteredUsers
+  },
   create: {
     // auth: process.env.JWT_PROTOCOL,
     // validate: validations.create,

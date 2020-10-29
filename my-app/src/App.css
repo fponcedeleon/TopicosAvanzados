@@ -28,6 +28,26 @@
   color: #61dafb;
 }
 
+.imgStyle{
+  width: inherit;
+}
+
+.logo{
+  width: 90%;
+  padding-top: 90px;
+}
+
+.titleHome{
+  text-align: center;
+  color: gray;
+}
+
+.buttonSignin{
+  background-color: #1177d1 !important;
+  color: white !important;
+  width: 100% !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
