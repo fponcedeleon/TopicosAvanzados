@@ -5,9 +5,8 @@ const getElectionModel = async (
   { createdBy, name, startDate, endDate, minAge, maxAge, city, country },
   { credentials }
 ) => {
-  const randomUser = await User.find({}).then((r) => r);
   return new Election({
-    createdBy: randomUser[0]._id, //credentials.id,
+    createdBy: createdBy, //credentials.id,
     name: name,
     startDate: startDate,
     endDate: endDate,

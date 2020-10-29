@@ -5,6 +5,7 @@ import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
 import { getFilteredUsers, getCurrent } from "../scripts/services/user.js";
 import { customEmail, createNewToken } from "../scripts/services/auth.js";
+import { useHistory } from "react-router-dom";
 
 const baseUrl =
   process.env.NODE_ENV === "localhost"
@@ -15,6 +16,7 @@ const baseUrl =
 
 export default function Services() {
   let electionId;
+  const history = useHistory();
 
   const generateNewLink = async (id) => {
     const token = await createNewToken(electionId, id);
@@ -47,7 +49,6 @@ export default function Services() {
   };
 
   const handleSumbit = async (event) => {
-    console.log("1");
     event.preventDefault();
     const startDateHr = event.target.startDateHr.value;
     const startDate = event.target.startDate.value + " " + startDateHr;
@@ -62,10 +63,10 @@ export default function Services() {
     const opt1 = event.target.optionOne.value;
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
+    const user = await getCurrent();
 
     const election = await createNewElection(
-      "test", //GET CURRENT USER
-      // currentUser.id,
+      user._id,
       startDate,
       endDate,
       minAge,
@@ -83,6 +84,8 @@ export default function Services() {
     await createNewOption(propId, opt2);
 
     await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
+    alert('Creada correctamente');
+    history.push("/");
   };
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
@@ -101,10 +104,10 @@ export default function Services() {
         ></input>
         <hr></hr>
         <label for="startDate">
-          <b>Comienzo*</b>
+          <b>Fecha Comienzo*</b>
         </label>
         <input
-          type="text"
+          type="date"
           placeholder="MM/DD/AAAA"
           name="startDate"
           id="startDate"
@@ -125,10 +128,10 @@ export default function Services() {
 
         <hr></hr>
         <label for="endDate">
-          <b>Finalizado*</b>
+          <b>Fecha Fin*</b>
         </label>
         <input
-          type="text"
+          type="date"
           placeholder="MM/DD/AAAA"
           name="endDate"
           id="endDate"
@@ -137,7 +140,7 @@ export default function Services() {
 
         <hr></hr>
         <label for="endDateHr">
-          <b>Hora Finalizado*</b>
+          <b>Hora Fin*</b>
         </label>
         <input
           type="text"
