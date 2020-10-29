@@ -8,13 +8,12 @@ import { voteOption } from "../scripts/services/option";
 import { getToken, deleteToken } from "../scripts/services/auth";
 
 const VotingDetails = (props) => {
+  let tokenApi;
   const checkToken = async () => {
     const urlP = new URLSearchParams(window.location.search);
     const token = urlP.get("token");
-    const tokenApi = await getToken(token);
-    //console.log(tokenApi[0]._id);
+    tokenApi = await getToken(token);
     if (tokenApi[0]) {
-      await deleteToken(tokenApi[0]._id);
       return true;
     } else {
       return false;
@@ -61,13 +60,14 @@ const VotingDetails = (props) => {
     selectedOptions[id] = event.target.value;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (window.confirm("Confirma las opciones votadas?")) {
       for (const key in selectedOptions) {
         voteOption(selectedOptions[key], "5f766c4c5c33392600cc824e").then();
       }
       
       alert("Has votado correctamente.");
+      await deleteToken(tokenApi[0]._id);
     }
   };
 
