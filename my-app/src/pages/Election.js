@@ -7,7 +7,11 @@ import { getFilteredUsers, getCurrent } from "../scripts/services/user.js";
 import { customEmail, createNewToken } from "../scripts/services/auth.js";
 
 const baseUrl =
-  window.location.hostname === "localhost" ? "http://localhost:3000" : ""; //NETLIFY
+  process.env.NODE_ENV === "localhost"
+    ? "http://localhost:3000"
+    : process.env.ENVIRONMENT === "test"
+    ? "https://topicos2020testing.netlify.app"
+    : "https://topicos2020.netlify.app";
 
 export default function Services() {
   let electionId;
@@ -16,7 +20,7 @@ export default function Services() {
     const token = await createNewToken(electionId, id);
     return `${baseUrl}/VotingDetails/${electionId}?token=${token.data.token}`;
   };
-  
+
   const sendCustomEmail = async (
     electionName,
     endDate,
