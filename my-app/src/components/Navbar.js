@@ -89,7 +89,6 @@ const Navbar = ({ isAuthenticated }) => {
             }
             
           </ul>
-          {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
         </div>
       </nav>
     </>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Election from './pages/Election';
 import Voting from './pages/Voting';
+import Error from './pages/Error';
 import Home from './pages/Home'; 
 import VerifyAccount from './pages/VerifyAccount'; 
 // eslint-disable-next-line
@@ -24,6 +25,7 @@ function App() {
     <BrowserRouter> 
       <Navbar isAuthenticated={isAuthenticated} /> 
       <Route path='/' exact component={Home} />
+      <Route path='/error' exact component={Error} />
       {
         isAuthenticated &&
         <React.Fragment>
