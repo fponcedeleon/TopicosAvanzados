@@ -7,22 +7,19 @@ import { getOnePost } from "../scripts/services/election";
 import { voteOption } from "../scripts/services/option";
 import { getToken, deleteToken } from "../scripts/services/auth";
 
-function VotingDetails(props) {
+const VotingDetails = (props) => {
   const checkToken = async () => {
     const urlP = new URLSearchParams(window.location.search);
     const token = urlP.get("token");
     const tokenApi = await getToken(token);
-    if (tokenApi) {
-      await deleteToken(tokenApi.data.id);
+    //console.log(tokenApi[0]._id);
+    if (tokenApi[0]) {
+      await deleteToken(tokenApi[0]._id);
       return true;
     } else {
       return false;
     }
   };
-
-  if (!checkToken()) {
-    //window.location = "/home"; //maybe make a new page showing that the url is invalid
-  }
 
   let selectedOptions = {};
 
@@ -31,12 +28,15 @@ function VotingDetails(props) {
   const electionId = props.match.params.id;
 
   useEffect(() => {
+    checkToken().then((result) => {
+      if (!result) window.location = "/home";
+    });
     getOnePost(electionId).then(
       (result) => {
         setElection(result);
       },
       (error) => {
-        console.log(error);
+        //console.log(error);
       }
     );
     getAllElectionProposals(electionId).then(
@@ -44,13 +44,13 @@ function VotingDetails(props) {
         setProposals(result);
       },
       (error) => {
-        console.log(error);
+        //console.log(error);
       }
     );
   }, [electionId]);
 
   const GetValueOfOpen = () => {
-    console.log("fede");
+    //console.log("fede");
   };
 
   if (!election || !proposals) {
@@ -66,7 +66,7 @@ function VotingDetails(props) {
       for (const key in selectedOptions) {
         voteOption(selectedOptions[key], "5f766c4c5c33392600cc824e").then();
       }
-
+      
       alert("Has votado correctamente.");
     }
   };
@@ -82,7 +82,7 @@ function VotingDetails(props) {
                 <input
                   readOnly="true"
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   aria-describedby="emailHelp"
                   value={election.name}
                 />
@@ -103,7 +103,7 @@ function VotingDetails(props) {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  class="form-control"
+                  className="form-control"
                 >
                   Enviar Respuesta
                 </button>
@@ -114,6 +114,6 @@ function VotingDetails(props) {
       </form>
     </Container>
   );
-}
+};
 
 export default VotingDetails;

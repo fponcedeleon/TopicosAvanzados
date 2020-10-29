@@ -12,7 +12,7 @@ module.exports = [
     config: config.create,
   },
   {
-    method: "DELETE",
+    method: "POST",
     path: "/token/{id}",
     config: config.deleteOne,
   },

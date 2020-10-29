@@ -47,5 +47,5 @@ export const getToken = async (token) => {
 };
 
 export const deleteToken = async (token) => {
-  return await deleteApi(`${baseUrl}/token/${token}`);
+  return await post(`${baseUrl}/token/${token}`);
 };

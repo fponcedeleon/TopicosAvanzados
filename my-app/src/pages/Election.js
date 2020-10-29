@@ -7,9 +7,7 @@ import { getAllUsers } from "../scripts/services/user.js";
 import { customEmail, createNewToken } from "../scripts/services/auth.js";
 
 const baseUrl =
-  window.location.hostname === "localhost"
-    ? "http://localhost:3000"
-    : ""; //NETLIFY
+  window.location.hostname === "localhost" ? "http://localhost:3000" : ""; //NETLIFY
 
 export default function Services() {
   let electionId;
@@ -67,7 +65,7 @@ export default function Services() {
     );
     electionId = election.data.id;
 
-    const proposal = await createNewProposal(electionId, name, description);
+    const proposal = await createNewProposal(electionId, nameEl, description);
     const propId = proposal.data.id;
 
     await createNewOption(propId, opt1);

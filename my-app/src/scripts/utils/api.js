@@ -12,6 +12,10 @@ const fetch = async (url, method, data) => {
   let body;
   if (data) {
     headers.append("Content-Type", "application/json");
+    // headers.append(
+    //   "Access-Control-Allow-Methods",
+    //   "GET, POST, OPTIONS, PUT, DELETE"
+    // );
     //headers.append('Access-Control-Allow-Origin', '*');
     // headers.append(
     //   'Access-Control-Allow-Headers',
