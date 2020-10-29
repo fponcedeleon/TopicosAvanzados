@@ -10,6 +10,9 @@ module.exports = {
   getAll: {
     handler: handlers.getAll
   },
+  getFilteredUsers: {
+    handler: handlers.getFilteredUsers
+  },
   create: {
     // auth: process.env.JWT_PROTOCOL,
     // validate: validations.create,
@@ -24,5 +27,14 @@ module.exports = {
     //auth: process.env.JWT_PROTOCOL,
     // validate: validations.deleteOne,
     handler: handlers.deleteOne
+  },
+  validateUser: {
+    // auth: process.env.JWT_PROTOCOL,
+    // validate: validations.deleteOne,
+    handler: handlers.validateUser
+  },
+  current: {
+    auth: process.env.JWT_PROTOCOL,
+    handler: handlers.current
   },
 };

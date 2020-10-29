@@ -5,6 +5,7 @@ const proposal = require("./proposal");
 const sendMail = require("./sendMail");
 const user = require("./user");
 const token = require("./token");
+const sessions = require("./sessions");
 
 module.exports = {
   name: "routes",
@@ -17,6 +18,7 @@ module.exports = {
       ...sendMail,
       ...user,
       ...token,
+      ...sessions,
     ]);
   },
 };
