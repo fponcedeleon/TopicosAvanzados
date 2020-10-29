@@ -17,7 +17,7 @@ const Navbar = ({ isAuthenticated }) => {
 
   useEffect(() => {
     getCurrent().then(res => {
-      if (res.credentials && res.credentials.role === 'admin') {
+      if (res && res.credentials && res.credentials.role === 'admin') {
         setIsAdmin(true);
       }
     })
