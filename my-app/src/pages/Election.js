@@ -3,12 +3,19 @@ import "../App.css";
 import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
-import { getAllUsers } from "../scripts/services/user.js";
+import { getFilteredUsers, getCurrent } from "../scripts/services/user.js";
 import { customEmail } from "../scripts/services/auth.js";
 
 export default function Services() {
-  const sendCustomEmail = async (electionName, endDate) => {
-    const users = await getAllUsers();
+  const sendCustomEmail = async (
+    electionName,
+    endDate,
+    minAge,
+    maxAge,
+    city,
+    department
+  ) => {
+    const users = await getFilteredUsers(minAge, maxAge, city, department);
 
     const subject = "Nueva eleccion";
     users.forEach((user) => {
@@ -27,31 +34,32 @@ export default function Services() {
   };
 
   const handleSumbit = async (event) => {
-    console.log("1")
+    console.log("1");
     event.preventDefault();
     const startDateHr = event.target.startDateHr.value;
     const startDate = event.target.startDate.value + " " + startDateHr;
     const endDateHr = event.target.endDateHr.value;
-    const endDate = event.target.endDate.value + " " + endDateHr;    
+    const endDate = event.target.endDate.value + " " + endDateHr;
     const minAge = event.target.minAge.value;
     const maxAge = event.target.maxAge.value;
     const city = event.target.city.value;
-    const country = event.target.country.value;
+    const department = event.target.department.value;
     const name = event.target.proposalName.value;
     const description = event.target.proposalDescription.value;
     const opt1 = event.target.optionOne.value;
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
+    const currentUser = await getCurrent();
 
-    console.log("2")
     const election = await createNewElection(
-      "test",
+      "test", //GET CURRENT USER
+      // currentUser.id,
       startDate,
       endDate,
       minAge,
       maxAge,
       city,
-      country,
+      department,
       nameEl
     );
 
@@ -65,7 +73,7 @@ export default function Services() {
     await createNewOption(propId, opt1);
     await createNewOption(propId, opt2);
 
-    await sendCustomEmail(name, endDate);
+    await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
   };
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
@@ -159,14 +167,14 @@ export default function Services() {
         <input type="text" placeholder="Ciudad" name="city" id="city"></input>
 
         <hr></hr>
-        <label for="country">
-          <b>Pais</b>
+        <label for="department">
+          <b>Departamento</b>
         </label>
         <input
           type="text"
-          placeholder="Pais"
-          name="country"
-          id="country"
+          placeholder="Departamento"
+          name="department"
+          id="department"
         ></input>
 
         <hr></hr>

@@ -12,6 +12,11 @@ module.exports = [
     config: config.getAll,
   },
   {
+    method: 'GET',
+    path: '/users/votants',
+    config: config.getFilteredUsers,
+  },
+  {
     method: 'POST',
     path: '/users',
     config: config.create,
