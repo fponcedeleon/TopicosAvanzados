@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { removeSession } from "../scripts/utils/session.js";
+import { getCurrent } from "../scripts/services/user.js";
 
 const Navbar = ({ isAuthenticated }) => {
   const [click, setClick] = useState(false);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
@@ -13,6 +14,14 @@ const Navbar = ({ isAuthenticated }) => {
     removeSession();
     window.location.reload();
   }
+
+  useEffect(() => {
+    getCurrent().then(res => {
+      if (res.credentials && res.credentials.role === 'admin') {
+        setIsAdmin(true);
+      }
+    })
+  }, [])
 
   return (
     <>
@@ -42,15 +51,17 @@ const Navbar = ({ isAuthenticated }) => {
                 Votacion
               </Link>
             </li>
-            <li className='nav-item'>
-              <Link
-                to='/election'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
-                Eleccion
-              </Link>
-            </li>
+            {isAdmin &&
+              <li className='nav-item'>
+                <Link
+                  to='/election'
+                  className='nav-links'
+                  onClick={closeMobileMenu}
+                >
+                  Eleccion
+                </Link>
+              </li>
+            }
             <li className='nav-item'>
               <Link
                 to='/'

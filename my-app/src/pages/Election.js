@@ -63,30 +63,38 @@ export default function Services() {
     const opt1 = event.target.optionOne.value;
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
-    const user = await getCurrent();
 
-    const election = await createNewElection(
-      user._id,
-      startDate,
-      endDate,
-      minAge,
-      maxAge,
-      city,
-      department,
-      nameEl
-    );
-    electionId = election.data.id;
+    try {
 
-    const proposal = await createNewProposal(electionId, nameEl, description);
-    const propId = proposal.data.id;
-
-    await createNewOption(propId, opt1);
-    await createNewOption(propId, opt2);
-
-    await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
-    alert('Creada correctamente');
-    history.push("/");
+      const election = await createNewElection(
+        startDate,
+        endDate,
+        minAge,
+        maxAge,
+        city,
+        department,
+        nameEl
+      );
+  
+      const proposal = await createNewProposal(
+        election.data.id,
+        name,
+        description
+      );
+      const propId = proposal.data.id;
+  
+      await createNewOption(propId, opt1);
+      await createNewOption(propId, opt2);
+  
+      await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
+      alert('Creada correctamente');
+      history.push("/");
+    }
+    catch (e) {
+      alert("An error occurred, please try again");
+    }
   };
+  
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
       <div class="container">

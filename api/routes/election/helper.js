@@ -6,7 +6,7 @@ const getElectionModel = async (
   { credentials }
 ) => {
   return new Election({
-    createdBy: createdBy, //credentials.id,
+    createdBy: credentials.id, //credentials.id,
     name: name,
     startDate: startDate,
     endDate: endDate,
