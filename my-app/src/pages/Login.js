@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
-import { useForm, useField, splitFormProps } from "react-form";
 import { setSession } from "../scripts/utils/session";
 import catolica from '../Img/cato.jpg';
 import logo from '../Img/ucu_logo.png';
@@ -15,21 +14,17 @@ export default function Login() {
 
   function LoginApp()
   {  
-      getToken(user,password).then((token) =>
-      {
-        if(token != null)
-        {
-          setSession(token)
-        } 
-        else{ 
-          alert("Credenciales incorrectas")
+      getToken(user, password).then((result) => {
+        if (result) {
+          setSession(result.result);
+          window.location.reload();
         }
-        window.location.reload()
+        else {
+          alert("Credenciales incorrectas");
+        }
       });
   }
-
-
-
+  
   return  <div className="row">
         <div className="col-md-9">
           <img className="imgStyle" src={catolica} alt="Catolica" />

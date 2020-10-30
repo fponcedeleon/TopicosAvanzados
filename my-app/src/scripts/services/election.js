@@ -7,7 +7,6 @@ const baseUrl =
     : "https://topicossw.herokuapp.com";
 
 export const createNewElection = async (
-  createdBy,
   startDate,
   endDate,
   minAge,
@@ -17,7 +16,6 @@ export const createNewElection = async (
   name
 ) => {
   const { data: election, error } = await post(`${baseUrl}/elections`, {
-    createdBy,
     startDate,
     endDate,
     minAge,

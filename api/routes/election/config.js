@@ -12,7 +12,7 @@ module.exports = {
     handler: handlers.getAll
   },
   create: {
-    // auth: process.env.JWT_PROTOCOL,
+    auth: process.env.JWT_PROTOCOL,
     // validate: validations.create,
     // description: 'Creates and returns an activity. Every param in the model is required',
     handler: handlers.create

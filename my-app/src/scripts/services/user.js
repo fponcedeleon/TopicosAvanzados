@@ -55,13 +55,13 @@ export const verifyAccount = async (userId) => {
 }
 
 
-export const getToken = async ({
-  user, 
+export const getToken = async (
+  username, 
   password
-}) => {
+) => {
   const { data } = await post(
     `${baseUrl}/sessions`,{
-         user, 
+         username, 
          password
   }); 
   return data;
