@@ -6,6 +6,7 @@ import { getAllElectionProposals } from "../scripts/services/proposal";
 import { getOnePost } from "../scripts/services/election";
 import { voteOption } from "../scripts/services/option";
 import { getToken, deleteToken } from "../scripts/services/auth";
+import { getCurrent } from "../scripts/services/user";
 
 const VotingDetails = (props) => {
   let tokenApi;
@@ -24,9 +25,15 @@ const VotingDetails = (props) => {
 
   const [election, setElection] = useState({});
   const [proposals, setProposals] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   const electionId = props.match.params.id;
 
   useEffect(() => {
+    getCurrent().then(res => {
+      if (res && res.credentials) {
+        setCurrentUser(res.credentials);
+      }
+    })
     checkToken().then((result) => {
       if (!result) window.location = "/home";
     });
@@ -63,7 +70,7 @@ const VotingDetails = (props) => {
   const handleSubmit = async () => {
     if (window.confirm("Confirma las opciones votadas?")) {
       for (const key in selectedOptions) {
-        voteOption(selectedOptions[key], "5f766c4c5c33392600cc824e").then();
+        voteOption(selectedOptions[key], currentUser.id).then();
       }
       
       alert("Has votado correctamente.");
