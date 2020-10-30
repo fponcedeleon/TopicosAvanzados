@@ -8,12 +8,9 @@ import Login from "./pages/Login";
 import VerifyAccount from "./pages/VerifyAccount";
 // eslint-disable-next-line
 import {
-  BrowserRouter as Router,
-  Switch,
   Route,
   BrowserRouter,
 } from "react-router-dom";
-import { Redirect } from "react-router-dom";
 import "./App.css";
 import VotingDetails from "./pages/VotingDetails";
 import VotingResult from "./pages/VotingResult";

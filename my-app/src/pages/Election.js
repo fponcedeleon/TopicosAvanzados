@@ -3,7 +3,7 @@ import "../App.css";
 import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
-import { getFilteredUsers, getCurrent } from "../scripts/services/user.js";
+import { getFilteredUsers } from "../scripts/services/user.js";
 import { customEmail, createNewToken } from "../scripts/services/auth.js";
 import { useHistory } from "react-router-dom";
 

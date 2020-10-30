@@ -49,11 +49,11 @@ const VotingDetails = (props) => {
       (result) => {
         setProposals(result);
       },
-      (error) => {
+      () => {
         //console.log(error);
       }
     );
-  }, [electionId]);
+  }, [electionId, checkToken]);
 
   const GetValueOfOpen = () => {
     //console.log("fede");
