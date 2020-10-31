@@ -24,3 +24,11 @@ export const customEmail = async (
     endDate,
   });
 };
+
+export const forgotPasswordEmail = async (userEmail, link, subject) => {
+  await post(`${baseUrl}/sendMail/forgotPassword`, {
+    userEmail,
+    link,
+    subject,
+  });
+};
