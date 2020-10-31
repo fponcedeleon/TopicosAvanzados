@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { useHistory } from "react-router-dom";
+import { removeSession } from "../scripts/utils/session.js";
+import { getCurrent } from "../scripts/services/user.js";
 
 const Navbar = ({ isAuthenticated }) => {
   const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-      setButton(true);
-    }
-  };
+  const history = useHistory();
+  const logout = () => {
+    removeSession();
+    history.push("/");
+    window.location.reload();
+  }
 
   useEffect(() => {
-    showButton();
-  }, []);
-
-  window.addEventListener('resize', showButton);
+    getCurrent().then(res => {
+      if (res && res.credentials && res.credentials.role === 'admin') {
+        setIsAdmin(true);
+      }
+    })
+  }, [])
 
   return (
     <>
@@ -52,13 +53,24 @@ const Navbar = ({ isAuthenticated }) => {
                 Votacion
               </Link>
             </li>
+            {isAdmin &&
+              <li className='nav-item'>
+                <Link
+                  to='/election'
+                  className='nav-links'
+                  onClick={closeMobileMenu}
+                >
+                  Eleccion
+                </Link>
+              </li>
+            }
             <li className='nav-item'>
               <Link
-                to='/election'
+                to='/'
                 className='nav-links'
-                onClick={closeMobileMenu}
+                onClick={logout}
               >
-                Eleccion
+                Log Out
               </Link>
             </li>
               </React.Fragment>

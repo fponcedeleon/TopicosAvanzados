@@ -4,6 +4,7 @@ const option = require("./option");
 const proposal = require("./proposal");
 const sendMail = require("./sendMail");
 const user = require("./user");
+const token = require("./token");
 const sessions = require("./sessions");
 
 module.exports = {
@@ -16,6 +17,7 @@ module.exports = {
       ...proposal,
       ...sendMail,
       ...user,
+      ...token,
       ...sessions,
     ]);
   },

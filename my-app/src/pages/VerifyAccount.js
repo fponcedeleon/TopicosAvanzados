@@ -13,9 +13,10 @@ const VerifyAccForm = () => {
                 setSession(res.token);
                 history.push('/')
                 alert('Successfully validated');
+                window.location.reload();
             })
-            .catch(err => alert('An error occured. Please try again'));
-    }, [userId]);
+            .catch(() => alert('An error occured. Please try again'));
+    }, [userId, history]);
 
     return (
         <div>

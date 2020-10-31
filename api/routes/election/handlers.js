@@ -21,6 +21,9 @@ const getAll = async () => {
 }
 
 const create = async ({ payload, auth }) => {
+  if (auth.credentials.role !== 'admin') {
+    // throw new Error('Unauthorized');
+  }
   const electionToInsert = await helper.getElectionModel(payload, auth);
   return await electionToInsert
     .save()

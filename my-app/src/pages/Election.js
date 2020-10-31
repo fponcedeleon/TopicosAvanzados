@@ -3,10 +3,26 @@ import "../App.css";
 import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
-import { getFilteredUsers, getCurrent } from "../scripts/services/user.js";
-import { customEmail } from "../scripts/services/auth.js";
+import { getFilteredUsers } from "../scripts/services/user.js";
+import { customEmail, createNewToken } from "../scripts/services/auth.js";
+import { useHistory } from "react-router-dom";
+
+const baseUrl =
+  process.env.NODE_ENV === "localhost"
+    ? "http://localhost:3000"
+    : process.env.ENVIRONMENT === "test"
+    ? "https://topicos2020testing.netlify.app"
+    : "https://topicos2020.netlify.app";
 
 export default function Services() {
+  let electionId;
+  const history = useHistory();
+
+  const generateNewLink = async (id) => {
+    const token = await createNewToken(electionId, id);
+    return `${baseUrl}/VotingDetails/${electionId}?token=${token.data.token}`;
+  };
+
   const sendCustomEmail = async (
     electionName,
     endDate,
@@ -18,9 +34,8 @@ export default function Services() {
     const users = await getFilteredUsers(minAge, maxAge, city, department);
 
     const subject = "Nueva eleccion";
-    users.forEach((user) => {
-      // const electionLink = generateNewLink();
-      const electionLink = "link";
+    users.forEach(async (user) => {
+      const electionLink = await generateNewLink(user._id);
       customEmail(
         user.firstName,
         user.email,
@@ -34,7 +49,6 @@ export default function Services() {
   };
 
   const handleSumbit = async (event) => {
-    console.log("1");
     event.preventDefault();
     const startDateHr = event.target.startDateHr.value;
     const startDate = event.target.startDate.value + " " + startDateHr;
@@ -49,32 +63,38 @@ export default function Services() {
     const opt1 = event.target.optionOne.value;
     const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
-    const currentUser = await getCurrent();
 
-    const election = await createNewElection(
-      "test", //GET CURRENT USER
-      // currentUser.id,
-      startDate,
-      endDate,
-      minAge,
-      maxAge,
-      city,
-      department,
-      nameEl
-    );
+    try {
 
-    const proposal = await createNewProposal(
-      election.data.id,
-      name,
-      description
-    );
-    const propId = proposal.data.id;
-
-    await createNewOption(propId, opt1);
-    await createNewOption(propId, opt2);
-
-    await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
+      const election = await createNewElection(
+        startDate,
+        endDate,
+        minAge,
+        maxAge,
+        city,
+        department,
+        nameEl
+      );
+  
+      const proposal = await createNewProposal(
+        election.data.id,
+        name,
+        description
+      );
+      const propId = proposal.data.id;
+  
+      await createNewOption(propId, opt1);
+      await createNewOption(propId, opt2);
+  
+      await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
+      alert('Creada correctamente');
+      history.push("/");
+    }
+    catch (e) {
+      alert("An error occurred, please try again");
+    }
   };
+
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
       <div class="container">
@@ -92,10 +112,10 @@ export default function Services() {
         ></input>
         <hr></hr>
         <label for="startDate">
-          <b>Comienzo*</b>
+          <b>Fecha Comienzo*</b>
         </label>
         <input
-          type="text"
+          type="date"
           placeholder="MM/DD/AAAA"
           name="startDate"
           id="startDate"
@@ -116,10 +136,10 @@ export default function Services() {
 
         <hr></hr>
         <label for="endDate">
-          <b>Finalizado*</b>
+          <b>Fecha Fin*</b>
         </label>
         <input
-          type="text"
+          type="date"
           placeholder="MM/DD/AAAA"
           name="endDate"
           id="endDate"
@@ -128,7 +148,7 @@ export default function Services() {
 
         <hr></hr>
         <label for="endDateHr">
-          <b>Hora Finalizado*</b>
+          <b>Hora Fin*</b>
         </label>
         <input
           type="text"
@@ -143,7 +163,7 @@ export default function Services() {
           <b>Minimo de edad</b>
         </label>
         <input
-          type="text"
+          type="number"
           placeholder="Edad minima"
           name="minAge"
           id="minAge"
@@ -154,7 +174,7 @@ export default function Services() {
           <b>Maximo de edad</b>
         </label>
         <input
-          type="text"
+          type="number"
           placeholder="Edad maxima"
           name="maxAge"
           id="maxAge"

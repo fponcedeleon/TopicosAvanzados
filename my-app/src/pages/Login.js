@@ -13,13 +13,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   function LoginApp() {
-    getToken(user, password).then((token) => {
-      if (token != null) {
-        setSession(token);
+    getToken(user, password).then((result) => {
+      if (result) {
+        setSession(result.result);
+        window.location.reload();
       } else {
         alert("Credenciales incorrectas");
       }
-      window.location.reload();
     });
   }
 
