@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const uri = process.env.MONGODB_URI;
-
+mongoose.set('useFindAndModify', false);
 const mongodb = async () => {
   const db = mongoose.connection;
   // eslint-disable-next-line no-console
