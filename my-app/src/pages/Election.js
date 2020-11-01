@@ -65,7 +65,6 @@ export default function Services() {
     const nameEl = event.target.nameEl.value;
 
     try {
-
       const election = await createNewElection(
         startDate,
         endDate,
@@ -75,22 +74,21 @@ export default function Services() {
         department,
         nameEl
       );
-  
+
       const proposal = await createNewProposal(
         election.data.id,
         name,
         description
       );
       const propId = proposal.data.id;
-  
+
       await createNewOption(propId, opt1);
       await createNewOption(propId, opt2);
-  
+
       await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
-      alert('Creada correctamente');
+      alert("Creada correctamente");
       history.push("/");
-    }
-    catch (e) {
+    } catch (e) {
       alert("An error occurred, please try again");
     }
   };

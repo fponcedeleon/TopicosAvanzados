@@ -1,16 +1,37 @@
 import React from "react";
-//import { sendEmail } from "../scripts/services/auth.js";
+import {
+  createNewToken,
+  forgotPasswordEmail,
+} from "../scripts/services/auth.js";
+import { getUserByEmail } from "../scripts/services/user.js";
+
+// const baseUrl =
+//   process.env.NODE_ENV === "localhost"
+//     ? "http://localhost:3000"
+//     : process.env.ENVIRONMENT === "test"
+//     ? "https://topicos2020testing.netlify.app"
+//     : "https://topicos2020.netlify.app";
+const baseUrl =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "https://topicos2020.netlify.app";
 
 export default function ForgotPassword() {
-  const subject = "Recuperacion de contraseña";
-  const mailBody =
-    "<p>Recupere su contraseña <a href='http://localhost:3000/changePassword:'>aqui</a></p>";
-  const handleSumbit = async (event) => {
-    console.log(document.getElementById("inputMail").value);
-    event.preventDefault();
-    //sendEmail(subject,document.getElementById("inputPassword").value,mailBody);
-    alert("Se le ha enviado un correo para cambiar su contraseña");
+  const generateNewLink = async (id) => {
+    const token = await createNewToken(null, id);
+    return `${baseUrl}/resetPassword?token=${token.data.token}`;
   };
+
+  const handleSumbit = async (event) => {
+    event.preventDefault();
+    const subject = "Restablecer contraseña";
+    const userEmail = document.getElementById("inputMail").value;
+    const user = await getUserByEmail(userEmail);
+    const link = await generateNewLink(user._id);
+    forgotPasswordEmail(userEmail, link, subject);
+    alert("Se le ha enviado un correo para restablecer su contraseña");
+  };
+
   return (
     <form id="forgotPassword" onSubmit={handleSumbit}>
       <div class="container">

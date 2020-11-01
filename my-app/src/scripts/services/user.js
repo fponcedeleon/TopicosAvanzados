@@ -5,6 +5,11 @@ const baseUrl =
     ? "http://localhost:8080"
     : "https://topicossw.herokuapp.com";
 
+export const getUserById = async (id) => {
+  const { data: user } = await get(`${baseUrl}/users/${id}`);
+  return user;
+};
+
 export const getAllUsers = async () => {
   const { data: users } = await get(`${baseUrl}/users`);
   return users;
@@ -20,6 +25,11 @@ export const getFilteredUsers = async (minAge, maxAge, city, department) => {
 export const getCurrent = async () => {
   const { data } = await post(`${baseUrl}/users/current`, {});
   return data;
+};
+
+export const getUserByEmail = async (userEmail) => {
+  const { data: user } = await get(`${baseUrl}/users/byEmail/${userEmail}`);
+  return user;
 };
 
 export const register = async ({
@@ -47,22 +57,22 @@ export const register = async ({
   return data;
 };
 
+export const changePassword = async (userId, password) => {
+  const { data: user } = await post(`${baseUrl}/users/resetPass/${userId}`, {
+    password,
+  });
+  return user;
+};
+
 export const verifyAccount = async (userId) => {
-  const { data } = await post(
-    `${baseUrl}/users/validate/${userId}`
-    , {});
+  const { data } = await post(`${baseUrl}/users/validate/${userId}`, {});
   return data;
-}
+};
 
-
-export const getToken = async (
-  username, 
-  password
-) => {
-  const { data } = await post(
-    `${baseUrl}/sessions`,{
-         username, 
-         password
-  }); 
+export const getToken = async (username, password) => {
+  const { data } = await post(`${baseUrl}/sessions`, {
+    username,
+    password,
+  });
   return data;
 };

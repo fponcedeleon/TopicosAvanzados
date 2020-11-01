@@ -48,6 +48,8 @@ const getTemplateForgotPassword = (link) => {
   let stringFile = file.toString();
 
   stringFile = stringFile.replace("{Link}", link);
+
+  return stringFile;
 };
 
 module.exports = {

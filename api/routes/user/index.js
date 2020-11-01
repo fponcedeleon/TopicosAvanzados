@@ -17,6 +17,11 @@ module.exports = [
     config: config.getFilteredUsers,
   },
   {
+    method: 'GET',
+    path: '/users/byEmail/{email}',
+    config: config.getUserByEmail,
+  },
+  {
     method: 'POST',
     path: '/users',
     config: config.create,
@@ -35,6 +40,11 @@ module.exports = [
     method: 'POST',
     path: '/users/validate/{id}',
     config: config.validateUser,
+  },
+  {
+    method: 'POST',
+    path: '/users/resetPass/{id}',
+    config: config.resetPassword,
   },
   {
     method: 'POST',

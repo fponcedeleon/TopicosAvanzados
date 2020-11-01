@@ -27,7 +27,7 @@ const create = async (request, h) => {
   }
 };
 
-const forgotPasswordMail = (request, h) => {
+const forgotPasswordMail = async (request, h) => {
   const { userEmail, link, subject } = request.payload;
   try {
     await CustomEmail.forgotPasswordEmail(userEmail, link, subject);

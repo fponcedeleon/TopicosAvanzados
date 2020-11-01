@@ -40,7 +40,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/verify" component={VerifyAccount} />
           <Route path="/forgotPassword" component={ForgotPassword} />
-          <Route path="/changePassword" component={ResetPassword} />
+          <Route path="/resetPassword" component={ResetPassword} />
         </React.Fragment>
       )}
       {isAuthenticated && (

@@ -15,15 +15,7 @@ const linkUrl =
  * @param {*} params this is accessed via api and the sport is the name, so we need to query.
  */
 const getUserById = async ({ params }) => {
-  return await User.findById(params.id)
-    .populate("username", ["email"])
-    .exec()
-    .then((results) => {
-      return results;
-    })
-    .catch((error) => {
-      return { status: "Error", message: error.message };
-    });
+  return await User.findById(params.id);
 };
 
 const getAll = async () => {
@@ -43,6 +35,10 @@ const getFilteredUsers = async ({ query }) => {
   if (query.department)
     filter.department = { $regex: query.department, $options: "i" };
   return await User.find(filter);
+};
+
+const getUserByEmail = async ({ params }) => {
+  return await User.findOne({ email: params.email });
 };
 
 const create = async ({ payload, auth }) => {
@@ -109,6 +105,15 @@ const validateUser = async ({ params }) => {
     });
 };
 
+const resetPassword = async ({ params, payload }) => {
+  const { password } = payload;
+  const userToUpdate = await User.updateOne(
+    { _id: params.id },
+    { password: password }
+  );
+  return userToUpdate;
+};
+
 const current = ({ auth }) => {
   return { status: "Success", credentials: auth.credentials };
 };
@@ -117,9 +122,11 @@ module.exports = {
   getUserById,
   getAll,
   getFilteredUsers,
+  getUserByEmail,
   create,
   update,
   deleteOne,
   validateUser,
   current,
+  resetPassword,
 };
