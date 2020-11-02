@@ -1,9 +1,12 @@
-const handlers = require('./handlers');
+const handlers = require("./handlers");
 
 module.exports = {
   create: {
     handler: handlers.create,
-    description: 'Send a new email',
+    description: "Send a new email",
     //auth: 'jwt',
+  },
+  forgotPasswordMail: {
+    handler: handlers.forgotPasswordMail,
   },
 };

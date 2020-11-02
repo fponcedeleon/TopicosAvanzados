@@ -35,7 +35,7 @@ const VotingDetails = (props) => {
       }
     })
     checkToken().then((result) => {
-      if (!result) window.location = "/home";
+      if (!result) window.location = "/error";
     });
     getOnePost(electionId).then(
       (result) => {

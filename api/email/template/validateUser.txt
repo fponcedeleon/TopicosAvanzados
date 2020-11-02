@@ -1,6 +1,6 @@
 Estimado usuario {Name},
 
-Ingrese al siguiente link para validar su cuenta
+Ingrese al siguiente link para validar su cuenta:
 
 {Link}
 

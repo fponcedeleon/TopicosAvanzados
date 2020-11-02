@@ -32,11 +32,22 @@ const getTemplateResults = (userName, electionName, resultsLink) => {
 };
 
 const getTemplateValidateUser = (userName, link) => {
-  const file = fs.readFileSync(path.resolve(__dirname, 'validateUser.txt'));
+  const file = fs.readFileSync(path.resolve(__dirname, "validateUser.txt"));
   let stringFile = file.toString();
 
-  stringFile = stringFile.replace('{Name}', userName);
-  stringFile = stringFile.replace('{Link}', link);
+  stringFile = stringFile.replace("{Name}", userName);
+  stringFile = stringFile.replace("{Link}", link);
+
+  return stringFile;
+};
+
+const getTemplateForgotPassword = (link) => {
+  const file = fs.readFileSync(
+    path.resolve(__dirname, "templateForgotPassword.txt")
+  );
+  let stringFile = file.toString();
+
+  stringFile = stringFile.replace("{Link}", link);
 
   return stringFile;
 };
@@ -45,4 +56,5 @@ module.exports = {
   getTemplateNewElection,
   getTemplateResults,
   getTemplateValidateUser,
+  getTemplateForgotPassword,
 };

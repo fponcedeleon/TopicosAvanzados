@@ -25,6 +25,14 @@ export const customEmail = async (
   });
 };
 
+export const forgotPasswordEmail = async (userEmail, link, subject) => {
+  await post(`${baseUrl}/sendMail/forgotPassword`, {
+    userEmail,
+    link,
+    subject,
+  });
+}
+
 export const createNewToken = async (electionId, userId) => {
   const { data: token, error } = await post(`${baseUrl}/token`, {
     electionId,

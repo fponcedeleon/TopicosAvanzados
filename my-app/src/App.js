@@ -6,6 +6,8 @@ import Error from "./pages/Error";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import VerifyAccount from "./pages/VerifyAccount";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 // eslint-disable-next-line
 import {
   Route,
@@ -37,6 +39,8 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/verify" component={VerifyAccount} />
+          <Route path="/forgotPassword" component={ForgotPassword} />
+          <Route path="/resetPassword" component={ResetPassword} />
         </React.Fragment>
       )}
       {isAuthenticated && (
