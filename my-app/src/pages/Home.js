@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../App.css";
 import { getAllElections } from "../scripts/services/election";
 
@@ -7,18 +7,13 @@ export default function Services() {
   const [data, setData] = useState([]);
   const [dataClosed, setDataClosed] = useState([]);
   let closedElections = [];
-  let openElections = [];
 
   useEffect(() => {
     getAllElections().then(
       (result) => {
         console.log(result);
         for (let index = 0; index < result.length; index++) {
-          if(!result[index].isActive){
-            closedElections.push(result[index]);
-          }else{
-            openElections.push(result[index]);
-          }
+          if (!result[index].isActive) closedElections.push(result[index]);
         }
         setDataClosed(closedElections);
         setData(result);
@@ -31,7 +26,6 @@ export default function Services() {
       }
     );
   }, []);
-  
 
   if (!data) {
     console.log(data);
@@ -46,35 +40,6 @@ export default function Services() {
     <div className="grid-votaciones">
       <div className="col-md-2"></div>
       <div className="col-md-10">
-        <div className="custom-row">
-          <div className="col-md-12">
-            <h2> Votaciones Abiertas </h2>
-          </div>
-        </div>
-        <div className="custom-row">
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data.map((election) => (
-                  <tr>
-                    <th scope="row">
-                      <Link to={"/VotingDetails/" + election._id}>
-                        {election._id}
-                      </Link>
-                    </th>
-                    <td>{election.name}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-
         <div className="custom-row">
           <div className="col-md-12">
             <h2> Votaciones Cerradas </h2>
