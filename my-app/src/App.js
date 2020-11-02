@@ -23,12 +23,11 @@ function App() {
       .then((res) => setIsAuthenticated(res && res.credentials))
       .catch(() => setIsAuthenticated(false));
   }, []);
-  
   return (
     <BrowserRouter>
       <Navbar isAuthenticated={isAuthenticated} />
       <Route path="/home" exact component={Home} />
-      <Route path="/error" exact component={Error} />
+      <Route path="/error" exact  component={Error} />
 
       {!isAuthenticated && (
         <React.Fragment>
