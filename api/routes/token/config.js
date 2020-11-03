@@ -7,11 +7,9 @@ module.exports = {
     handler: handlers.getToken
   },
   create: {
-    auth: process.env.JWT_PROTOCOL,
     handler: handlers.create
   },
   deleteOne: {
-    auth: process.env.JWT_PROTOCOL,
     handler: handlers.deleteOne
   },
 };
