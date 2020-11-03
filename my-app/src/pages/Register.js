@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import catolica from '../Img/cato.jpg';
+import logo from '../Img/ucu_logo.png';
 
 
 const InputField = React.forwardRef((props, ref) => {
@@ -51,79 +53,96 @@ const RegisterForm = () => {
     });
 
     return (
-        <Container fluid>
+        <div class="row">
             <Row className="justify-content-md-center">
             </Row>
-            <Row className="justify-content-md-center">
-                <Col xs={{ span: 4 }}>
+            <div className="row">
+            <div className="col-md-9">
+          <img className="imgStyle" src={catolica} alt="Catolica" />
+        </div>
+        <div className="col-md-3">
+            <div className="row">
+                <Col xs={{ span: 11 }}>
                     <Form>
-                        <div>
+                        <div style={{paddingTop:"20px" }}>
                             <label>
-                                Nombre: <InputField field="firstName" />
+                            Nombre
                             </label>
+                                 <InputField field="firstName" className="form-control" />
                         </div>
 
                         <div>
                             <label>
-                                Apellido: <InputField type="text" field="lastName" />
+                                Apellido
                             </label>
+                            <InputField type="text" field="lastName" className="form-control"  />
                         </div>
 
                         <div>
                             <label>
-                                Username <InputField type="text" field="username" />
+                                Username 
                             </label>
+                            <InputField type="text" field="username" className="form-control"  />
                         </div>
 
                         <div>
                             <label>
-                                Contraseña <InputField type="text" field="password" />
+                                Contraseña
                             </label>
+                             <InputField type="text" field="password" className="form-control"  />
                         </div>
 
                         <div>
                             <label>
-                                Email <InputField type="email" field="email" />
+                                Email 
                             </label>
+                            <InputField type="email" field="email" className="form-control"  />
                         </div>
 
                         <div>
                             <label>
-                                Ciudad <InputField type="text" field="city" />
+                                Ciudad 
                             </label>
+                            <InputField type="text" field="city" className="form-control"  />
                         </div>
 
                         <div>
                             <label>
-                                Departamento <InputField type="text" field="department" />
+                                Departamento 
                             </label>
+                            <InputField type="text" field="department" className="form-control"  />
                         </div>
 
                         <div>
                             <label>
-                                Pa&iacute;s <InputField type="text" field="country" />
+                                Pa&iacute;s 
                             </label>
+                            <InputField type="text" field="country" className="form-control"  />
                         </div>
 
                         <div>
                             <label>
-                                Edad <InputField type="number" min="10" max="100" field="age" />
+                                Edad 
                             </label>
+                            <InputField type="number" min="10" max="100" field="age" className="form-control"  />
                         </div>
 
-                        <div style={{ textAlign: 'center' }}>
+                        <div style={{ textAlign: 'center', paddingTop:"20px" }}>
                             <Button type="submit" disabled={!canSubmit}>
                                 Submit
-                </Button>
+                             </Button>
                         </div>
 
                         <div>
                             <em>{isSubmitting ? "Submitting..." : null}</em>
                         </div>
                     </Form>
-                </Col>
-            </Row>
-        </Container>
+                </Col> 
+                </div>
+        </div>
+            </div>
+            
+        </div>
     );
 }
 

@@ -44,21 +44,21 @@ export default function Login() {
               </div>
             </div> 
             <div className="row"> 
-              <div className="col-md-12">
+              <div className="col-md-11">
                 <div className="form-group">
                   <input type="text" className="form-control" id="userText" placeholder="User" onChange={event => setUser(event.target.value)} />
                 </div>
               </div>
             </div> 
             <div className="row"> 
-              <div className="col-md-12">
+              <div className="col-md-11">
                 <div className="form-group">
                   <input type="password" className="form-control" id="passwordText" placeholder="Password" onChange={event => setPassword(event.target.value)}/>
                 </div>
               </div>
             </div> 
             <div className="row"> 
-              <div className="col-md-12">
+              <div className="col-md-11">
               <Button className="buttonSignin" type="submit" onClick={event => LoginApp()}>Sign in</Button>
               </div>
             </div> 
