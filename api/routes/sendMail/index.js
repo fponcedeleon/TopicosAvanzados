@@ -1,4 +1,10 @@
-const config = require('./config');
+const config = require("./config");
 
-module.exports = [{ method: 'POST', path: '/sendMail', config: config.create }];
-module.exports = [{ method: 'POST', path: '/sendMail/forgotPassword', config: config.forgotPasswordMail }]
+module.exports = [
+  { method: "POST", path: "/sendMail", config: config.create },
+  {
+    method: "POST",
+    path: "/sendMail/forgotPassword",
+    config: config.forgotPasswordMail,
+  },
+];
