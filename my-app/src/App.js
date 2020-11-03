@@ -9,7 +9,7 @@ import VerifyAccount from "./pages/VerifyAccount";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 // eslint-disable-next-line
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import VotingDetails from "./pages/VotingDetails";
 import VotingResult from "./pages/VotingResult";
@@ -23,31 +23,41 @@ function App() {
       .then((res) => setIsAuthenticated(res && res.credentials))
       .catch(() => setIsAuthenticated(false));
   }, []);
+
+  const NotFoundRedirect = () => <Redirect to='/error' />
+  const HomeRedirect = () => <Redirect to='/home' />
+
   return (
     <BrowserRouter>
-      <Navbar isAuthenticated={isAuthenticated} />
-      <Route path="/home" exact component={Home} />
-      <Route path="/error" exact  component={Error} />
 
-      {!isAuthenticated && (
-        <React.Fragment>
-          <Route path="/" exact component={Login} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/verify" component={VerifyAccount} />
-          <Route path="/forgotPassword" component={ForgotPassword} />
-          <Route path="/resetPassword" component={ResetPassword} />
-        </React.Fragment>
-      )}
-      {isAuthenticated && (
-        <React.Fragment>
-          <Route path="/" exact component={Home} />
-          <Route path="/election" component={Election} />
-          <Route path="/voting" component={Voting} />
-          <Route path="/votingdetails/:id" component={VotingDetails} />
-          <Route path="/votingresult/:id" component={VotingResult} />
-        </React.Fragment>
-      )}
+      <Navbar isAuthenticated={isAuthenticated} />
+      <Switch>
+        {!isAuthenticated && (
+          <React.Fragment>
+            <Route path="/home" component={Login} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/verify" component={VerifyAccount} />
+            <Route path="/forgotPassword" component={ForgotPassword} />
+            <Route path="/resetPassword" component={ResetPassword} />
+            <Route path="/" exact component={HomeRedirect} />
+            <Route path="/error" exact component={Error} />
+            <Route component={NotFoundRedirect} />
+          </React.Fragment>
+        )}
+        {isAuthenticated && (
+          <React.Fragment>
+            <Route path="/home" component={Home} />
+            <Route path="/election" component={Election} />
+            <Route path="/voting" component={Voting} />
+            <Route path="/votingdetails/:id" component={VotingDetails} />
+            <Route path="/votingresult/:id" component={VotingResult} />
+            <Route path="/" exact component={HomeRedirect} />
+            <Route path="/error" exact component={Error} />
+            <Route component={NotFoundRedirect} />
+          </React.Fragment>
+        )}
+      </Switch>
     </BrowserRouter>
   );
 }
