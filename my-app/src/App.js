@@ -9,7 +9,7 @@ import VerifyAccount from "./pages/VerifyAccount";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 // eslint-disable-next-line
-import { Route, BrowserRouter, Switch } from "react-router-dom";
+import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import VotingDetails from "./pages/VotingDetails";
 import VotingResult from "./pages/VotingResult";
@@ -24,6 +24,9 @@ function App() {
       .catch(() => setIsAuthenticated(false));
   }, []);
 
+  const NotFoundRedirect = () => <Redirect to='/error' />
+  const HomeRedirect = () => <Redirect to='/home' />
+
   return (
     <BrowserRouter>
 
@@ -31,23 +34,27 @@ function App() {
       <Switch>
         {!isAuthenticated && (
           <React.Fragment>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/verify" exact component={VerifyAccount} />
-            <Route path="/forgotPassword" exact component={ForgotPassword} />
-            <Route path="/resetPassword" exact component={ResetPassword} />
-            <Route component={Error} />
+            <Route path="/home" component={Login} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/verify" component={VerifyAccount} />
+            <Route path="/forgotPassword" component={ForgotPassword} />
+            <Route path="/resetPassword" component={ResetPassword} />
+            <Route path="/" exact component={HomeRedirect} />
+            <Route path="/error" exact component={Error} />
+            <Route component={NotFoundRedirect} />
           </React.Fragment>
         )}
         {isAuthenticated && (
           <React.Fragment>
-            <Route path="/" exact component={Home} />
-            <Route path="/election" exact component={Election} />
-            <Route path="/voting" exact component={Voting} />
-            <Route path="/votingdetails/:id" exact component={VotingDetails} />
-            <Route path="/votingresult/:id" exact component={VotingResult} />
-            <Route component={Error} />
+            <Route path="/home" component={Home} />
+            <Route path="/election" component={Election} />
+            <Route path="/voting" component={Voting} />
+            <Route path="/votingdetails/:id" component={VotingDetails} />
+            <Route path="/votingresult/:id" component={VotingResult} />
+            <Route path="/" exact component={HomeRedirect} />
+            <Route path="/error" exact component={Error} />
+            <Route component={NotFoundRedirect} />
           </React.Fragment>
         )}
       </Switch>
