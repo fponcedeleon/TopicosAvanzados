@@ -9,10 +9,7 @@ import VerifyAccount from "./pages/VerifyAccount";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 // eslint-disable-next-line
-import {
-  Route,
-  BrowserRouter,
-} from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import VotingDetails from "./pages/VotingDetails";
 import VotingResult from "./pages/VotingResult";
@@ -26,7 +23,7 @@ function App() {
       .then((res) => setIsAuthenticated(res && res.credentials))
       .catch(() => setIsAuthenticated(false));
   }, []);
-
+  
   return (
     <BrowserRouter>
       <Navbar isAuthenticated={isAuthenticated} />

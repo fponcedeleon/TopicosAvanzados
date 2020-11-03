@@ -14,6 +14,7 @@ export const customEmail = async (
   isNewElection,
   endDate = null
 ) => {
+  console.log(subject)
   await post(`${baseUrl}/sendMail`, {
     userName,
     userEmail,

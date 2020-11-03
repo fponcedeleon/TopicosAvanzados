@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
 import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
@@ -7,14 +7,57 @@ import { getFilteredUsers } from "../scripts/services/user.js";
 import { customEmail, createNewToken } from "../scripts/services/auth.js";
 import { useHistory } from "react-router-dom";
 
+// const baseUrl =
+//   process.env.NODE_ENV === "localhost"
+//     ? "http://localhost:3000"
+//     : process.env.ENVIRONMENT === "test"
+//     ? "https://topicos2020testing.netlify.app"
+//     : "https://topicos2020.netlify.app";
+
 const baseUrl =
-  process.env.NODE_ENV === "localhost"
+  window.location.hostname === "localhost"
     ? "http://localhost:3000"
-    : process.env.ENVIRONMENT === "test"
-    ? "https://topicos2020testing.netlify.app"
     : "https://topicos2020.netlify.app";
 
 export default function Services() {
+  const [proposalList, setProposalList] = useState([
+    { proposalName: "", proposalDescription: "", options: [""] },
+  ]);
+  const [boolAux, setBoolAux] = useState(true);
+
+  // handle input change
+  const handleInputChange = (e, index, i = null) => {
+    const { name, value } = e.target;
+    const list = [...proposalList];
+    if (name == "options") {
+      list[index][name][i] = value;
+    } else {
+      list[index][name] = value;
+    }
+    setProposalList(list);
+  };
+
+  // // handle click event of the Remove button
+  // const handleRemoveClick = index => {
+  //   const list = [...inputList];
+  //   list.splice(index, 1);
+  //   setInputList(list);
+  // };
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    setProposalList([
+      ...proposalList,
+      { proposalName: "", proposalDescription: "", options: [""] },
+    ]);
+  };
+
+  const handleAddOptionClick = (e, i) => {
+    e.preventDefault();
+    proposalList[i]["options"].push("");
+    setBoolAux(!boolAux);
+  };
+
   let electionId;
   const history = useHistory();
 
@@ -58,10 +101,6 @@ export default function Services() {
     const maxAge = event.target.maxAge.value;
     const city = event.target.city.value;
     const department = event.target.department.value;
-    const name = event.target.proposalName.value;
-    const description = event.target.proposalDescription.value;
-    const opt1 = event.target.optionOne.value;
-    const opt2 = event.target.optionTwo.value;
     const nameEl = event.target.nameEl.value;
 
     try {
@@ -75,15 +114,19 @@ export default function Services() {
         nameEl
       );
 
-      const proposal = await createNewProposal(
-        election.data.id,
-        name,
-        description
-      );
-      const propId = proposal.data.id;
+      electionId = election.data.id;
 
-      await createNewOption(propId, opt1);
-      await createNewOption(propId, opt2);
+      proposalList.forEach(async (prop) => {
+        const proposal = await createNewProposal(
+          electionId,
+          prop.proposalName,
+          prop.proposalDescription
+        );
+        const propId = proposal.data.id;
+        prop.options.forEach(async (op) => {
+          await createNewOption(propId, op);
+        });
+      });
 
       await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
       alert("Creada correctamente");
@@ -95,10 +138,10 @@ export default function Services() {
 
   return (
     <form id="generateElection" onSubmit={handleSumbit}>
-      <div class="container">
+      <div className="container">
         <h1 className="election">Eleccion</h1>
         <p>Llene este formulario para crear una eleccion.</p>
-        <label for="nameEl">
+        <label htmlFor="nameEl">
           <b>Nombre*</b>
         </label>
         <input
@@ -109,7 +152,7 @@ export default function Services() {
           required
         ></input>
         <hr></hr>
-        <label for="startDate">
+        <label htmlFor="startDate">
           <b>Fecha Comienzo*</b>
         </label>
         <input
@@ -121,7 +164,7 @@ export default function Services() {
         ></input>
 
         <hr></hr>
-        <label for="startDateHr">
+        <label htmlFor="startDateHr">
           <b>Hora Comienzo*</b>
         </label>
         <input
@@ -133,7 +176,7 @@ export default function Services() {
         ></input>
 
         <hr></hr>
-        <label for="endDate">
+        <label htmlFor="endDate">
           <b>Fecha Fin*</b>
         </label>
         <input
@@ -145,7 +188,7 @@ export default function Services() {
         ></input>
 
         <hr></hr>
-        <label for="endDateHr">
+        <label htmlFor="endDateHr">
           <b>Hora Fin*</b>
         </label>
         <input
@@ -157,7 +200,7 @@ export default function Services() {
         ></input>
 
         <hr></hr>
-        <label for="minAge">
+        <label htmlFor="minAge">
           <b>Minimo de edad</b>
         </label>
         <input
@@ -168,7 +211,7 @@ export default function Services() {
         ></input>
 
         <hr></hr>
-        <label for="maxAge">
+        <label htmlFor="maxAge">
           <b>Maximo de edad</b>
         </label>
         <input
@@ -179,13 +222,13 @@ export default function Services() {
         ></input>
 
         <hr></hr>
-        <label for="city">
+        <label htmlFor="city">
           <b>Ciudad</b>
         </label>
         <input type="text" placeholder="Ciudad" name="city" id="city"></input>
 
         <hr></hr>
-        <label for="department">
+        <label htmlFor="department">
           <b>Departamento</b>
         </label>
         <input
@@ -196,42 +239,57 @@ export default function Services() {
         ></input>
 
         <hr></hr>
-        <label for="proposal">
-          <b>Propuesta</b>
-        </label>
-        <input
-          type="text"
-          placeholder="Propuesta"
-          name="proposalName"
-          id="proposalName"
-        ></input>
-        <input
-          type="text"
-          placeholder="Descripcion"
-          name="proposalDescription"
-          id="proposalDescription"
-        ></input>
+        {proposalList.map((x, i) => {
+          return (
+            <div>
+              <label htmlFor="proposal">
+                <b>Propuesta</b>
+              </label>
+              <input
+                name="proposalName"
+                placeholder="Propuesta"
+                id="proposalName"
+                value={x.proposalName}
+                onChange={(e) => handleInputChange(e, i)}
+              ></input>
+              <input
+                name="proposalDescription"
+                placeholder="Descripcion"
+                id="proposalDescription"
+                value={x.proposalDescription}
+                onChange={(e) => handleInputChange(e, i)}
+              ></input>
+              <label htmlFor="options">
+                <b>Opciones</b>
+              </label>
+              {x.options.map((o, ind) => {
+                return (
+                  <div>
+                    <input
+                      placeholder={`Opcion ${ind}`}
+                      name="options"
+                      id="options"
+                      value={o}
+                      onChange={(e) => handleInputChange(e, i, ind)}
+                    ></input>
+                    {x.options.length - 1 === ind && (
+                      <button onClick={(e) => handleAddOptionClick(e, i)}>
+                        Add Option
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+              {proposalList.length - 1 === i && (
+                <button onClick={handleAddClick}>Add Proposal</button>
+              )}
+            </div>
+          );
+        })}
 
         <hr></hr>
-        <label for="options">
-          <b>Opciones</b>
-        </label>
-        <input
-          type="text"
-          placeholder="Opcion 1"
-          name="optionOne"
-          id="optionOne"
-        ></input>
-        <input
-          type="text"
-          placeholder="Opcion 2"
-          name="optionTwo"
-          id="optionTwo"
-        ></input>
 
-        <hr></hr>
-
-        <button type="submit" class="electionbtn">
+        <button type="submit" className="electionbtn">
           Crear eleccion
         </button>
       </div>
