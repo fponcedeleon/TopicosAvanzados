@@ -49,7 +49,7 @@ export default function ForgotPassword() {
           required
         ></input>
         <hr></hr>
-        <button type="submit" class="btn btn-outline-dark">
+        <button type="submit" className="btn btn-outline-dark">
           Recuperar
         </button>
       </div>

@@ -11,6 +11,10 @@ export default function ResetPassword() {
 
   const handleSumbit = async (event) => {
     event.preventDefault();
+    if (!user) {
+      alert("Token invalido");
+      return;
+    }
     setIsLoading(true);
     const password = document.getElementById("inputPassword").value;
     if (password === document.getElementById("inputPasswordConfirm").value) {
@@ -25,26 +29,30 @@ export default function ResetPassword() {
   };
   
   useEffect(() => {
+
     if (!token) {
       const urlP = new URLSearchParams(window.location.search);
       const urlToken = urlP.get("token");
-      getToken(urlToken)
-        .then(response => {
-          if (response && response[0]) {
-            getUserById(response[0].userId)
-              .then(u => {
-                if (u) {
-                  setUser(u);
-                  setToken(response[0]);
-                }
-                else {
-                  window.location.href = '/error';
-                }
-              })
-          }
-        })
-        .catch (e => window.location.href = '/error')
-        .finally(() => setIsLoading(false));
+      Promise.all(
+        [
+        getToken(urlToken)
+          .then(response => {
+            if (response && response[0]) {
+              getUserById(response[0].userId)
+                .then(u => {
+                  if (u) {
+                    setUser(u);
+                    setToken(response[0]);
+                  }
+                  else {
+                    window.location.href = '/error';
+                  }
+                })
+            }
+          })
+          .catch (e => window.location.href = '/error')]
+      ).then(() => setIsLoading(false));
+        
     }
   }, [token, isLoading]);
 

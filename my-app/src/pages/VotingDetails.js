@@ -26,6 +26,7 @@ const VotingDetails = (props) => {
 
     const urlP = new URLSearchParams(window.location.search);
     const urlToken = urlP.get("token");
+    Promise.all([
     getToken(urlToken)
       .then(response => {
         if (!response) {
@@ -61,7 +62,8 @@ const VotingDetails = (props) => {
             })
           })
 
-      }).finally(() => setIsLoading(false));
+      })])
+      .then(() => setIsLoading(false));
   }, [electionId, election, isLoading]);
 
   if (!election || !proposals) {
