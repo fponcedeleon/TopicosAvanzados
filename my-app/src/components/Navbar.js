@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { useHistory } from "react-router-dom";
 import { removeSession } from "../scripts/utils/session.js";
-import { getCurrent } from "../scripts/services/user.js";
 
 const Navbar = ({ isAuthenticated, isAdmin }) => {
   const [click, setClick] = useState(false);

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useForm, useField, splitFormProps } from "react-form";
 import { register } from "../scripts/services/user";

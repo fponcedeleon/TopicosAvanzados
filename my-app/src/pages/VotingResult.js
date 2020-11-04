@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import ProposalResult from "../components/proposal/ProposalResult";
 import { getAllElectionProposals } from "../scripts/services/proposal";

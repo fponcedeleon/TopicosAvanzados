@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { setSession } from "../scripts/utils/session";
 import { verifyAccount } from "../scripts/services/user";
