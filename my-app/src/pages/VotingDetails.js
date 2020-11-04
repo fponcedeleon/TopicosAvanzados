@@ -12,13 +12,7 @@ import Loading from "../components/Loading";
 
 const VotingDetails = (props) => {
   const [isLoading, setIsLoading] = useState(true);
-  let tokenApi = null;
-  const checkToken = async () => {
-    const urlP = new URLSearchParams(window.location.search);
-    const token = urlP.get("token");
-    tokenApi = await getToken(token);
-    return tokenApi[0];
-  };
+  const [token, setToken] = useState(true);
 
   let selectedOptions = {};
 
@@ -28,37 +22,47 @@ const VotingDetails = (props) => {
   const electionId = props.match.params.id;
 
   useEffect(() => {
-    getCurrent().then(res => {
-      if (res && res.credentials) {
-        setCurrentUser(res.credentials);
-      }
-    })
-    .then(() => {
-      checkToken().then((result) => {
-        if (!result) window.location = "/error";
+    if (election) return;
+
+    const urlP = new URLSearchParams(window.location.search);
+    const urlToken = urlP.get("token");
+    getToken(urlToken)
+      .then(response => {
+        if (!response) {
+          window.location.href = '/error';
+        }
+        else {
+          setToken(response[0]);
+        }
       })
       .then(() => {
-        getOnePost(electionId).then(
-          (result) => {
-            setElection(result);
-          },
-          (error) => {
-            console.error(error);
+        getCurrent().then(res => {
+          if (res && res.credentials) {
+            setCurrentUser(res.credentials);
           }
-        ).then(() => {
-          getAllElectionProposals(electionId).then(
-            (result) => {
-              setProposals(result);
-            },
-            (error) => {
-              console.error(error);
-            }
-          )
         })
-      })
+          .then(() => {
+            getOnePost(electionId).then(
+              (result) => {
+                setElection(result);
+              },
+              (error) => {
+                console.error(error);
+              }
+            ).then(() => {
+              getAllElectionProposals(electionId).then(
+                (result) => {
+                  setProposals(result);
+                },
+                (error) => {
+                  console.error(error);
+                }
+              )
+            })
+          })
 
-    }).finally(() => setIsLoading(false));
-  }, [electionId, checkToken, isLoading]);
+      }).finally(() => setIsLoading(false));
+  }, [electionId, election, isLoading]);
 
   if (!election || !proposals) {
     return <div></div>;
@@ -76,7 +80,7 @@ const VotingDetails = (props) => {
       }
 
       alert("Has votado correctamente.");
-      await deleteToken(tokenApi[0]._id);
+      await deleteToken(token._id);
     }
     setIsLoading(false);
   };

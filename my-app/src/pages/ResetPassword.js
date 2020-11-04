@@ -6,20 +6,8 @@ import Loading from "../components/Loading";
 
 export default function ResetPassword() {
   const [isLoading, setIsLoading] = useState(true);
-  let tokenApi = null;
-  let user = null;
-
-  const checkToken = async () => {
-    const urlP = new URLSearchParams(window.location.search);
-    const token = urlP.get("token");
-    tokenApi = await getToken(token);
-    if (tokenApi[0]) {
-      user = await getUserById(tokenApi[0].userId);
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
 
   const handleSumbit = async (event) => {
     event.preventDefault();
@@ -27,7 +15,7 @@ export default function ResetPassword() {
     const password = document.getElementById("inputPassword").value;
     if (password === document.getElementById("inputPasswordConfirm").value) {
       await changePassword(user._id, password);
-      await deleteToken(tokenApi[0]._id);
+      await deleteToken(token._id);
       setIsLoading(false);
       alert("se ha cambiado la contraseña");
     } else {
@@ -35,13 +23,30 @@ export default function ResetPassword() {
       alert("Las contraseñas no coinciden");
     }
   };
-
+  
   useEffect(() => {
-    checkToken().then((result) => {
-      if (!result) window.location = "/error";
-      setIsLoading(false);
-    })
-  }, [checkToken, isLoading]);
+    if (!token) {
+      const urlP = new URLSearchParams(window.location.search);
+      const urlToken = urlP.get("token");
+      getToken(urlToken)
+        .then(response => {
+          if (response && response[0]) {
+            getUserById(response[0].userId)
+              .then(u => {
+                if (u) {
+                  setUser(u);
+                  setToken(response[0]);
+                }
+                else {
+                  window.location.href = '/error';
+                }
+              })
+          }
+        })
+        .catch (e => window.location.href = '/error')
+        .finally(() => setIsLoading(false));
+    }
+  }, [token, isLoading]);
 
   return (
     <>
