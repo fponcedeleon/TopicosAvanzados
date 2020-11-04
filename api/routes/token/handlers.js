@@ -17,7 +17,6 @@ const getToken = async ({ params }) => {
 };
 
 const create = async ({ payload, auth }) => {
-  console.log(payload);
   const tokenToInsert = await helper.getTokenModel(payload, auth);
   return await tokenToInsert
     .save()
