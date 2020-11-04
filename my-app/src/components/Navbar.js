@@ -5,9 +5,8 @@ import { useHistory } from "react-router-dom";
 import { removeSession } from "../scripts/utils/session.js";
 import { getCurrent } from "../scripts/services/user.js";
 
-const Navbar = ({ isAuthenticated }) => {
+const Navbar = ({ isAuthenticated, isAdmin }) => {
   const [click, setClick] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const history = useHistory();
@@ -16,14 +15,6 @@ const Navbar = ({ isAuthenticated }) => {
     history.push("/");
     window.location.reload();
   }
-
-  useEffect(() => {
-    getCurrent().then(res => {
-      if (res && res.credentials && res.credentials.role === 'admin') {
-        setIsAdmin(true);
-      }
-    })
-  }, [])
 
   return (
     <>

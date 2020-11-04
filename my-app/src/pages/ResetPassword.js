@@ -24,7 +24,7 @@ export default function ResetPassword() {
     event.preventDefault();
     setIsLoading(true);
     const password = document.getElementById("inputPassword").value;
-    if (password == document.getElementById("inputPasswordConfirm").value) {
+    if (password === document.getElementById("inputPasswordConfirm").value) {
       await changePassword(user._id, password);
       await deleteToken(tokenApi[0]._id);
       setIsLoading(false);
@@ -40,7 +40,7 @@ export default function ResetPassword() {
       if (!result) window.location = "/error";
       setIsLoading(false);
     })
-  }, [isLoading]);
+  }, [checkToken, isLoading]);
 
   return (
     <>

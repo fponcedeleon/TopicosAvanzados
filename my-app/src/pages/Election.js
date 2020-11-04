@@ -24,7 +24,7 @@ export default function Services() {
   const handleInputChange = (e, index, i = null) => {
     const { name, value } = e.target;
     const list = [...proposalList];
-    if (name == "options") {
+    if (name === "options") {
       list[index][name][i] = value;
     } else {
       list[index][name] = value;
@@ -234,7 +234,7 @@ export default function Services() {
         <hr></hr>
         {proposalList.map((x, i) => {
           return (
-            <div>
+            <div key={i}>
               <label htmlFor="proposal">
                 <b>Propuesta</b>
               </label>
@@ -257,7 +257,7 @@ export default function Services() {
               </label>
               {x.options.map((o, ind) => {
                 return (
-                  <div>
+                  <div key={ind}>
                     <input
                       placeholder={`Opcion ${ind}`}
                       name="options"

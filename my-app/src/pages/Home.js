@@ -30,7 +30,7 @@ export default function Services() {
       }
     )
     .then(() => setIsLoading(false));
-  }, [dataClosedLength, isLoading]);
+  }, [dataClosedLength, closedElections, isLoading]);
 
   if (!data) {
     return <div></div>;

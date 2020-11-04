@@ -33,13 +33,13 @@ const UnauthenticatedApp = () =>
     </>
   );
 
-const AuthenticatedApp = () => 
+const AuthenticatedApp = ({ isAdmin }) => 
   (
     <>
       <Switch>
         <Route exact path="/" component={() => <Redirect to="/home" />} />
         <Route exact path="/home" component={Home} />
-        <Route exact path="/election" component={Election} />
+        {isAdmin && <Route exact path="/election" component={Election} />}
         <Route exact path="/voting" component={Voting} />
         <Route exact path="/votingdetails/:id" component={VotingDetails} />
         <Route exact path="/votingresult/:id" component={VotingResult} />
@@ -52,11 +52,13 @@ const AuthenticatedApp = () =>
 
 const RouterNavigation = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getCurrent()
       .then((res) => {
         setIsAuthenticated(res && res.credentials);
+        setIsAdmin(res && res.credentials && res.credentials.role === "standard");
         setIsLoading(false);
       })
       .catch((error) => {
@@ -68,10 +70,10 @@ const RouterNavigation = () => {
 
   return (
     <Router>
-      <Navbar isAuthenticated={isAuthenticated} />
+      <Navbar isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
       {isLoading && <Loading />}
       {!isAuthenticated && !isLoading && <UnauthenticatedApp />}
-      {isAuthenticated && !isLoading && <AuthenticatedApp />}      
+      {isAuthenticated && !isLoading && <AuthenticatedApp isAdmin={isAdmin} />}      
     </Router>
   );
 }

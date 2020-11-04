@@ -18,11 +18,11 @@ export default function Login() {
     getToken(user, password).then((result) => {
       if (result) {
         setSession(result.result);
-        window.location.reload();
+        window.location.href = '/home';
       } else {
         alert("Credenciales incorrectas");
       }
-      setIsLoading(false);
+      // setIsLoading(false);
     })
     .catch((error) => {
       setIsLoading(false);
