@@ -6,13 +6,7 @@ import { createNewOption } from "../scripts/services/option.js";
 import { getFilteredUsers } from "../scripts/services/user.js";
 import { customEmail, createNewToken } from "../scripts/services/auth.js";
 import { useHistory } from "react-router-dom";
-
-// const baseUrl =
-//   process.env.NODE_ENV === "localhost"
-//     ? "http://localhost:3000"
-//     : process.env.ENVIRONMENT === "test"
-//     ? "https://topicos2020testing.netlify.app"
-//     : "https://topicos2020.netlify.app";
+import Loading from "../components/Loading";
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -24,6 +18,7 @@ export default function Services() {
     { proposalName: "", proposalDescription: "", options: [""] },
   ]);
   const [boolAux, setBoolAux] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // handle input change
   const handleInputChange = (e, index, i = null) => {
@@ -36,13 +31,6 @@ export default function Services() {
     }
     setProposalList(list);
   };
-
-  // // handle click event of the Remove button
-  // const handleRemoveClick = index => {
-  //   const list = [...inputList];
-  //   list.splice(index, 1);
-  //   setInputList(list);
-  // };
 
   // handle click event of the Add button
   const handleAddClick = () => {
@@ -58,7 +46,7 @@ export default function Services() {
     setBoolAux(!boolAux);
   };
 
-  let electionId;
+  let electionId = null;
   const history = useHistory();
 
   const generateNewLink = async (id) => {
@@ -93,6 +81,7 @@ export default function Services() {
 
   const handleSumbit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const startDateHr = event.target.startDateHr.value;
     const startDate = event.target.startDate.value + " " + startDateHr;
     const endDateHr = event.target.endDateHr.value;
@@ -131,13 +120,17 @@ export default function Services() {
       await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
       alert("Creada correctamente");
       history.push("/");
+      setIsLoading(false);
     } catch (e) {
       alert("An error occurred, please try again");
+      setIsLoading(false);
     }
   };
 
   return (
-    <form id="generateElection" onSubmit={handleSumbit}>
+    <>
+    {isLoading && <Loading />}
+    {!isLoading && <form id="generateElection" onSubmit={handleSumbit}>
       <div className="container">
         <h1 className="election">Eleccion</h1>
         <p>Llene este formulario para crear una eleccion.</p>
@@ -293,6 +286,7 @@ export default function Services() {
           Crear eleccion
         </button>
       </div>
-    </form>
+    </form>}
+    </>
   );
 }

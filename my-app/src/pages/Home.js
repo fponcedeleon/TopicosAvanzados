@@ -2,42 +2,47 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
 import { getAllElections } from "../scripts/services/election";
+import Loading from "../components/Loading";
 
 export default function Services() {
   const [data, setData] = useState([]);
   const [dataClosed, setDataClosed] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   let closedElections = [];
+  const dataClosedLength = dataClosed && dataClosed.length;
 
   useEffect(() => {
     getAllElections().then(
       (result) => {
-        console.log(result);
         for (let index = 0; index < result.length; index++) {
           if (!result[index].isActive) closedElections.push(result[index]);
         }
         setDataClosed(closedElections);
         setData(result);
+        
       },
       // Nota: es importante manejar errores aquí y no en
       // un bloque catch() para que no interceptemos errores
       // de errores reales en los componentes.
       (error) => {
-        console.log(error);
+        console.error(error);
+        setIsLoading(false);
       }
-    );
-  }, []);
+    )
+    .then(() => setIsLoading(false));
+  }, [dataClosedLength, isLoading]);
 
   if (!data) {
-    console.log(data);
     return <div></div>;
   }
   if (!dataClosed) {
-    console.log(dataClosed);
     return <div></div>;
   }
 
   return (
-    <div className="grid-votaciones">
+    <>
+    {isLoading && <Loading />}
+    {!isLoading && <div className="grid-votaciones">
       <div className="col-md-2"></div>
       <div className="col-md-10">
         <div className="custom-row">
@@ -46,8 +51,8 @@ export default function Services() {
           </div>
         </div>
         <div className="custom-row">
-          <table class="table">
-            <thead class="thead-dark">
+          <table className="table">
+            <thead className="thead-dark">
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
@@ -55,9 +60,8 @@ export default function Services() {
             </thead>
             <tbody>
               {dataClosed &&
-                dataClosed.map((election) => (
-                  <tr>
-                    {console.log("ELECTION: " + election._id)}
+                dataClosed.map((election, index) => (
+                  <tr key={index}>
                     <th scope="row">
                       <Link to={"/VotingResult/" + election._id}>
                         {election._id}
@@ -71,5 +75,7 @@ export default function Services() {
         </div>
       </div>
     </div>
+    }
+    </>
   );
 }

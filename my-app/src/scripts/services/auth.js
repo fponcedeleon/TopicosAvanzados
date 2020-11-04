@@ -14,7 +14,6 @@ export const customEmail = async (
   isNewElection,
   endDate = null
 ) => {
-  console.log(subject)
   await post(`${baseUrl}/sendMail`, {
     userName,
     userEmail,
@@ -44,9 +43,7 @@ export const createNewToken = async (electionId, userId) => {
       throw new Error("Token already exists.");
     }
     throw error;
-    //throw new Error('Oops! Something went wrong...');
   }
-  console.log(token)
   return token;
 };
 

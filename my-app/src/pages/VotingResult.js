@@ -3,10 +3,12 @@ import ProposalResult from "../components/proposal/ProposalResult";
 import { getAllElectionProposals } from "../scripts/services/proposal";
 import { getOnePost } from "../scripts/services/election";
 import "../App.css";
+import Loading from "../components/Loading";
 
 export default function VotingResult(props) {
   const [election, setElection] = useState({});
   const [proposals, setProposals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const electionId = props.match.params.id;
 
@@ -16,22 +18,26 @@ export default function VotingResult(props) {
         setElection(result);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
-    );
-
-    getAllElectionProposals(electionId).then(
-      (result) => {
-        setProposals(result);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }, [electionId]);
-  console.log(election)
+    )
+    .then(() => {
+      getAllElectionProposals(electionId).then(
+        (result) => {
+          setProposals(result);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  
+      setIsLoading(false);
+    })
+  }, [electionId, isLoading]);
   return (
-    <div>
+    <>
+    {isLoading && <Loading />}
+    {!isLoading && <div>
       <div className="row">
         <div className="details-middle contenedorCentrado">
           <div className="custom-row">
@@ -39,12 +45,12 @@ export default function VotingResult(props) {
           </div>
 
           {proposals.map((p, index) => (
-            <div>
+            <div key={index}>
               <ProposalResult proposalName={p.name} proposalId={p._id} />
             </div>
           ))}
         </div>
       </div>
-    </div>
-  );
+    </div>}
+  </>);
 }

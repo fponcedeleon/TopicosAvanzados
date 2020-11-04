@@ -20,7 +20,7 @@ const ProposalResult = (props) => {
         setOption(result);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }, [id]);
@@ -34,16 +34,16 @@ const ProposalResult = (props) => {
           </div>
         </div>
         <div className="custom-row">
-          <table class="table">
-            <thead class="thead-dark">
+          <table className="table">
+            <thead className="thead-dark">
               <tr>
                 <th scope="col">Opcion</th>
                 <th scope="col">Cantidad de votos</th>
               </tr>
             </thead>
             <tbody>
-              {options.map((option) => (
-                <tr>
+              {options.map((option, index) => (
+                <tr key={index}>
                   <td>{option.name}</td>
                   <td>{GetPercent(option)}</td>
                 </tr>

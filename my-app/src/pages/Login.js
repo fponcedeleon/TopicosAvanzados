@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../App.css";
-import { useForm, useField, splitFormProps } from "react-form";
 import { Link } from "react-router-dom";
 import { setSession } from "../scripts/utils/session";
 import catolica from "../Img/cato.jpg";
 import logo from "../Img/ucu_logo.png";
 import Button from "react-bootstrap/Button";
 import { getToken } from "../scripts/services/user";
+import Loading from "../components/Loading";
 
 export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function LoginApp() {
+    setIsLoading(true);
     getToken(user, password).then((result) => {
       if (result) {
         setSession(result.result);
@@ -20,11 +22,18 @@ export default function Login() {
       } else {
         alert("Credenciales incorrectas");
       }
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      console.error(error);
     });
   }
 
   return (
-    <div className="row">
+    <>
+    {isLoading && <Loading />}
+    {!isLoading && <form className="row">
       <div className="col-md-9">
         <img className="imgStyle" src={catolica} alt="Catolica" />
       </div>
@@ -73,13 +82,14 @@ export default function Login() {
             <Button
               className="buttonSignin"
               type="submit"
-              onClick={(event) => LoginApp()}
+              onClick={() => LoginApp()}
             >
               Sign in
             </Button>
           </div>
         </div>
       </div>
-    </div>
+    </form>}
+    </>
   );
 }

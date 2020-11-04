@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getToken, deleteToken } from "../scripts/services/auth";
 import { getUserById, changePassword } from "../scripts/services/user";
+import Loading from "../components/Loading";
 
 export default function ResetPassword() {
-  let tokenApi;
-  let user;
+  const [isLoading, setIsLoading] = useState(true);
+  let tokenApi = null;
+  let user = null;
 
   const checkToken = async () => {
     const urlP = new URLSearchParams(window.location.search);
@@ -20,12 +22,15 @@ export default function ResetPassword() {
 
   const handleSumbit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const password = document.getElementById("inputPassword").value;
     if (password == document.getElementById("inputPasswordConfirm").value) {
       await changePassword(user._id, password);
       await deleteToken(tokenApi[0]._id);
+      setIsLoading(false);
       alert("se ha cambiado la contraseña");
     } else {
+      setIsLoading(false);
       alert("Las contraseñas no coinciden");
     }
   };
@@ -33,11 +38,14 @@ export default function ResetPassword() {
   useEffect(() => {
     checkToken().then((result) => {
       if (!result) window.location = "/error";
-    });
-  });
+      setIsLoading(false);
+    })
+  }, [isLoading]);
 
   return (
-    <form id="resetPassword" onSubmit={handleSumbit}>
+    <>
+    {isLoading && <Loading />}
+    {!isLoading && <form id="resetPassword" onSubmit={handleSumbit}>
       <div className="container">
         <h1 className="forgotTitle">Cambiar contraseña</h1>
         <label className="lbpassword">
@@ -65,6 +73,7 @@ export default function ResetPassword() {
           Cambiar
         </button>
       </div>
-    </form>
+    </form>}
+    </>
   );
 }
