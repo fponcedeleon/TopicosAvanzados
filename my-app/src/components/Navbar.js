@@ -41,7 +41,7 @@ const Navbar = ({ isAuthenticated, isAdmin }) => {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Votacion
+                Votación
               </Link>
             </li>
             {isAdmin &&
@@ -51,7 +51,7 @@ const Navbar = ({ isAuthenticated, isAdmin }) => {
                   className='nav-links'
                   onClick={closeMobileMenu}
                 >
-                  Eleccion
+                  Nueva Elección
                 </Link>
               </li>
             }
@@ -61,7 +61,7 @@ const Navbar = ({ isAuthenticated, isAdmin }) => {
                 className='nav-links'
                 onClick={logout}
               >
-                Log Out
+                Cerrar Sesión
               </Link>
             </li>
               </React.Fragment>
@@ -75,7 +75,7 @@ const Navbar = ({ isAuthenticated, isAdmin }) => {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Login
+                Iniciar Sesión
               </Link>
             </li>
             <li className='nav-item'>
@@ -84,7 +84,7 @@ const Navbar = ({ isAuthenticated, isAdmin }) => {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Register
+                Registrarme
               </Link>
             </li>
               </React.Fragment>

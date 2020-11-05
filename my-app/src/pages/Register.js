@@ -62,7 +62,7 @@ const RegisterForm = () => {
           <Form onSubmit={handleSubmit}>
             <Row className="justify-content-md-center">
               <Col lg="8">
-                <h2>Register</h2>
+                <h2>Registro</h2>
                 <hr />
                 <Form.Group controlId="firstName">
                   <Form.Label>*Nombre</Form.Label>
