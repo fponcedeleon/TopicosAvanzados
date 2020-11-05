@@ -1,4 +1,4 @@
-import { post, get, put } from "../utils/api.js";
+import { post, get } from "../utils/api.js";
 
 const baseUrl =
   window.location.hostname === "localhost"

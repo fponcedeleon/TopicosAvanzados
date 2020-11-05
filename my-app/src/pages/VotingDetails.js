@@ -70,7 +70,7 @@ const VotingDetails = (props) => {
       setIsLoading(false);
       setHasLoaded(true);
     });
-  }, [electionId, election, isLoading]);
+  }, [electionId, election, isLoading, hasLoaded]);
 
   if (!election || !proposals) {
     return <div></div>;
