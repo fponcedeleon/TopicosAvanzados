@@ -42,6 +42,9 @@ const VotingDetails = (props) => {
             .then((res) => {
               if (res && res.credentials) {
                 setCurrentUser(res.credentials);
+                if (currentUser.id !== token.userId) {
+                  window.location.href = "/error";
+                }
               }
             })
             .then(() => {

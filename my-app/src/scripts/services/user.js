@@ -52,7 +52,6 @@ export const register = async ({
     department,
     password,
   });
-
   if (data.status === "Error") {
     throw data.message;
   }

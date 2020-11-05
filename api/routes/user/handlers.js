@@ -55,6 +55,9 @@ const create = async ({ payload, auth }) => {
       };
     })
     .catch((error) => {
+      if (error.code === 11000) {
+        return { status: "Error", message: "Este email ya fue utilizado" };
+      }
       return { status: "Error", message: error };
     });
 };
