@@ -83,7 +83,6 @@ const VotingDetails = (props) => {
   const handleSubmit = async () => {
     setIsLoading(true);
     if (window.confirm("Confirma las opciones votadas?")) {
-      console.log(selectedOptions)
       for (const key in selectedOptions) {
         await voteOption(selectedOptions[key], currentUser.id);
       }
