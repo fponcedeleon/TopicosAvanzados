@@ -16,7 +16,7 @@ const VotingDetails = (props) => {
 
   let selectedOptions = {};
 
-  const [election, setElection] = useState({});
+  const [election, setElection] = useState(null);
   const [proposals, setProposals] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const electionId = props.match.params.id;
