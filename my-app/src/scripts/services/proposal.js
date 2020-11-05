@@ -1,5 +1,4 @@
 import { post, get } from "../utils/api.js";
-//import { removePostId } from "../utils/session.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -17,7 +16,6 @@ export const createNewProposal = async (electionId, name, description) => {
       throw new Error("Proposal already exists.");
     }
     throw error;
-    //throw new Error('Oops! Something went wrong...');
   }
 
   return proposal;

@@ -1,8 +1,11 @@
-import React from 'react';
-import ReactLoading from 'react-loading';
- 
-const LoadingComponent = ({ type, color }) => (
-    <ReactLoading type={type} color={color} height={667} width={375} />
-);
- 
-export default LoadingComponent;
+import React from "react";
+import { WaveTopBottomLoading } from "react-loadingg";
+const Container = () => 
+    (
+        <>
+            <div style={{height: "100vh", backgroundColor: "rgb(111, 194, 249)", opacity: "0.6"}}>
+                <WaveTopBottomLoading />
+            </div>
+        </>
+    );
+export default Container;

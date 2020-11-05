@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { useHistory } from "react-router-dom";
 import { removeSession } from "../scripts/utils/session.js";
-import { getCurrent } from "../scripts/services/user.js";
 
-const Navbar = ({ isAuthenticated }) => {
+const Navbar = ({ isAuthenticated, isAdmin }) => {
   const [click, setClick] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const history = useHistory();
@@ -16,14 +15,6 @@ const Navbar = ({ isAuthenticated }) => {
     history.push("/");
     window.location.reload();
   }
-
-  useEffect(() => {
-    getCurrent().then(res => {
-      if (res && res.credentials && res.credentials.role === 'admin') {
-        setIsAdmin(true);
-      }
-    })
-  }, [])
 
   return (
     <>
@@ -50,7 +41,7 @@ const Navbar = ({ isAuthenticated }) => {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Votacion
+                Votación
               </Link>
             </li>
             {isAdmin &&
@@ -60,7 +51,7 @@ const Navbar = ({ isAuthenticated }) => {
                   className='nav-links'
                   onClick={closeMobileMenu}
                 >
-                  Eleccion
+                  Nueva Elección
                 </Link>
               </li>
             }
@@ -70,7 +61,7 @@ const Navbar = ({ isAuthenticated }) => {
                 className='nav-links'
                 onClick={logout}
               >
-                Log Out
+                Cerrar Sesión
               </Link>
             </li>
               </React.Fragment>
@@ -84,7 +75,7 @@ const Navbar = ({ isAuthenticated }) => {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Login
+                Iniciar Sesión
               </Link>
             </li>
             <li className='nav-item'>
@@ -93,7 +84,7 @@ const Navbar = ({ isAuthenticated }) => {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Register
+                Registrarme
               </Link>
             </li>
               </React.Fragment>

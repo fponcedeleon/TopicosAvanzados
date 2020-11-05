@@ -1,30 +1,41 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
 import "../App.css";
-import { useForm, useField, splitFormProps } from "react-form";
 import { Link } from "react-router-dom";
 import { setSession } from "../scripts/utils/session";
 import catolica from "../Img/cato.jpg";
 import logo from "../Img/ucu_logo.png";
 import Button from "react-bootstrap/Button";
 import { getToken } from "../scripts/services/user";
+import Loading from "../components/Loading";
 
 export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function LoginApp() {
+    setIsLoading(true);
     getToken(user, password).then((result) => {
       if (result) {
         setSession(result.result);
-        window.location.reload();
+        setIsLoading(false);
+        window.location.href = '/home';
       } else {
-        alert("Credenciales incorrectas");
+        setIsLoading(false);
+        alert("Por favor, verificá que tus credenciales sean correctas");
       }
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      alert(error);
     });
   }
 
   return (
-    <div className="row">
+    <>
+    {isLoading && <Loading />}
+    {!isLoading && <form className="row">
       <div className="col-md-9">
         <img className="imgStyle" src={catolica} alt="Catolica" />
       </div>
@@ -34,7 +45,7 @@ export default function Login() {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <label className="titleHome">Sign in</label>
+            <label className="titleHome">Iniciar Sesión</label>
           </div>
         </div>
         <div className="row">
@@ -44,7 +55,7 @@ export default function Login() {
                 type="text"
                 className="form-control"
                 id="userText"
-                placeholder="User"
+                placeholder="Nombre de Usuario"
                 onChange={(event) => setUser(event.target.value)}
               />
             </div>
@@ -57,7 +68,7 @@ export default function Login() {
                 type="password"
                 className="form-control"
                 id="passwordText"
-                placeholder="Password"
+                placeholder="Contraseña"
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
@@ -65,7 +76,7 @@ export default function Login() {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <Link to="/forgotPassword">¿Olvidó su contraseña?</Link>
+            <Link to="/forgotPassword">¿Olvidaste la contraseña?</Link>
           </div>
         </div>
         <div className="row">
@@ -73,13 +84,14 @@ export default function Login() {
             <Button
               className="buttonSignin"
               type="submit"
-              onClick={(event) => LoginApp()}
+              onClick={() => LoginApp()}
             >
-              Sign in
+              Iniciar Sesión
             </Button>
           </div>
         </div>
       </div>
-    </div>
+    </form>}
+    </>
   );
 }

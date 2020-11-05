@@ -9,24 +9,9 @@ const fetch = async (url, method, data) => {
     headers.append('Authorization', `Bearer ${session}`);
   }
 
-  // Configurar cabeceras y cors
   let body;
   if (data) {
     headers.append("Content-Type", "application/json");
-    // headers.append(
-    //   "Access-Control-Allow-Methods",
-    //   "GET, POST, OPTIONS, PUT, DELETE"
-    // );
-    //headers.append('Access-Control-Allow-Origin', '*');
-    // headers.append(
-    //   'Access-Control-Allow-Headers',
-    //   'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method',
-    // );
-    // headers.append(
-    //   'Access-Control-Allow-Methods',
-    //   'GET, POST, OPTIONS, PUT, DELETE',
-    // );
-    // headers.append('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     body = JSON.stringify(data);
   }
 
@@ -40,7 +25,6 @@ const fetch = async (url, method, data) => {
     return { error: { status: response.status } };
   }
 
-  //console.log(response);
   return { data: await response.json() };
 };
 

@@ -93,7 +93,6 @@ const validateUser = async ({ params }) => {
   return await User.findOneAndUpdate({ _id: params.id }, { validated: true })
     .exec()
     .then((result) => {
-      console.log(result);
       if (result) {
         const token = sessionHelper.createJWT(result.username);
         return { status: "Success", token: token };

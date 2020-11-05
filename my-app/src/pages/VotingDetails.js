@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import "../index.css";
 import { ListProposal } from "../components/proposal/ListProposal";
@@ -7,19 +8,11 @@ import { getOnePost } from "../scripts/services/election";
 import { voteOption } from "../scripts/services/option";
 import { getToken, deleteToken } from "../scripts/services/auth";
 import { getCurrent } from "../scripts/services/user";
+import Loading from "../components/Loading";
 
 const VotingDetails = (props) => {
-  let tokenApi;
-  const checkToken = async () => {
-    const urlP = new URLSearchParams(window.location.search);
-    const token = urlP.get("token");
-    tokenApi = await getToken(token);
-    if (tokenApi[0]) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
+  const [token, setToken] = useState(true);
 
   let selectedOptions = {};
 
@@ -29,35 +22,51 @@ const VotingDetails = (props) => {
   const electionId = props.match.params.id;
 
   useEffect(() => {
-    getCurrent().then(res => {
-      if (res && res.credentials) {
-        setCurrentUser(res.credentials);
-      }
-    })
-    checkToken().then((result) => {
-      if (!result) window.location = "/error";
-    });
-    getOnePost(electionId).then(
-      (result) => {
-        setElection(result);
-      },
-      (error) => {
-        //console.log(error);
-      }
-    );
-    getAllElectionProposals(electionId).then(
-      (result) => {
-        setProposals(result);
-      },
-      () => {
-        //console.log(error);
-      }
-    );
-  }, [electionId, checkToken]);
+    if (election) {
+      setIsLoading(false);
+      return;
+    }
+    const urlP = new URLSearchParams(window.location.search);
+    const urlToken = urlP.get("token");
+    Promise.all([
+    getToken(urlToken)
+      .then(response => {
+        if (!response) {
+          window.location.href = '/error';
+        }
+        else {
+          setToken(response[0]);
+        }
+      })
+      .then(() => {
+        getCurrent().then(res => {
+          if (res && res.credentials) {
+            setCurrentUser(res.credentials);
+          }
+        })
+          .then(() => {
+            getOnePost(electionId).then(
+              (result) => {
+                setElection(result);
+              },
+              (error) => {
+                console.error(error);
+              }
+            ).then(() => {
+              getAllElectionProposals(electionId).then(
+                (result) => {
+                  setProposals(result);
+                },
+                (error) => {
+                  console.error(error);
+                }
+              )
+            })
+          })
 
-  const GetValueOfOpen = () => {
-    //console.log("fede");
-  };
+      })])
+      .then(() => setIsLoading(false));
+  }, [electionId, election, isLoading]);
 
   if (!election || !proposals) {
     return <div></div>;
@@ -68,59 +77,62 @@ const VotingDetails = (props) => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     if (window.confirm("Confirma las opciones votadas?")) {
       for (const key in selectedOptions) {
         voteOption(selectedOptions[key], currentUser.id).then();
       }
-      
-      alert("Has votado correctamente.");
-      await deleteToken(tokenApi[0]._id);
+
+      alert("Has votado correctamente");
+      await deleteToken(token._id);
     }
+    setIsLoading(false);
   };
 
   return (
-    <Container>
-      <form>
-        <div className="voting-Details">
-          <div className="row">
-            <div className="details-middle">
-              <div className="custom-row">
-                <label>Nombre</label>
-                <input
-                  readOnly="true"
-                  type="text"
-                  className="form-control"
-                  aria-describedby="emailHelp"
-                  value={election.name}
-                />
-              </div>
-
-              {proposals.map((p) => (
-                <div>
-                  <ListProposal
-                    proposalName={p.name}
-                    proposalId={p._id}
-                    funcionGetValue={GetValueOfOpen()}
-                    handleChange={handleChange}
+    <>
+      {isLoading && <Loading />}
+      {!isLoading && <Container>
+        <form>
+          <div className="voting-Details">
+            <div className="row">
+              <div className="details-middle">
+                <div className="custom-row">
+                  <label>Nombre</label>
+                  <input
+                    readOnly
+                    type="text"
+                    className="form-control"
+                    aria-describedby="emailHelp"
+                    value={election.name}
                   />
                 </div>
-              ))}
 
-              <div className="custom-row">
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  className="form-control"
-                >
-                  Enviar Respuesta
+                {proposals.map((p, index) => (
+                  <div key={index}>
+                    <ListProposal
+                      proposalName={p.name}
+                      proposalId={p._id}
+                      handleChange={handleChange}
+                    />
+                  </div>
+                ))}
+
+                <div className="custom-row">
+                  <button
+                    type="button"
+                    onClick={handleSubmit}
+                    className="form-control"
+                  >
+                    Enviar Respuesta
                 </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
-    </Container>
-  );
+        </form>
+      </Container>}
+    </>);
 };
 
 export default VotingDetails;
