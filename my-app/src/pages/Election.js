@@ -37,6 +37,7 @@ export default function Services() {
     if (name === "options") {
       list[index][name][i] = value;
     } else {
+      console.log(list[index])
       list[index][name] = value;
     }
     setProposalList(list);
@@ -186,12 +187,12 @@ export default function Services() {
                       {/* <hr /> */}
                       <Form.Group controlId={`proposal-${i}`}>
                         <Form.Label>Nombre</Form.Label>
-                        <Form.Control type="text" placeholder={`Propuesta ${i + 1}`} onChange={(e) => handleInputChange(e, i)} value={proposal.proposalName} />
+                        <Form.Control type="text" name="proposalName" placeholder={`Propuesta ${i + 1}`} onChange={(e) => handleInputChange(e, i)} value={proposal.proposalName} />
                       </Form.Group>
 
                       <Form.Group controlId={`description-${i}`}>
                         <Form.Label>Descripción</Form.Label>
-                        <Form.Control type="text" placeholder={`Descripción ${i + 1}`} onChange={(e) => handleInputChange(e, i)} value={proposal.proposalDescription} />
+                        <Form.Control type="text" name="proposalDescription" placeholder={`Descripción ${i + 1}`} onChange={(e) => handleInputChange(e, i)} value={proposal.proposalDescription} />
                       </Form.Group>
 
                       {
@@ -200,7 +201,7 @@ export default function Services() {
                             <strong>Opción {index + 1}</strong>
                             <hr />
                             <Form.Group controlId={`option-${index + 1}`}>
-                              <Form.Control type="text" placeholder={`Propuesta ${i + 1} - Opción ${index + 1}`} onChange={(e) => handleInputChange(e, i, index)} value={option} />
+                              <Form.Control type="text" name="options" placeholder={`Propuesta ${i + 1} - Opción ${index + 1}`} onChange={(e) => handleInputChange(e, i, index)} value={option} />
                             </Form.Group>
 
                             {
@@ -210,7 +211,7 @@ export default function Services() {
                         </Button>
                             }
                             {
-                              proposalList.length - 1 === i &&
+                              proposalList.length - 1 === i  && proposal.options.length - 1 === index &&
                               <Button variant="outline-info" type="button" className="center" onClick={handleAddClick}>
                                 Agregar Propuesta
                         </Button>
