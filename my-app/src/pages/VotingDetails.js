@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 const VotingDetails = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   let selectedOptions = {};
 
@@ -22,10 +23,10 @@ const VotingDetails = (props) => {
   const electionId = props.match.params.id;
 
   useEffect(() => {
-    // if (election) {
-    //   setIsLoading(false);
-    //   return;
-    // }
+    if (hasLoaded) {
+      setIsLoading(false);
+      return;
+    }
     const urlP = new URLSearchParams(window.location.search);
     const urlToken = urlP.get("token");
     Promise.all([
@@ -65,7 +66,10 @@ const VotingDetails = (props) => {
           })
 
       })])
-      .then(() => setIsLoading(false));
+      .then(() => {
+        setIsLoading(false);
+        setHasLoaded(true);
+      });
   }, [electionId, election, isLoading]);
 
   if (!election || !proposals) {
