@@ -58,7 +58,7 @@ const RouterNavigation = () => {
     getCurrent()
       .then((res) => {
         setIsAuthenticated(res && res.credentials);
-        setIsAdmin(res && res.credentials && res.credentials.role === "standard");
+        setIsAdmin(res && res.credentials && res.credentials.role === "admin");
         setIsLoading(false);
       })
       .catch((error) => {
