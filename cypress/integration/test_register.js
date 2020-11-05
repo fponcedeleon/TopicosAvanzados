@@ -21,5 +21,8 @@ describe("Form test", () => {
         .type("20")
         cy.get('form[name=formRegister]').submit()
         cy.contains('Submit').click()
+        cy.on('window:alert',(txt)=>{
+            should('Please check your email to verify your account')
+        })
     });
 });

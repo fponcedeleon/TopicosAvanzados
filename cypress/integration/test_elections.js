@@ -1,14 +1,22 @@
 describe("Form test", () => {
     it("Can fill the form", () => {
-        cy.visit('localhost:3000/elections')
+        cy.visit('localhost:3000')
+        cy.get('input[id=userText]')
+        .type("apardo")
+        cy.get('input[id=passwordText]')
+        .type("45986382")
+        cy.get('Button[type=Submit').click()
+        cy.wait(3000)
+        cy.visit('localhost:3000/election')
+        cy.wait(3000)
         cy.get('input[name="nameEl"]')
         .type("election_test")
         cy.get('input[name="startDate"]')
-        .type("12/28/2020")
+        .type("2020-12-28")
         cy.get('input[name="startDateHr"]')
         .type("09:00")
         cy.get('input[name="endDate"]')
-        .type("01/28/2021")
+        .type("2021-01-28")
         cy.get('input[name="endDateHr"]')
         .type("09:00")
         cy.get('input[name="minAge"]')
@@ -17,18 +25,22 @@ describe("Form test", () => {
         .type("30")
         cy.get('input[name="city"]')
         .type("Montevideo")
-        cy.get('input[name="country"]')
+        cy.get('input[name="department"]')
         .type("Uruguay")
         cy.get('input[name="proposalName"]')
         .type("TestProposal")
         cy.get('input[name="proposalDescription"]')
         .type("TestPropDescription")
-        cy.get('input[name="optionOne"]')
+        cy.get('input[placeholder="Opcion 0"]')
         .type("TestOptionOne")
-        cy.get('input[name="optionTwo"]')
+        cy.get('Button[name="addOption"]').click()
+        cy.get('input[placeholder="Opcion 1"]')
         .type("TestOptionTwo")
-        cy.get('form[name="formElection"').submit();
-        cy.url().should('include', '/elections')
+        cy.get('Button[name="submitElection"]').click()
+        cy.on('window:alert',(txt)=>{
+            should('Creada correctamente')
+        })
+        
     });
 });
 

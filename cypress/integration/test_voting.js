@@ -7,6 +7,10 @@ describe("Form test", () => {
         .type("45986382")
         cy.get('Button[type=Submit').click()
         cy.wait(3000)
-        cy.get('a[href*="voting"]').should('be.visible')
+        cy.get('div[class="grid-votaciones"] a').first().click()
+        cy.get('button').click()
+        cy.on('window:alert',(txt)=>{
+            should('Has votado correctamente.')
+        })
     });
 });
