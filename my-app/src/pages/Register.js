@@ -26,6 +26,14 @@ const RegisterForm = () => {
       return;
     }
 
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const cleanBd = new Date(birthdate).setHours(0,0,0,0);
+    if (cleanBd >= today) {
+      alert("Por favor, verificá que la fecha de nacimiento sea válida");
+      return;
+    }
+
     setIsLoading(true);
     const user = {
       firstName,

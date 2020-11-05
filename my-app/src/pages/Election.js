@@ -91,6 +91,16 @@ export default function Services() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (minAge > maxAge) {
+      alert("Por favor, verificá que la edad mínima sea menor o igual que la edad máxima");
+      return;
+    }
+    const minDate = new Date(startValue);
+    const maxDate = new Date(endValue);
+    if (minDate > maxDate) {
+      alert("Por favor, verificá que la fecha de inicio sea menor o igual que la fecha de fin");
+      return;
+    }
     setIsLoading(true);
 
     try {
