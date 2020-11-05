@@ -21,10 +21,9 @@ const createUserModel = ({ payload }) => {
  * @param {*} param0 user's information to include in response
  * @param {*} includePsw true if include password in response
  */
-const parseUserInfo = ({ _id, username, firstName, lastName, email, password, role, isActive }, includePsw) => {
+const parseUserInfo = ({ _id, firstName, lastName, email, password, role, isActive }, includePsw) => {
   return {
     id: _id,
-    username: username,
     password: includePsw ? password : undefined,
     email: email || undefined,
     firstName: firstName || undefined,
@@ -53,8 +52,8 @@ const saveUser = userModel => {
   })
 }
 
-const comparePassword = (username, password) => {
-  return User.findOne({ username })
+const comparePassword = (email, password) => {
+  return User.findOne({ email })
     .exec()
     .then(user => {
       if (user) {

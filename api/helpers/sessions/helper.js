@@ -2,13 +2,13 @@ const userHelper = require('../users');
 const jwt = require('jsonwebtoken');
 
 const getExistingUserByUsername = async ({ screen_name }) => {
-  return await userHelper.getUserByParams({ username: screen_name });
+  return await userHelper.getUserByParams({ email: screen_name });
 }
 
 const createUser = async ({ screen_name }) => {
   const payloadObj = {
     payload: {
-      username: screen_name
+      email: screen_name
     }
   };
 
@@ -19,14 +19,14 @@ const createUser = async ({ screen_name }) => {
 
 }
 
-const createJWT = username => {
-  return jwt.sign({ sub: username }, process.env.JWT_SECRET);
+const createJWT = email => {
+  return jwt.sign({ sub: email }, process.env.JWT_SECRET);
 }
 
-const create = async (username, password) => {
+const create = async (email, password) => {
 
-  const validatedUser = await userHelper.comparePassword(username, password);
-  return validatedUser ? createJWT(username) : null;
+  const validatedUser = await userHelper.comparePassword(email, password);
+  return validatedUser ? createJWT(email) : null;
 };
 
 module.exports = {

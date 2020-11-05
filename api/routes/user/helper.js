@@ -1,18 +1,21 @@
 const User = require("../../models/user");
 
 const getUserModel = async (
-  { username, password, email, firstName, lastName, isActive, role, age, city, country, department },
+  { password, email, firstName, lastName, isActive, role, city, country, department, birthdate },
   { credentials }
 ) => {
+  console.log(birthdate);
+  const ageCalculated = (new Date().getTime() - new Date(birthdate).getTime())/31536000000;
+
   return new User({
-    username: username,
+    birthdate: birthdate,
     password: password,
     email: email,
     firstName: firstName,
     lastName: lastName,
     isActive: isActive,
     role: role,
-    age: age,
+    age: ageCalculated,
     city: city,
     country: country,
     department: department,
@@ -21,7 +24,6 @@ const getUserModel = async (
 
 const parseUser = ({
   _id,
-  username,
   password,
   email,
   firstName,
@@ -29,14 +31,15 @@ const parseUser = ({
   isActive,
   role,
   age,
+  birthdate,
   city,
   country,
   department,
 }) => {
   return {
     id: _id || undefined,
-    username: username,
     password: password,
+    birthdate: birthdate,
     email: email,
     firstName: firstName,
     lastName: lastName,

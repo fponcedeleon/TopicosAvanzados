@@ -227,7 +227,7 @@ export default function Services() {
           </Row>
           <Row className="justify-content-md-center" style={{margin: "2rem"}}>
             <Button variant="primary" type="submit" className="center">
-              Submit
+              Crear Elección
         </Button>
           </Row>
         </Form>

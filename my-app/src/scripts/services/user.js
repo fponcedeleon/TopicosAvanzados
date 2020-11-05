@@ -33,22 +33,20 @@ export const getUserByEmail = async (userEmail) => {
 };
 
 export const register = async ({
-  username,
   firstName,
   lastName,
   email,
-  age,
+  birthdate,
   country,
   city,
   department,
   password,
 }) => {
   const { data } = await post(`${baseUrl}/users`, {
-    username,
     firstName,
     lastName,
     email,
-    age,
+    birthdate,
     country,
     city,
     department,
@@ -73,9 +71,9 @@ export const verifyAccount = async (userId) => {
   return data;
 };
 
-export const getToken = async (username, password) => {
+export const getToken = async (email, password) => {
   const { data } = await post(`${baseUrl}/sessions`, {
-    username,
+    email,
     password,
   });
   return data;
