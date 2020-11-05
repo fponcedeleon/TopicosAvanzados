@@ -4,7 +4,6 @@ const getUserModel = async (
   { password, email, firstName, lastName, isActive, role, city, country, department, birthdate },
   { credentials }
 ) => {
-  console.log(birthdate);
   const ageCalculated = (new Date().getTime() - new Date(birthdate).getTime())/31536000000;
 
   return new User({
@@ -15,7 +14,7 @@ const getUserModel = async (
     lastName: lastName,
     isActive: isActive,
     role: role,
-    age: ageCalculated,
+    age: Math.trunc(ageCalculated),
     city: city,
     country: country,
     department: department,
