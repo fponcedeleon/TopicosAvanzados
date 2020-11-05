@@ -84,11 +84,11 @@ const VotingDetails = (props) => {
     setIsLoading(true);
     if (window.confirm("Confirma las opciones votadas?")) {
       for (const key in selectedOptions) {
-        voteOption(selectedOptions[key], currentUser.id).then();
+        await voteOption(selectedOptions[key], currentUser.id);
       }
 
-      alert("Has votado correctamente");
       await deleteToken(token._id);
+      alert("Has votado correctamente");
     }
     setIsLoading(false);
   };

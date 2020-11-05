@@ -17,7 +17,7 @@ module.exports = [
     config: config.create,
   },
   {
-    method: "PUT",
+    method: "POST",
     path: "/options/{id}",
     config: config.update,
   },

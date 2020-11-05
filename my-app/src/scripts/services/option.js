@@ -39,7 +39,7 @@ export const voteOption = async (optionId, userId) => {
   if (arrAux.indexOf(userId) < 0) {
     arrAux.push(userId);
   }
-  const { data: option } = await put(`${baseUrl}/options/${optionId}`, {
+  const { data: option } = await post(`${baseUrl}/options/${optionId}`, {
     name: nameAux,
     votants: arrAux,
   });
