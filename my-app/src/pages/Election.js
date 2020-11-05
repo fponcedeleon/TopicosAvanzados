@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import "../App.css";
+import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { createNewElection } from "../scripts/services/election.js";
 import { createNewProposal } from "../scripts/services/proposal.js";
 import { createNewOption } from "../scripts/services/option.js";
@@ -8,6 +9,7 @@ import { getFilteredUsers } from "../scripts/services/user.js";
 import { customEmail, createNewToken } from "../scripts/services/auth.js";
 import { useHistory } from "react-router-dom";
 import Loading from "../components/Loading";
+import DateTimePicker from 'react-datetime-picker';
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -20,6 +22,13 @@ export default function Services() {
   ]);
   const [boolAux, setBoolAux] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [startValue, setStartValue] = useState(new Date());
+  const [endValue, setEndValue] = useState(new Date(new Date().getTime() + 1));
+  const [maxAge, setMaxAge] = useState(0);
+  const [minAge, setMinAge] = useState(0);
+  const [city, setCity] = useState('');
+  const [department, setDepartment] = useState('');
 
   // handle input change
   const handleInputChange = (e, index, i = null) => {
@@ -80,28 +89,19 @@ export default function Services() {
     });
   };
 
-  const handleSumbit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const startDateHr = event.target.startDateHr.value;
-    const startDate = event.target.startDate.value + " " + startDateHr;
-    const endDateHr = event.target.endDateHr.value;
-    const endDate = event.target.endDate.value + " " + endDateHr;
-    const minAge = event.target.minAge.value;
-    const maxAge = event.target.maxAge.value;
-    const city = event.target.city.value;
-    const department = event.target.department.value;
-    const nameEl = event.target.nameEl.value;
 
     try {
       const election = await createNewElection(
-        startDate,
-        endDate,
+        startValue,
+        endValue,
         minAge,
         maxAge,
         city,
         department,
-        nameEl
+        name,
       );
 
       electionId = election.data.id;
@@ -118,180 +118,120 @@ export default function Services() {
         });
       });
 
-      await sendCustomEmail(nameEl, endDate, minAge, maxAge, city, department);
-      alert("Creada correctamente");
+      await sendCustomEmail(name, endValue, minAge, maxAge, city, department);
+      setIsLoading(false);
+      alert("Elección creada correctamente");
       history.push("/");
-      setIsLoading(false);
     } catch (e) {
-      alert("An error occurred, please try again");
       setIsLoading(false);
+      alert("Ocurrió un error. Por favor, intentalo nuevamente");
     }
   };
 
   return (
     <>
-    {isLoading && <Loading />}
-    {!isLoading && <form id="generateElection" onSubmit={handleSumbit}>
-      <div className="container">
-        <h1 className="election">Eleccion</h1>
-        <p>Llene este formulario para crear una eleccion.</p>
-        <label htmlFor="nameEl">
-          <b>Nombre*</b>
-        </label>
-        <input
-          type="text"
-          placeholder="Eleccion 1"
-          name="nameEl"
-          id="nameEl"
-          required
-        ></input>
-        <hr></hr>
-        <label htmlFor="startDate">
-          <b>Fecha Comienzo*</b>
-        </label>
-        <input
-          type="date"
-          placeholder="MM/DD/AAAA"
-          name="startDate"
-          id="startDate"
-          required
-        ></input>
+      {isLoading && <Loading />}
+      {!isLoading &&
+        <Form onSubmit={handleSubmit}>
+          <Row className="justify-content-md-center">
+            <Col lg="8">
+              <h2>Nueva Elección</h2>
+              <hr />
+              <Form.Group controlId="name">
+                <Form.Label>*Nombre</Form.Label>
+                <Form.Control required type="text" placeholder="Elección 1" onChange={(e) => setName(e.target.value)} />
+              </Form.Group>
 
-        <hr></hr>
-        <label htmlFor="startDateHr">
-          <b>Hora Comienzo*</b>
-        </label>
-        <input
-          type="text"
-          placeholder="HH:MM"
-          name="startDateHr"
-          id="startDateHr"
-          required
-        ></input>
+              <Form.Group controlId="startDate">
+                <Form.Label>*Fecha Inicio</Form.Label> <br />
+                <DateTimePicker
+                  onChange={setStartValue}
+                  value={startValue}
+                />
+              </Form.Group>
 
-        <hr></hr>
-        <label htmlFor="endDate">
-          <b>Fecha Fin*</b>
-        </label>
-        <input
-          type="date"
-          placeholder="MM/DD/AAAA"
-          name="endDate"
-          id="endDate"
-          required
-        ></input>
+              <Form.Group controlId="endDate">
+                <Form.Label>*Fecha Fin</Form.Label> <br />
+                <DateTimePicker
+                  onChange={setEndValue}
+                  value={endValue}
+                />
+              </Form.Group>
 
-        <hr></hr>
-        <label htmlFor="endDateHr">
-          <b>Hora Fin*</b>
-        </label>
-        <input
-          type="text"
-          placeholder="HH:MM"
-          name="endDateHr"
-          id="endDateHr"
-          required
-        ></input>
+              <Form.Group controlId="minAge">
+                <Form.Label>Mínimo edad</Form.Label>
+                <Form.Control type="number" min="10" max="100" placeholder="20" onChange={(e) => setMinAge(e.target.value)} />
+              </Form.Group>
 
-        <hr></hr>
-        <label htmlFor="minAge">
-          <b>Minimo de edad</b>
-        </label>
-        <input
-          type="number"
-          min="10"
-          max="100"
-          placeholder="Edad minima"
-          name="minAge"
-          id="minAge"
-        ></input>
+              <Form.Group controlId="maxAge">
+                <Form.Label>Máximo edad</Form.Label>
+                <Form.Control type="number" min="10" max="100" placeholder="30" onChange={(e) => setMaxAge(e.target.value)} />
+              </Form.Group>
 
-        <hr></hr>
-        <label htmlFor="maxAge">
-          <b>Maximo de edad</b>
-        </label>
-        <input
-          type="number"
-          min="10"
-          max="100"
-          placeholder="Edad maxima"
-          name="maxAge"
-          id="maxAge"
-        ></input>
+              <Form.Group controlId="city">
+                <Form.Label>Ciudad</Form.Label>
+                <Form.Control type="text" placeholder="Montevideo" onChange={(e) => setCity(e.target.value)} />
+              </Form.Group>
 
-        <hr></hr>
-        <label htmlFor="city">
-          <b>Ciudad</b>
-        </label>
-        <input type="text" placeholder="Ciudad" name="city" id="city"></input>
+              <Form.Group controlId="ciudad">
+                <Form.Label>Departamento</Form.Label>
+                <Form.Control type="text" placeholder="Montevideo" onChange={(e) => setDepartment(e.target.value)} />
+              </Form.Group>
 
-        <hr></hr>
-        <label htmlFor="department">
-          <b>Departamento</b>
-        </label>
-        <input
-          type="text"
-          placeholder="Departamento"
-          name="department"
-          id="department"
-        ></input>
+              {
+                proposalList.map((proposal, i) => (
+                  <Card key={i} style={{ marginTop: "1rem" }}>
+                    <Card.Body>
+                      <Card.Title>Propuesta {i + 1}</Card.Title>
+                      {/* <hr /> */}
+                      <Form.Group controlId={`proposal-${i}`}>
+                        <Form.Label>Nombre</Form.Label>
+                        <Form.Control type="text" placeholder={`Propuesta ${i + 1}`} onChange={(e) => handleInputChange(e, i)} value={proposal.proposalName} />
+                      </Form.Group>
 
-        <hr></hr>
-        {proposalList.map((x, i) => {
-          return (
-            <div key={i}>
-              <label htmlFor="proposal">
-                <b>Propuesta</b>
-              </label>
-              <input
-                name="proposalName"
-                placeholder="Propuesta"
-                id="proposalName"
-                value={x.proposalName}
-                onChange={(e) => handleInputChange(e, i)}
-              ></input>
-              <input
-                name="proposalDescription"
-                placeholder="Descripcion"
-                id="proposalDescription"
-                value={x.proposalDescription}
-                onChange={(e) => handleInputChange(e, i)}
-              ></input>
-              <label htmlFor="options">
-                <b>Opciones</b>
-              </label>
-              {x.options.map((o, ind) => {
-                return (
-                  <div key={ind}>
-                    <input
-                      placeholder={`Opcion ${ind}`}
-                      name="options"
-                      id="options"
-                      value={o}
-                      onChange={(e) => handleInputChange(e, i, ind)}
-                    ></input>
-                    {x.options.length - 1 === ind && (
-                      <button onClick={(e) => handleAddOptionClick(e, i)}>
-                        Add Option
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
-              {proposalList.length - 1 === i && (
-                <button onClick={handleAddClick}>Add Proposal</button>
-              )}
-            </div>
-          );
-        })}
+                      <Form.Group controlId={`description-${i}`}>
+                        <Form.Label>Descripción</Form.Label>
+                        <Form.Control type="text" placeholder={`Descripción ${i + 1}`} onChange={(e) => handleInputChange(e, i)} value={proposal.proposalDescription} />
+                      </Form.Group>
 
-        <hr></hr>
+                      {
+                        proposal.options.map((option, index) => (
+                          <div key={index}>
+                            <strong>Opción {index + 1}</strong>
+                            <hr />
+                            <Form.Group controlId={`option-${index + 1}`}>
+                              <Form.Control type="text" placeholder={`Propuesta ${i + 1} - Opción ${index + 1}`} onChange={(e) => handleInputChange(e, i, index)} value={option} />
+                            </Form.Group>
 
-        <button type="submit" className="electionbtn">
-          Crear eleccion
-        </button>
-      </div>
-    </form>}
+                            {
+                              proposal.options.length - 1 === index &&
+                              <Button variant="outline-primary" type="button" className="center" onClick={(e) => handleAddOptionClick(e, i)}>
+                                Agregar Opción
+                        </Button>
+                            }
+                            {
+                              proposalList.length - 1 === i &&
+                              <Button variant="outline-info" type="button" className="center" onClick={handleAddClick}>
+                                Agregar Propuesta
+                        </Button>
+                            }
+                          </div>
+                        ))
+
+                      }
+                    </Card.Body>
+                  </Card>
+                ))
+              }
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center" style={{margin: "2rem"}}>
+            <Button variant="primary" type="submit" className="center">
+              Submit
+        </Button>
+          </Row>
+        </Form>
+      }
     </>
   );
 }
