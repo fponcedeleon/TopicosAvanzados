@@ -1,4 +1,5 @@
 import { get, post } from "../utils/api.js";
+import { exec } from "child_process";
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -54,6 +55,10 @@ export const register = async ({
     department,
     password,
   });
+
+  if (data.status === "Error") {
+    throw new Exception(data.message);
+  }
   return data;
 };
 
