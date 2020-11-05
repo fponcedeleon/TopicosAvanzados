@@ -1,10 +1,7 @@
 describe("Form test", () => {
-    beforeEach(() => {
-        cy.visit('https://topicossw.herokuapp.com/register')
-    })
-
     it("User Registration Form", () => {
-        cy.get('input[name=fristName]')
+        cy.visit('localhost:3000/register')
+        cy.get('input[name=firstName]')
         .type("testFirstName")
         cy.get('input[name=lastName]')
         .type("testLastName")

@@ -1,9 +1,6 @@
 describe("Form test", () => {
-    beforeEach(() => {
-        cy.visit('https://topicossw.herokuapp.com/elections')
-    })
-
     it("Can fill the form", () => {
+        cy.visit('localhost:3000/elections')
         cy.get('input[name="nameEl"]')
         .type("election_test")
         cy.get('input[name="startDate"]')
