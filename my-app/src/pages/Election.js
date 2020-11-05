@@ -37,7 +37,6 @@ export default function Services() {
     if (name === "options") {
       list[index][name][i] = value;
     } else {
-      console.log(list[index])
       list[index][name] = value;
     }
     setProposalList(list);
