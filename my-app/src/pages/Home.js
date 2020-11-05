@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import { getAllElections } from "../scripts/services/election";
 import Loading from "../components/Loading";
+import moment from 'moment';
 
 export default function Services() {
   const [data, setData] = useState([]);
@@ -56,6 +57,7 @@ export default function Services() {
             <thead className="thead-dark">
               <tr>
                 <th scope="col">Nombre</th>
+                <th scope="col">Fecha Cerrada</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +69,7 @@ export default function Services() {
                         {election.name ? election.name : "Eleccion"}
                       </Link>
                     </th>
+                    <th>{moment(election.endDate).format("LLLL")}</th>
                   </tr>
                 ))}
             </tbody>

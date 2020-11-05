@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 import { getAllElections } from "../scripts/services/election";
 import Loading from "../components/Loading";
+import moment from 'moment';
 
 export default function VotingPage() {
 
@@ -45,15 +46,13 @@ export default function VotingPage() {
         <table className="table">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">ID</th>
               <th scope="col">Nombre</th>
             </tr>
           </thead>
           <tbody>
             {data && data.map((election, index) =>
               <tr key={index}>
-                <th scope="row"><Link to={"/VotingDetails/" + election._id}>{election._id}</Link></th>
-                <td>{election.name}</td>
+                <th scope="row"><Link to={"/VotingDetails/" + election._id}>{election.name}</Link></th>
               </tr>
             )}
           </tbody>
@@ -69,15 +68,15 @@ export default function VotingPage() {
         <table className="table">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">ID</th>
               <th scope="col">Nombre</th>
+              <th scope="col">Fecha Cerrada</th>
             </tr>
           </thead>
           <tbody>
             {data && data.map((election, index) =>
               <tr key={index}>
-                <th scope="row"><Link to={"/VotingResult/" + election._id}>{election._id}</Link></th>
-                <td>{election.name}</td>
+                <th scope="row"><Link to={"/VotingResult/" + election._id}>{election.name}</Link></th>
+                <th scope="row">{moment(election.endDate).locale("es").format("LLLL")}</th>
               </tr>
             )}
           </tbody>
