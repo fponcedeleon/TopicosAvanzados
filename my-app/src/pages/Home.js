@@ -55,7 +55,6 @@ export default function Services() {
           <table className="table">
             <thead className="thead-dark">
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
               </tr>
             </thead>
@@ -65,10 +64,9 @@ export default function Services() {
                   <tr key={index}>
                     <th scope="row">
                       <Link to={"/VotingResult/" + election._id}>
-                        {election._id}
+                        {election.name ? election.name : "Eleccion"}
                       </Link>
                     </th>
-                    <td>{election.name}</td>
                   </tr>
                 ))}
             </tbody>
