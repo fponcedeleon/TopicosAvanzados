@@ -22,10 +22,10 @@ const VotingDetails = (props) => {
   const electionId = props.match.params.id;
 
   useEffect(() => {
-    if (election) {
-      setIsLoading(false);
-      return;
-    }
+    // if (election) {
+    //   setIsLoading(false);
+    //   return;
+    // }
     const urlP = new URLSearchParams(window.location.search);
     const urlToken = urlP.get("token");
     Promise.all([
