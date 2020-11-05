@@ -10,14 +10,13 @@ const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
   const [department, setDepartment] = useState('');
   const [country, setCountry] = useState('');
-  const [age, setAge] = useState(0);
+  const [birthdate, setBirthdate] = useState(null);
   // Use the useForm hook to create a form instance
 
   const handleSubmit = (e) => {
@@ -31,13 +30,12 @@ const RegisterForm = () => {
     const user = {
       firstName,
       lastName,
-      username,
       email,
       password,
       country,
       city,
       department,
-      age,
+      birthdate,
     };
     register(user)
       .then(() => {
@@ -78,11 +76,6 @@ const RegisterForm = () => {
                   </Form.Text>
                 </Form.Group>
 
-                <Form.Group controlId="username">
-                  <Form.Label>*Nombre de Usuario</Form.Label>
-                  <Form.Control required type="text" placeholder="usuario" onChange={(e) => setUsername(e.target.value)} />
-                </Form.Group>
-
                 <Form.Group controlId="password">
                   <Form.Label>*Contraseña</Form.Label>
                   <Form.Control required type="password" placeholder="contraseña" onChange={(e) => setPassword(e.target.value)} />
@@ -109,14 +102,14 @@ const RegisterForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="age">
-                  <Form.Label>*Edad</Form.Label>
-                  <Form.Control required type="number" min="10" max="100" placeholder="Edad" onChange={(e) => setAge(e.target.value)} />
+                  <Form.Label>*Fecha de Nacimiento</Form.Label>
+                  <Form.Control required type="date" placeholder="DD/MM/AAAA" onChange={(e) => setBirthdate(e.target.value)} />
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="justify-content-md-center">
+            <Row className="justify-content-md-center" style={{margin: "25px"}}>
               <Button variant="primary" type="submit" className="center">
-                Submit
+                Registrarme
               </Button>
             </Row>
           </Form>

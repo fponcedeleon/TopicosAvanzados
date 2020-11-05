@@ -52,10 +52,10 @@ export default function Login() {
           <div className="col-md-12">
             <div className="form-group">
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 id="userText"
-                placeholder="Nombre de Usuario"
+                placeholder="Email"
                 onChange={(event) => setUser(event.target.value)}
               />
             </div>

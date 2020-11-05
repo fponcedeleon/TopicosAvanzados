@@ -6,7 +6,7 @@ const helper = require("./helper");
  */
 const getElectionById = async ({ params }) => {
   return await Election.findById(params.id)
-    .populate("createdBy", ["email", "username"])
+    .populate("createdBy", ["email"])
     .exec()
     .then((results) => {
       return results;

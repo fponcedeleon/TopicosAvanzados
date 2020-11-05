@@ -48,7 +48,7 @@ const create = async ({ payload, auth }) => {
     .then((result) => {
       const link = `${linkUrl}/verify/${result._id}`;
       const subject = "Verify your email address";
-      validateUserEmail(result.username, result.email, link, subject);
+      validateUserEmail(result.firstName, result.email, link, subject);
       return {
         status: "Success",
         data: helper.parseUser(result),
@@ -94,7 +94,7 @@ const validateUser = async ({ params }) => {
     .exec()
     .then((result) => {
       if (result) {
-        const token = sessionHelper.createJWT(result.username);
+        const token = sessionHelper.createJWT(result.email);
         return { status: "Success", token: token };
       }
       return { status: "Error" };
