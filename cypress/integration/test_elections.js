@@ -2,9 +2,9 @@ describe("Form test", () => {
     it("Can fill the form", () => {
         cy.visit('localhost:3000')
         cy.get('input[id=userText]')
-        .type("apardo")
+        .type("topicossw2020@gmail.com")
         cy.get('input[id=passwordText]')
-        .type("45986382")
+        .type("topicos_2020")
         cy.get('Button[type=Submit').click()
         cy.wait(3000)
         cy.visit('localhost:3000/election')
