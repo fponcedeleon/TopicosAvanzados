@@ -76,7 +76,7 @@ export default function Login() {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <Link to="/forgotPassword">¿Olvidó su contraseña?</Link>
+            <Link to="/forgotPassword">¿Olvidaste la contraseña?</Link>
           </div>
         </div>
         <div className="row">
