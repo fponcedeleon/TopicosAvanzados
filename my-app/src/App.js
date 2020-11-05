@@ -24,7 +24,7 @@ const UnauthenticatedApp = () =>
         <Route exact path="/" component={() => <Redirect to="/login" />} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/verify" component={VerifyAccount} />
+        <Route exact path="/verify/:id" component={VerifyAccount} />
         <Route exact path="/forgotPassword" component={ForgotPassword} />
         <Route exact path="/resetPassword" component={ResetPassword} />
         <Route exact path="/error" component={ErrorPage} />

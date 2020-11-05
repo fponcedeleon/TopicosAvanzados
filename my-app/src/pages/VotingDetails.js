@@ -22,8 +22,10 @@ const VotingDetails = (props) => {
   const electionId = props.match.params.id;
 
   useEffect(() => {
-    if (election) return;
-
+    if (election) {
+      setIsLoading(false);
+      return;
+    }
     const urlP = new URLSearchParams(window.location.search);
     const urlToken = urlP.get("token");
     Promise.all([
@@ -98,7 +100,7 @@ const VotingDetails = (props) => {
                 <div className="custom-row">
                   <label>Nombre</label>
                   <input
-                    readOnly="true"
+                    readOnly
                     type="text"
                     className="form-control"
                     aria-describedby="emailHelp"

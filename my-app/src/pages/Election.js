@@ -199,6 +199,8 @@ export default function Services() {
         </label>
         <input
           type="number"
+          min="10"
+          max="100"
           placeholder="Edad minima"
           name="minAge"
           id="minAge"
@@ -210,6 +212,8 @@ export default function Services() {
         </label>
         <input
           type="number"
+          min="10"
+          max="100"
           placeholder="Edad maxima"
           name="maxAge"
           id="maxAge"

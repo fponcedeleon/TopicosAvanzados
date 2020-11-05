@@ -23,7 +23,7 @@ export default function Login() {
       } else {
         alert("Credenciales incorrectas");
       }
-      // setIsLoading(false);
+      setIsLoading(false);
     })
     .catch((error) => {
       setIsLoading(false);

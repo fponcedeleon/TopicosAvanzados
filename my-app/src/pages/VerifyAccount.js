@@ -13,10 +13,11 @@ const VerifyAccForm = () => {
     verifyAccount(userId)
       .then(res => {
         setSession(res.token);
-        history.push('/')
+        history.push('/home');
+        window.location.href = '/home';
         setIsLoading(false);
         alert('Successfully validated');
-        window.location.reload();
+        // window.location.reload();
       })
       .catch(() => {
         setIsLoading(false);
