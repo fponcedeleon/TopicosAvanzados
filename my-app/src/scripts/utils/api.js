@@ -1,27 +1,17 @@
-//import { getSession } from './session.js';
+// eslint-disable-next-line import/extensions
+import { getSession } from './session.js';
 
 const fetch = async (url, method, data) => {
   const headers = new Headers();
 
-  /*
   const session = getSession();
   if (session) {
-    headers.append('Authorization', `Bearer ${session.token}`);
-  }*/
-  // Configurar cabeceras y cors
+    headers.append('Authorization', `Bearer ${session}`);
+  }
+
   let body;
   if (data) {
     headers.append("Content-Type", "application/json");
-    //headers.append('Access-Control-Allow-Origin', '*');
-    // headers.append(
-    //   'Access-Control-Allow-Headers',
-    //   'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method',
-    // );
-    // headers.append(
-    //   'Access-Control-Allow-Methods',
-    //   'GET, POST, OPTIONS, PUT, DELETE',
-    // );
-    // headers.append('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     body = JSON.stringify(data);
   }
 
@@ -35,7 +25,6 @@ const fetch = async (url, method, data) => {
     return { error: { status: response.status } };
   }
 
-  //console.log(response);
   return { data: await response.json() };
 };
 

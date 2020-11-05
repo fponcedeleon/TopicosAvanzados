@@ -23,27 +23,9 @@ const init = async () => {
     }
   };
 
-  //await createUser();
   task.task();
   await server.register([cors, connectors, jwtAuth, routes]);
   await server.start();
 };
-
-const User = require('./models/user');
-const createUser = () => {
-  const user = new User({
-    username: 'test',
-    password: 'psw',
-    firstName: 'test',
-    lastName: 'test',
-    isActive: true,
-  });
-  
-  //user.save().then();
-  //User.findOne({username: 'test'}).then((re) => console.log('success'+ re)).catch(error=>console.log(error));
-
-
-}
-
 
 init();

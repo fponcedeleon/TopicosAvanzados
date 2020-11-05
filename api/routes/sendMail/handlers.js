@@ -27,6 +27,17 @@ const create = async (request, h) => {
   }
 };
 
+const forgotPasswordMail = async (request, h) => {
+  const { userEmail, link, subject } = request.payload;
+  try {
+    await CustomEmail.forgotPasswordEmail(userEmail, link, subject);
+    return h ? h.response({ email: "Email has been sent" }).code(201) : null;
+  } catch (error) {
+    return h ? h.response({ err: "Failed to send email" }).code(500) : error;
+  }
+}
+
 module.exports = {
   create,
+  forgotPasswordMail,
 };

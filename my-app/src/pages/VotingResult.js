@@ -1,61 +1,57 @@
-
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
 import ProposalResult from "../components/proposal/ProposalResult";
 import { getAllElectionProposals } from "../scripts/services/proposal";
 import { getOnePost } from "../scripts/services/election";
-import '../App.css';
-
+import "../App.css";
+import Loading from "../components/Loading";
 
 export default function VotingResult(props) {
-
   const [election, setElection] = useState({});
   const [proposals, setProposals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const electionId = props.match.params.id;
 
   useEffect(() => {
-
-    getOnePost(electionId)
-      .then(
-        (result) => {
-          setElection(result);
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-
-    getAllElectionProposals(electionId).then(
+    getOnePost(electionId).then(
       (result) => {
-        setProposals(result);
+        setElection(result);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     )
-
-  }, [electionId])
-   
-
-    return <div> 
-        
-        <div className="row">
-          <div className="details-middle contenedorCentrado">
-
-            <div className="custom-row"> 
-                <h2>Nombre Eleccion: {election.name} </h2> 
-            </div>
-
-
-            {proposals.map((p, index) =>
-              <div>
-                <ProposalResult proposalName={p.name} proposalId={p._id}/>
-              </div>
-            )}
-            
+    .then(() => {
+      getAllElectionProposals(electionId).then(
+        (result) => {
+          setProposals(result);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  
+      setIsLoading(false);
+    })
+  }, [electionId, isLoading]);
+  return (
+    <>
+    {isLoading && <Loading />}
+    {!isLoading && <div>
+      <div className="row">
+        <div className="details-middle contenedorCentrado">
+          <div className="custom-row">
+            <h2>Elección: {election.name}</h2>
           </div>
-        </div>
-        
-         </div>
 
+          {proposals.map((p, index) => (
+            <div key={index}>
+              <ProposalResult proposalName={p.name} proposalId={p._id} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>}
+  </>);
 }

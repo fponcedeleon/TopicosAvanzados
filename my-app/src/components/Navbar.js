@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from './Button';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { useHistory } from "react-router-dom";
+import { removeSession } from "../scripts/utils/session.js";
 
-function Navbar() {
+const Navbar = ({ isAuthenticated, isAdmin }) => {
   const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
-
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-      setButton(true);
-    }
-  };
-
-  useEffect(() => {
-    showButton();
-  }, []);
-
-  window.addEventListener('resize', showButton);
+  const history = useHistory();
+  const logout = () => {
+    removeSession();
+    history.push("/");
+    window.location.reload();
+  }
 
   return (
     <>
@@ -36,31 +28,69 @@ function Navbar() {
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className='nav-item'>
+            { isAuthenticated &&
+              <React.Fragment>
+              <li className='nav-item'>
+                <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+                  Home
+                </Link>
+              </li>
+                <li className='nav-item'>
               <Link
                 to='/voting'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Votacion
+                Votación
+              </Link>
+            </li>
+            {isAdmin &&
+              <li className='nav-item'>
+                <Link
+                  to='/election'
+                  className='nav-links'
+                  onClick={closeMobileMenu}
+                >
+                  Nueva Elección
+                </Link>
+              </li>
+            }
+            <li className='nav-item'>
+              <Link
+                to='/'
+                className='nav-links'
+                onClick={logout}
+              >
+                Cerrar Sesión
+              </Link>
+            </li>
+              </React.Fragment>
+            }
+
+            { !isAuthenticated &&
+              <React.Fragment>
+                <li className='nav-item'>
+              <Link
+                to='/login'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Iniciar Sesión
               </Link>
             </li>
             <li className='nav-item'>
               <Link
-                to='/election'
+                to='/register'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Eleccion
+                Registrarme
               </Link>
             </li>
+              </React.Fragment>
+            }
+            
           </ul>
-          {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
         </div>
       </nav>
     </>

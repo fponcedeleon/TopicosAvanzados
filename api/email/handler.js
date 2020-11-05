@@ -1,5 +1,10 @@
 const nodemailer = require("nodemailer");
-const { getTemplateResults, getTemplateNewElection } = require("./template");
+const {
+  getTemplateResults,
+  getTemplateNewElection,
+  getTemplateValidateUser,
+  getTemplateForgotPassword,
+} = require("./template");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -46,6 +51,18 @@ const customEmail = (
   sendEmail(subject, userEmail, text);
 };
 
+const forgotPasswordEmail = (userEmail, link, subject) => {
+  const text = getTemplateForgotPassword(link);
+  sendEmail(subject, userEmail, text);
+};
+
+const validateUserEmail = (userName, userEmail, link, subject) => {
+  const text = getTemplateValidateUser(userName, link);
+  sendEmail(subject, userEmail, text);
+};
+
 module.exports = {
   customEmail,
+  forgotPasswordEmail,
+  validateUserEmail,
 };

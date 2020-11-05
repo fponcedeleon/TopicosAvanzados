@@ -1,5 +1,4 @@
 import { post, get } from "../utils/api.js";
-//import { removePostId } from "../utils/session.js";
 
 const baseUrl =
   window.location.hostname === "localhost"
@@ -7,7 +6,6 @@ const baseUrl =
     : "https://topicossw.herokuapp.com";
 
 export const createNewElection = async (
-  createdBy,
   startDate,
   endDate,
   minAge,
@@ -17,7 +15,6 @@ export const createNewElection = async (
   name
 ) => {
   const { data: election, error } = await post(`${baseUrl}/elections`, {
-    createdBy,
     startDate,
     endDate,
     minAge,
@@ -31,15 +28,13 @@ export const createNewElection = async (
       throw new Error("Election already exists.");
     }
     throw error;
-    //throw new Error('Oops! Something went wrong...');
   }
 
   return election;
 };
 
 export const getAllElections = async () => {
-  const { data: elections } = await get(`${baseUrl}/elections`); //IMPLEMENTAR RUTA EN API
-  console.log(elections);
+  const { data: elections } = await get(`${baseUrl}/elections`);
   return elections;
 };
 
