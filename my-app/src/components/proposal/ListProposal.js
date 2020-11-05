@@ -17,6 +17,8 @@ export class ListProposal extends Component {
     getAllProposalOptions(id)
       .then(
         (result) => {
+          const event = {target: {value: result[0]._id}}
+          this.props.handleChange(event, id)
           this.setState({
             data: result
           });

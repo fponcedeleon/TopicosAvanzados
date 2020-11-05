@@ -24,53 +24,53 @@ const VotingDetails = (props) => {
 
   useEffect(() => {
     if (hasLoaded) {
-      setIsLoading(false);
       return;
     }
     const urlP = new URLSearchParams(window.location.search);
     const urlToken = urlP.get("token");
     Promise.all([
-    getToken(urlToken)
-      .then(response => {
-        if (!response) {
-          window.location.href = '/error';
-        }
-        else {
-          setToken(response[0]);
-        }
-      })
-      .then(() => {
-        getCurrent().then(res => {
-          if (res && res.credentials) {
-            setCurrentUser(res.credentials);
+      getToken(urlToken)
+        .then((response) => {
+          if (!response[0]) {
+            window.location.href = "/error";
+          } else {
+            setToken(response[0]);
           }
         })
-          .then(() => {
-            getOnePost(electionId).then(
-              (result) => {
-                setElection(result);
-              },
-              (error) => {
-                console.error(error);
+        .then(() => {
+          getCurrent()
+            .then((res) => {
+              if (res && res.credentials) {
+                setCurrentUser(res.credentials);
               }
-            ).then(() => {
-              getAllElectionProposals(electionId).then(
-                (result) => {
-                  setProposals(result);
-                },
-                (error) => {
-                  console.error(error);
-                }
-              )
             })
-          })
-
-      })])
-      .then(() => {
-        setIsLoading(false);
-        setHasLoaded(true);
-      });
-  }, [electionId, election, isLoading, hasLoaded]);
+            .then(() => {
+              getOnePost(electionId)
+                .then(
+                  (result) => {
+                    setElection(result);
+                  },
+                  (error) => {
+                    console.error(error);
+                  }
+                )
+                .then(() => {
+                  getAllElectionProposals(electionId).then(
+                    (result) => {
+                      setProposals(result);
+                    },
+                    (error) => {
+                      console.error(error);
+                    }
+                  );
+                });
+            });
+        }),
+    ]).then(() => {
+      setIsLoading(false);
+      setHasLoaded(true);
+    });
+  }, [electionId, election, isLoading]);
 
   if (!election || !proposals) {
     return <div></div>;
@@ -83,6 +83,7 @@ const VotingDetails = (props) => {
   const handleSubmit = async () => {
     setIsLoading(true);
     if (window.confirm("Confirma las opciones votadas?")) {
+      console.log(selectedOptions)
       for (const key in selectedOptions) {
         await voteOption(selectedOptions[key], currentUser.id);
       }
@@ -96,47 +97,50 @@ const VotingDetails = (props) => {
   return (
     <>
       {isLoading && <Loading />}
-      {!isLoading && <Container>
-        <form>
-          <div className="voting-Details">
-            <div className="row">
-              <div className="details-middle">
-                <div className="custom-row">
-                  <label>Nombre</label>
-                  <input
-                    readOnly
-                    type="text"
-                    className="form-control"
-                    aria-describedby="emailHelp"
-                    value={election.name}
-                  />
-                </div>
-
-                {proposals.map((p, index) => (
-                  <div key={index}>
-                    <ListProposal
-                      proposalName={p.name}
-                      proposalId={p._id}
-                      handleChange={handleChange}
+      {!isLoading && (
+        <Container>
+          <form>
+            <div className="voting-Details">
+              <div className="row">
+                <div className="details-middle">
+                  <div className="custom-row">
+                    <label>Nombre</label>
+                    <input
+                      readOnly
+                      type="text"
+                      className="form-control"
+                      aria-describedby="emailHelp"
+                      value={election.name}
                     />
                   </div>
-                ))}
 
-                <div className="custom-row">
-                  <button
-                    type="button"
-                    onClick={handleSubmit}
-                    className="form-control"
-                  >
-                    Enviar Respuesta
-                </button>
+                  {proposals.map((p, index) => (
+                    <div key={index}>
+                      <ListProposal
+                        proposalName={p.name}
+                        proposalId={p._id}
+                        handleChange={handleChange}
+                      />
+                    </div>
+                  ))}
+
+                  <div className="custom-row">
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      className="form-control"
+                    >
+                      Enviar Respuesta
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
-      </Container>}
-    </>);
+          </form>
+        </Container>
+      )}
+    </>
+  );
 };
 
 export default VotingDetails;
