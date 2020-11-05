@@ -83,7 +83,7 @@ const VotingDetails = (props) => {
         voteOption(selectedOptions[key], currentUser.id).then();
       }
 
-      alert("Has votado correctamente.");
+      alert("Has votado correctamente");
       await deleteToken(token._id);
     }
     setIsLoading(false);

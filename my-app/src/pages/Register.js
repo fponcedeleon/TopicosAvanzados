@@ -23,7 +23,7 @@ const RegisterForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
-      alert('Las contraseñas deben ser iguales');
+      alert("Las contraseñas deben ser iguales");
       return;
     }
 
@@ -42,17 +42,13 @@ const RegisterForm = () => {
     register(user)
       .then(() => {
         setIsLoading(false);
-        alert('Verificá tu email para confirmar tu cuenta');
+        alert('Ingresá a tu email para verificar tu cuenta');
       })
       .catch(error => {
         setIsLoading(false);
         alert(error);
       });
   }
-
-  useEffect(() => {
-    console.log(email);
-  }, [email])
 
   return (
     <>
@@ -76,7 +72,7 @@ const RegisterForm = () => {
 
                 <Form.Group controlId="email">
                   <Form.Label>*Email</Form.Label>
-                  <Form.Control required type="email" placeholder="ejemplo@email.com" onChange={(e) => setEmail(e.target.value)} />
+                  <Form.Control required type="email" placeholder="correo@ejemplo.com" onChange={(e) => setEmail(e.target.value)} />
                   <Form.Text className="text-muted">
                     No compartiremos el email con nadie.
                   </Form.Text>

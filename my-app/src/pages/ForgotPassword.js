@@ -22,13 +22,19 @@ export default function ForgotPassword() {
   const handleSumbit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const subject = "Restablecer contraseña";
-    const userEmail = document.getElementById("inputMail").value;
-    const user = await getUserByEmail(userEmail);
-    const link = await generateNewLink(user._id);
-    forgotPasswordEmail(userEmail, link, subject);
-    setIsLoading(false);
-    alert("Se le ha enviado un correo para restablecer su contraseña");
+    try {
+      const subject = "Restablecer contraseña";
+      const userEmail = document.getElementById("inputMail").value;
+      const user = await getUserByEmail(userEmail);
+      const link = await generateNewLink(user._id);
+      forgotPasswordEmail(userEmail, link, subject);
+      setIsLoading(false);
+      alert("Se ha enviado un correo para restablecer la contraseña");
+    }
+    catch (e) {
+      setIsLoading(false);
+      alert("Ocurrió un error. Por favor, intentalo nuevamente");
+    }
   };
 
   return (
@@ -38,7 +44,7 @@ export default function ForgotPassword() {
       <div className="container">
         <h1 className="forgotTitle">Recuperar contraseña</h1>
         <label className="Email">
-          <b>Mail</b>
+          <b>Email</b>
         </label>
         <input
           type="text"

@@ -16,12 +16,11 @@ const VerifyAccForm = () => {
         history.push('/home');
         window.location.href = '/home';
         setIsLoading(false);
-        alert('Successfully validated');
-        // window.location.reload();
+        alert("Cuenta verificada correctamente. Disfrute de nuestros servicios!");
       })
       .catch(() => {
         setIsLoading(false);
-        alert('An error occured. Please try again')
+        alert("Ocurrió un error. Por favor, intenalo nuevamente");
       });
   }, [userId, history, isLoading]);
 

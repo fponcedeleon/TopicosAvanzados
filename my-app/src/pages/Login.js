@@ -19,15 +19,16 @@ export default function Login() {
     getToken(user, password).then((result) => {
       if (result) {
         setSession(result.result);
+        setIsLoading(false);
         window.location.href = '/home';
       } else {
-        alert("Credenciales incorrectas");
+        setIsLoading(false);
+        alert("Por favor, verificá que tus credenciales sean correctas");
       }
-      setIsLoading(false);
     })
     .catch((error) => {
       setIsLoading(false);
-      console.error(error);
+      alert(error);
     });
   }
 
@@ -44,7 +45,7 @@ export default function Login() {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <label className="titleHome">Sign in</label>
+            <label className="titleHome">Iniciar Sesión</label>
           </div>
         </div>
         <div className="row">
@@ -54,7 +55,7 @@ export default function Login() {
                 type="text"
                 className="form-control"
                 id="userText"
-                placeholder="User"
+                placeholder="Nombre de Usuario"
                 onChange={(event) => setUser(event.target.value)}
               />
             </div>
@@ -67,7 +68,7 @@ export default function Login() {
                 type="password"
                 className="form-control"
                 id="passwordText"
-                placeholder="Password"
+                placeholder="Contraseña"
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
@@ -85,7 +86,7 @@ export default function Login() {
               type="submit"
               onClick={() => LoginApp()}
             >
-              Sign in
+              Iniciar Sesión
             </Button>
           </div>
         </div>

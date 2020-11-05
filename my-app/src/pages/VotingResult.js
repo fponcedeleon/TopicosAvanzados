@@ -42,7 +42,7 @@ export default function VotingResult(props) {
       <div className="row">
         <div className="details-middle contenedorCentrado">
           <div className="custom-row">
-            <h2>Eleccion: {election.name}</h2>
+            <h2>Elección: {election.name}</h2>
           </div>
 
           {proposals.map((p, index) => (

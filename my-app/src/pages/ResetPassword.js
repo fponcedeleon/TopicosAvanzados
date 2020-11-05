@@ -24,7 +24,7 @@ export default function ResetPassword() {
       alert("se ha cambiado la contraseña");
     } else {
       setIsLoading(false);
-      alert("Las contraseñas no coinciden");
+      alert("Las contraseñas deben ser iguales");
     }
   };
   
@@ -63,7 +63,7 @@ export default function ResetPassword() {
       <div className="container">
         <h1 className="forgotTitle">Cambiar contraseña</h1>
         <label className="lbpassword">
-          <b>Escriba una nueva contraseña</b>
+          <b>Escribe una nueva contraseña</b>
         </label>
         <input
           type="password"
