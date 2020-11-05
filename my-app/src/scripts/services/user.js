@@ -57,7 +57,7 @@ export const register = async ({
   });
 
   if (data.status === "Error") {
-    throw new Exception(data.message);
+    throw data.message;
   }
   return data;
 };
