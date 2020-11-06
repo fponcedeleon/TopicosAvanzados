@@ -1,0 +1,40 @@
+describe("Form test", () => {
+    it("Can fill the form", () => {
+        cy.visit('https://topicos2020.netlify.app')
+        cy.get('input[id=userText]')
+        .type("topicossw2020@gmail.com")
+        cy.get('input[id=passwordText]')
+        .type("topicos_2020")
+        cy.get('Button[type=Submit').click()
+        cy.wait(3000)
+        cy.visit('https://topicos2020.netlify.app/election')
+        cy.wait(3000)
+        cy.get('input[placeholder="Elección 1"]')
+        .type("election_test")
+        cy.get('input[placeholder="20"]')
+        .type("20")
+        cy.get('input[placeholder="30"]')
+        .type("30")
+        cy.get('input[placeholder="Montevideo"]')
+        .eq(0)
+        .type("Montevideo")
+        cy.get('input[placeholder="Montevideo"]')
+        .eq(1)
+        .type("Montevideo")
+        cy.get('input[placeholder="Propuesta 1"]')
+        .type("TestProposal1")
+        cy.get('input[placeholder="Descripción 1"]')
+        .type("TestPropDescription1")
+        cy.get('input[placeholder="Propuesta 1 - Opción 1"]')
+        .type("TestOptionOne")
+        cy.get('button[class="center btn btn-outline-primary"]').click()
+        cy.get('input[placeholder="Propuesta 1 - Opción 2"]')
+        .type("TestOptionTwo")
+        cy.get('Button[type="submit"]').click()
+        cy.on('window:alert',(txt)=>{
+            should('Elección creada correctamente')
+        })
+        
+    });
+});
+

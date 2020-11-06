@@ -1,0 +1,30 @@
+describe("Form test", () => {
+    const userN = () => Cypress._.random(0, 1e6)
+    const id = userN()
+    it("User Registration Form", () => {
+        cy.visit('https://topicos2020.netlify.app/register')
+        cy.wait(3000)
+        cy.get('input[placeholder="Nombre"]')
+        .type("testFirstName")
+        cy.get('input[placeholder="Apellido"]')
+        .type("testLastName")
+        cy.get('input[placeholder="correo@ejemplo.com"]')
+        .type("test" + id + "@test.com")
+        cy.get('input[placeholder="contraseña"]')
+        .type("testPassword")
+        cy.get('input[placeholder="Repetir contraseña"]')
+        .type("testPassword")
+        cy.get('input[placeholder="Ciudad"]')
+        .type("Palermo")
+        cy.get('input[placeholder="Departamento"]')
+        .type("Montevideo")
+        cy.get('input[placeholder="País"]')
+        .type("Uruguay")
+        cy.get('input[placeholder="DD/MM/AAAA"]')
+        .type("1991-09-19")
+        cy.get('Button[type="submit"]').click()
+        cy.on('window:alert',(txt)=>{
+           should('Ingresá a tu email para verificar tu cuenta')
+        })
+    });
+});
