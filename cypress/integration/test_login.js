@@ -1,6 +1,6 @@
 describe("Form test", () => {
     it("Login form", () => {
-        cy.visit('localhost:3000')
+        cy.visit('https://topicos2020.netlify.app')
         cy.get('input[id=userText]')
         .type("topicossw2020@gmail.com")
         cy.get('input[id=passwordText]')

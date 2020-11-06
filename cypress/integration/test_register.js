@@ -2,7 +2,7 @@ describe("Form test", () => {
     const userN = () => Cypress._.random(0, 1e6)
     const id = userN()
     it("User Registration Form", () => {
-        cy.visit('localhost:3000/register')
+        cy.visit('https://topicos2020.netlify.app/register')
         cy.wait(3000)
         cy.get('input[placeholder="Nombre"]')
         .type("testFirstName")
