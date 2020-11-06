@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const moment = require("moment")
 
 const getTemplateNewElection = (
   userName,
@@ -14,7 +15,7 @@ const getTemplateNewElection = (
 
   stringFile = stringFile.replace("{Name}", userName);
   stringFile = stringFile.replace("{ElectionName}", electionName);
-  stringFile = stringFile.replace("{EndDate}", endDate);
+  stringFile = stringFile.replace("{EndDate}", moment(endDate).format("LLLL"));
   stringFile = stringFile.replace("{ElectionLink}", electionLink);
 
   return stringFile;
